@@ -4,6 +4,6 @@ import androidx.core.content.FileProvider
 
 class AppFileProvider : FileProvider() {
     companion object {
-        const val AUTHORITY = "com.kyant.music.file.provider"
+        const val AUTHORITY = "com.kyant.music.storage.provider"
     }
 }
