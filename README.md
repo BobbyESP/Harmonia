@@ -32,3 +32,10 @@ Kotlin code style is enforced by `ktlint` plugin with **Android mode**.
 
 - Run `./gradlew :app:releaseComposeCompilerHtmlReport :ui:releaseComposeCompilerHtmlReport --rerun-tasks` to check
   stability for Compose. You may disable configuration cache of Gradle temporarily.
+
+## License
+
+This project is licensed under [Apache License 2.0](LICENSE).
+
+But you are **not allowed to derive a new project** from this one, personal use (cannot be published to Internet) is
+allowed.
