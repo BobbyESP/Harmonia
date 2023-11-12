@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Harmonia</string>
+
+    <string name="songs">歌曲</string>
+    <string name="albums">专辑</string>
+    <string name="artists">艺人</string>
+    <string name="genres">流派</string>
+    <string name="folders">文件夹</string>
+    <string name="playlists">播放列表</string>
+    <string name="favorites">收藏</string>
+
+    <string name="settings">设置</string>
+</resources>

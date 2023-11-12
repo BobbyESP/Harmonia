@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Harmonia</string>
+
+    <string name="songs">Songs</string>
+    <string name="albums">Albums</string>
+    <string name="artists">Artists</string>
+    <string name="genres">Genres</string>
+    <string name="folders">Folders</string>
+    <string name="playlists">Playlists</string>
+    <string name="favorites">Favorites</string>
+
+    <string name="settings">Settings</string>
+</resources>

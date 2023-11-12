@@ -1,0 +1,40 @@
+[versions]
+agp = "8.3.0-alpha13"
+android-minSdk = "24"
+android-compileSdk = "34"
+android-targetSdk = "34"
+kotlin = "1.9.20"
+compose-compiler = "1.5.4"
+
+activity = "1.8.0"
+compose = "1.6.0-alpha08"
+compose-m3 = "1.2.0-alpha10"
+core = "1.13.0-alpha01"
+coroutines = "1.7.3"
+glide-compose = "1.0.0-beta01"
+kotlinx-collections-immutable = "0.3.6"
+lifecycle = "2.7.0-beta01"
+media = "1.7.0-beta01"
+serialization = "1.6.0"
+
+[libraries]
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
+glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glide-compose" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }
+kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "serialization" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-m3" }
+media = { module = "androidx.media:media", version.ref = "media" }
+ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
