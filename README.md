@@ -1,5 +1,7 @@
 # Harmonia
 
+![License](https://img.shields.io/static/v1?label=license&message=CC-BY-NC-ND-4.0&color=blue)
+
 A modern and beautiful music player for Android.
 
 ## Project modules
@@ -35,7 +37,4 @@ Kotlin code style is enforced by `ktlint` plugin with **Android mode**.
 
 ## License
 
-This project is licensed under [Apache License 2.0](LICENSE).
-
-But you are **not allowed to derive a new project** from this one, personal use (cannot be published to Internet) is
-allowed.
+This project is licensed under the [CC BY-NC-ND 4.0](LICENSE.md) (Attribution-NonCommercial-NoDerivs 4.0 International).
