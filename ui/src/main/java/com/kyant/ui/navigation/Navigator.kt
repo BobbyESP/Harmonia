@@ -12,18 +12,18 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
-val LocalNavigator = staticCompositionLocalOf<Navigator?> { null }
+val LocalNavigator = staticCompositionLocalOf<Navigator<out Screen>?> { null }
 
 @Composable
-fun rememberNavigator(homeScreen: HomeScreen): Navigator {
+fun <S : Screen> rememberNavigator(homeScreen: S): Navigator<S> {
     return rememberSaveable(homeScreen) { Navigator(homeScreen) }
 }
 
 @Parcelize
-class Navigator(private val homeScreen: HomeScreen) : Parcelable {
+class Navigator<S : Screen>(private val homeScreen: S) : Parcelable {
 
     @IgnoredOnParcel
-    val screens = mutableStateListOf<Screen>(homeScreen)
+    val screens = mutableStateListOf(homeScreen)
 
     @IgnoredOnParcel
     var currentRouteDepth by mutableIntStateOf(0)
@@ -38,7 +38,7 @@ class Navigator(private val homeScreen: HomeScreen) : Parcelable {
         currentRouteDepth != 0
     }
 
-    fun push(screen: Screen) {
+    fun push(screen: S) {
         if (screen in screens.take(currentRouteDepth + 1)) {
             screen.enter()
             return
@@ -58,13 +58,13 @@ class Navigator(private val homeScreen: HomeScreen) : Parcelable {
         screen?.exit()
     }
 
-    fun removeRoute(screen: Screen) {
+    fun removeRoute(screen: S) {
         if (currentRouteDepth < 1) return
         currentRouteDepth--
         screen.exit()
     }
 
-    fun addRoute(screen: Screen) {
+    fun addRoute(screen: S) {
         if (screen in screens.take(currentRouteDepth + 1)) return
         while (currentRouteDepth < screens.lastIndex) {
             screens.removeLastOrNull()

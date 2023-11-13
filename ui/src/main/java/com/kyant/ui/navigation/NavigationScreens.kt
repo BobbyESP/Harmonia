@@ -6,13 +6,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 
 @Composable
-fun NavigationScreens(
-    navigator: Navigator,
+inline fun <reified S : Screen> NavigationScreens(
+    navigator: Navigator<S>,
     modifier: Modifier = Modifier,
-    content: @Composable Navigator.(Screen) -> Unit
+    crossinline content: @Composable Navigator<S>.(S) -> Unit
 ) {
-    CompositionLocalProvider(LocalNavigator provides navigator) {
-        Box(modifier = modifier) {
+    Box(modifier = modifier) {
+        CompositionLocalProvider(LocalNavigator provides navigator) {
             navigator.screens.forEach { screen ->
                 ScreenContainer(navigator, screen) {
                     content(navigator, screen)

@@ -27,11 +27,11 @@ import com.kyant.ui.theme.LocalColorToken
 import com.kyant.ui.util.thenIf
 import kotlinx.coroutines.launch
 
-@Suppress("NOTHING_TO_INLINE", "KotlinRedundantDiagnosticSuppress")
+@Suppress("KotlinRedundantDiagnosticSuppress")
 @Composable
-inline fun ScreenContainer(
-    navigator: Navigator,
-    screen: Screen,
+inline fun <reified S : Screen> ScreenContainer(
+    navigator: Navigator<S>,
+    screen: S,
     content: @Composable () -> Unit
 ) {
     val animationSpec = spring<Float>(1f, 200f)
@@ -121,7 +121,7 @@ inline fun ScreenContainer(
                     }
                 }
             }
-            .thenIf(screen !is HomeScreen) {
+            .thenIf(!screen.isHome) {
                 val state = rememberDraggableState { delta ->
                     if (delta.isNaN()) return@rememberDraggableState
                     scope.launch {

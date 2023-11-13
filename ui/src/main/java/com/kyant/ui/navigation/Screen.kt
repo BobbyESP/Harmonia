@@ -9,33 +9,23 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-open class HomeScreen : Screen() {
+open class Screen(val isHome: Boolean) : Parcelable {
 
     @IgnoredOnParcel
-    final override var isActive by mutableStateOf(true)
+    open var isActive by mutableStateOf(isHome)
 
     @IgnoredOnParcel
-    final override val fraction = FractionAnimatable(1f)
+    open val fraction = FractionAnimatable(if (isHome) 1f else 0f)
 
-    final override fun enter() = Unit
-
-    final override fun exit() = Unit
-}
-
-@Parcelize
-open class Screen : Parcelable {
-
-    @IgnoredOnParcel
-    open var isActive by mutableStateOf(false)
-
-    @IgnoredOnParcel
-    open val fraction = FractionAnimatable(0f)
-
-    open fun enter() {
+    open fun enter() = if (isHome) {
+        Unit
+    } else {
         isActive = true
     }
 
-    open fun exit() {
+    open fun exit() = if (isHome) {
+        Unit
+    } else {
         isActive = false
     }
 }
