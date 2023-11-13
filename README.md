@@ -6,8 +6,6 @@ A modern and beautiful music player for Android.
 
 ## Project modules
 
-**Note:** `ui` package in `app` module is excluded from the Git now, because it's not ready yet.
-
 - [app](app/README.md)
 - [media](media/README.md)
 - [ui](ui/README.md)

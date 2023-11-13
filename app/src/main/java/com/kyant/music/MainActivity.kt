@@ -14,7 +14,7 @@ import com.kyant.media.session.MediaBrowserService
 import com.kyant.music.service.LocalPlayer
 import com.kyant.music.service.PlaybackService
 import com.kyant.music.service.StatefulPlayer
-import com.kyant.music.ui.Home
+import com.kyant.music.ui.Main
 import com.kyant.ui.RootBackground
 import com.kyant.ui.theme.Theme
 import com.kyant.ui.theme.systemColorScheme
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
             Theme(systemColorScheme()) {
                 RootBackground {
                     CompositionLocalProvider(value = LocalPlayer provides player) {
-                        Home()
+                        Main()
                     }
                 }
             }
