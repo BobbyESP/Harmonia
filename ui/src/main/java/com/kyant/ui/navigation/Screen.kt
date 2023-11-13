@@ -17,11 +17,9 @@ open class HomeScreen : Screen() {
     @IgnoredOnParcel
     final override val fraction = FractionAnimatable(1f)
 
-    final override fun enter() {
-    }
+    final override fun enter() = Unit
 
-    final override fun exit() {
-    }
+    final override fun exit() = Unit
 }
 
 @Parcelize
