@@ -24,7 +24,8 @@ fun Settings() {
     ) {
         Text(
             text = "Settings",
-            modifier = Modifier.padding(24.dp, 24.dp, 16.dp, 8.dp),
+            modifier = Modifier
+                .padding(24.dp, 24.dp, 16.dp, 8.dp),
             style = Theme.typography.titleLarge
         )
     }

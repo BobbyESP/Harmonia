@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kyant.music.ui.MainScreen
-import com.kyant.music.ui.settings.Settings
 import com.kyant.ui.Surface
 import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalScroll
@@ -31,7 +30,8 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
     ) {
         Text(
             text = "Library",
-            modifier = Modifier.padding(24.dp, 24.dp, 16.dp, 8.dp),
+            modifier = Modifier
+                .padding(24.dp, 24.dp, 16.dp, 8.dp),
             style = Theme.typography.titleLarge
         )
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {

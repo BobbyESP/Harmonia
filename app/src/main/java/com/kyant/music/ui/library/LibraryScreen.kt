@@ -23,6 +23,7 @@ sealed class LibraryScreen(isHome: Boolean = false) : Screen(isHome) {
             NavigationScreens(navigator = navigator) { screen ->
                 when (screen) {
                     Library -> Library(mainNavigator)
+                    Songs -> Songs()
                     else -> {}
                 }
             }
