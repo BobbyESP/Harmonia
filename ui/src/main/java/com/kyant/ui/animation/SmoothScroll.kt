@@ -13,8 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.isUnspecified
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -36,6 +38,7 @@ fun Modifier.smoothVerticalOverscroll(
     }
     this
         .nestedScroll(connection)
+        .clip(RectangleShape)
         .graphicsLayer { translationY = overscrollOffset.value }
 }
 
@@ -53,6 +56,7 @@ fun Modifier.smoothVerticalScroll(
     }
     this
         .nestedScroll(connection)
+        .clip(RectangleShape)
         .verticalScroll(
             state = state,
             enabled = enabled,
@@ -76,6 +80,7 @@ fun Modifier.smoothVerticalScroll(
     }
     this
         .nestedScroll(connection)
+        .clip(RectangleShape)
         .verticalScroll(
             state = state,
             enabled = enabled,
