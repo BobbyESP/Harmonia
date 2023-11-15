@@ -17,10 +17,15 @@ lifecycle = "2.7.0-beta01"
 media = "1.7.0-beta01"
 serialization = "1.6.0"
 
+kyant-m3color = "2023.10.1"
+kyant-taglib = "62c8fc5fbd"
+
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glide-compose" }
+kyant-m3color = { module = "com.github.Kyant0:m3color", version.ref = "kyant-m3color" }
+kyant-taglib = { module = "com.github.Kyant0:taglib", version.ref = "kyant-taglib" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }

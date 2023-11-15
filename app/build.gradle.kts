@@ -85,6 +85,6 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.glide.compose) // https://github.com/bumptech/glide
-    implementation("com.github.Kyant0:taglib:2b7da3d303") // https://github.com/Kyant0/taglib
+    implementation(libs.kyant.taglib) // https://github.com/Kyant0/taglib
     implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
 }

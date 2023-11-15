@@ -54,5 +54,5 @@ dependencies {
     api(libs.ui)
     api(libs.ui.graphics)
     api(libs.material3)
-    api("com.github.Kyant0:m3color:2023.10.1") // https://github.com/Kyant0/m3color
+    api(libs.kyant.m3color) // https://github.com/Kyant0/m3color
 }

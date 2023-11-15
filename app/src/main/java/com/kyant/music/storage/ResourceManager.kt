@@ -50,8 +50,8 @@ object ResourceManager {
 
     fun getMetadata(song: Song): Metadata? {
         return try {
-            useFd(song) {
-                TagLib.getMetadata(it)
+            useFd(song) { fd, fileName ->
+                TagLib.getMetadata(fd, fileName)
             }
         } catch (_: Exception) {
             null
@@ -60,8 +60,8 @@ object ResourceManager {
 
     private fun getPictures(song: Song): Array<Picture>? {
         return try {
-            useFd(song) {
-                TagLib.getPictures(it)
+            useFd(song) { fd, fileName ->
+                TagLib.getPictures(fd, fileName)
             }
         } catch (_: Exception) {
             null
@@ -120,17 +120,17 @@ object ResourceManager {
 
     fun getLyrics(song: Song): String? {
         return try {
-            useFd(song) {
-                TagLib.getLyrics(it)
+            useFd(song) { fd, fileName ->
+                TagLib.getLyrics(fd, fileName)
             }
         } catch (_: Exception) {
             null
         }
     }
 
-    private inline fun <T> useFd(song: Song, block: (Int) -> T): T? {
+    private inline fun <T> useFd(song: Song, block: (fd: Int, fileName: String) -> T): T? {
         return context.get()!!.contentResolver.openFileDescriptor(song.uri, "r")?.use { pfd ->
-            block(pfd.dup().detachFd())
+            block(pfd.dup().detachFd(), song.fileProperties.fileName)
         }
     }
 }
