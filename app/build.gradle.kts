@@ -86,5 +86,6 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.glide.compose) // https://github.com/bumptech/glide
     implementation(libs.kyant.taglib) // https://github.com/Kyant0/taglib
+    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.3.1") // https://github.com/chrisbanes/haze
     implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
 }
