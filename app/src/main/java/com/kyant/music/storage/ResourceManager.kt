@@ -69,7 +69,13 @@ object ResourceManager {
     }
 
     fun getFrontCover(song: Song): Bitmap? {
-        return getCoverArt(song, FRONT_COVER)
+        return try {
+            val pictures = getPictures(song)
+            val picture = pictures?.find { it.pictureType == FRONT_COVER } ?: pictures?.firstOrNull()
+            picture?.let { BitmapFactory.decodeByteArray(it.data, 0, it.data.size) }
+        } catch (_: Exception) {
+            null
+        }
     }
 
     private fun getCoverArt(song: Song, pictureType: String): Bitmap? {
