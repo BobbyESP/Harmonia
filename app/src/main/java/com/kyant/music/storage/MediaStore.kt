@@ -10,7 +10,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.core.database.getIntOrNull
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import com.bumptech.glide.Glide
@@ -26,7 +25,6 @@ import com.kyant.music.util.mutableSaveableListStateOf
 import kotlin.streams.toList as kotlinToList
 import kotlin.system.measureNanoTime
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.Dispatchers
@@ -131,30 +129,11 @@ object MediaStore {
                 null
             )?.use { cursor ->
                 val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
-
                 val pathColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
                 val mimeTypeColumn = cursor.getColumnIndex(MediaStore.Audio.Media.MIME_TYPE).takeIf { it != -1 }
                 val sizeColumn = cursor.getColumnIndex(MediaStore.Audio.Media.SIZE).takeIf { it != -1 }
-                val dateModifiedColumn =
-                    cursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED).takeIf { it != -1 }
+                val dateModifiedColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED).takeIf { it != -1 }
                 val dateAddedColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DATE_ADDED).takeIf { it != -1 }
-
-                val durationColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION).takeIf { it != -1 }
-                val bitrateColumn = cursor.getColumnIndex(MediaStore.Audio.Media.BITRATE).takeIf { it != -1 }
-
-                val titleColumn = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE).takeIf { it != -1 }
-                val albumColumn = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM).takeIf { it != -1 }
-                val artistColumn = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST).takeIf { it != -1 }
-                val albumArtistColumn =
-                    cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ARTIST).takeIf { it != -1 }
-                val discNumberColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DISC_NUMBER).takeIf { it != -1 }
-                val trackNumberColumn = cursor.getColumnIndex(MediaStore.Audio.Media.TRACK).takeIf { it != -1 }
-                val yearColumn = cursor.getColumnIndex(MediaStore.Audio.Media.YEAR).takeIf { it != -1 }
-                val genreColumn = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    cursor.getColumnIndex(MediaStore.Audio.Media.GENRE).takeIf { it != -1 }
-                } else {
-                    null
-                }
 
                 while (cursor.moveToNext()) {
                     val path = cursor.getStringOrNull(pathColumn) ?: continue
@@ -166,38 +145,6 @@ object MediaStore {
                             size = sizeColumn?.let { cursor.getLongOrNull(it) } ?: 0,
                             dateModified = dateModifiedColumn?.let { cursor.getLongOrNull(it) } ?: 0,
                             dateAdded = dateAddedColumn?.let { cursor.getLongOrNull(it) } ?: 0
-                        ),
-                        audioProperties = AudioProperties(
-                            duration = durationColumn?.let { cursor.getLongOrNull(it) } ?: 0,
-                            bitrate = bitrateColumn?.let { cursor.getIntOrNull(it)?.div(1024) } ?: 0
-                        ),
-                        metadata = AudioMetadata(
-                            properties = mutableMapOf<String, ImmutableList<String>>().apply {
-                                titleColumn?.let { cursor.getStringOrNull(it) }?.let {
-                                    put("TITLE", persistentListOf(it))
-                                }
-                                albumColumn?.let { cursor.getStringOrNull(it) }?.let {
-                                    put("ALBUM", persistentListOf(it))
-                                }
-                                artistColumn?.let { cursor.getStringOrNull(it) }?.let {
-                                    put("ARTIST", persistentListOf(it))
-                                }
-                                albumArtistColumn?.let { cursor.getStringOrNull(it) }?.let {
-                                    put("ALBUMARTIST", persistentListOf(it))
-                                }
-                                discNumberColumn?.let { cursor.getStringOrNull(it) }?.let {
-                                    put("DISCNUMBER", persistentListOf(it))
-                                }
-                                trackNumberColumn?.let { cursor.getStringOrNull(it) }?.let {
-                                    put("TRACKNUMBER", persistentListOf(it))
-                                }
-                                yearColumn?.let { cursor.getIntOrNull(it) }?.let {
-                                    put("DATE", persistentListOf(it.toString()))
-                                }
-                                genreColumn?.let { cursor.getStringOrNull(it) }?.let {
-                                    put("GENRE", persistentListOf(it))
-                                }
-                            }.toImmutableMap()
                         )
                     )
                 }
@@ -218,9 +165,7 @@ object MediaStore {
 
                     ResourceManager.createThumbnail(song)
 
-                    Song(
-                        source = song.source,
-                        fileProperties = song.fileProperties,
+                    song.copy(
                         audioProperties = AudioProperties(
                             duration = tag?.audioProperties?.length?.toLong() ?: 0,
                             bitrate = tag?.audioProperties?.bitrate ?: 0,
