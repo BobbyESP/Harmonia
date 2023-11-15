@@ -10,18 +10,6 @@ A modern and beautiful music player for Android.
 - [media](media/README.md)
 - [ui](ui/README.md)
 
-## Libraries
-
-### Third-party
-
-- [Glide](https://github.com/bumptech/glide)
-- [GridPad](https://github.com/touchlane/gridpad-android)
-
-### From [Kyant](https://github.com/Kyant0)
-
-- [m3color](https://github.com/Kyant0/m3color)
-- [taglib](https://github.com/Kyant0/taglib)
-
 ## Contributing
 
 ### Code style
