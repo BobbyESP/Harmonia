@@ -34,6 +34,7 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                 .padding(24.dp, 24.dp, 16.dp, 8.dp),
             style = Theme.typography.titleLarge
         )
+        PermissionCard()
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Surface(
                 onClick = { push(LibraryScreen.Songs) },
