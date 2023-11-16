@@ -15,6 +15,7 @@ import com.kyant.music.service.LocalPlayer
 import com.kyant.music.service.PlaybackService
 import com.kyant.music.service.StatefulPlayer
 import com.kyant.music.ui.MainScreen
+import com.kyant.music.ui.RequestPermissionDialog
 import com.kyant.ui.RootBackground
 import com.kyant.ui.theme.Theme
 import com.kyant.ui.theme.systemColorScheme
@@ -49,6 +50,7 @@ class MainActivity : ComponentActivity() {
                         MainScreen.Container()
                     }
                 }
+                RequestPermissionDialog()
             }
         }
     }

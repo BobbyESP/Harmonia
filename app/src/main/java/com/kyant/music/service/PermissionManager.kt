@@ -1,7 +1,6 @@
-package com.kyant.music.ui.library
+package com.kyant.music.service
 
 import android.Manifest
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,15 +12,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import com.kyant.music.storage.MediaStore
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Stable
-class PermissionViewModel(private val application: Application) : AndroidViewModel(application) {
+class PermissionManager(private val context: Context) {
 
     val permissions = listOfNotNull(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -43,7 +41,7 @@ class PermissionViewModel(private val application: Application) : AndroidViewMod
 
     var isGranted by mutableStateOf(
         permissions.all {
-            ContextCompat.checkSelfPermission(application, it) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
     )
         private set
@@ -51,15 +49,15 @@ class PermissionViewModel(private val application: Application) : AndroidViewMod
     fun processPermissionResult(granted: Boolean) {
         isGranted = granted
         if (granted) {
-            viewModelScope.launch(Dispatchers.IO) {
-                MediaStore.scan(application)
+            CoroutineScope(Dispatchers.IO).launch {
+                MediaStore.scan(context)
             }
         }
     }
 
-    fun goToSettings(context: Context) {
+    fun launchAppInfo() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package", application.packageName, null)
+            data = Uri.fromParts("package", context.packageName, null)
         }
         context.startActivity(intent)
     }

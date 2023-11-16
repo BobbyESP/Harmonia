@@ -64,7 +64,7 @@ fun Songs() {
             modifier = Modifier
                 .hazeBlur(
                     RoundRect(sortMenuRect, with(density) { 24.dp.toPx() }, with(density) { 24.dp.toPx() }),
-                    backgroundColor = Theme.colorScheme.surfaceContainerHighest.color
+                    backgroundColor = Theme.colorScheme.surfaceContainerHigh.color
                 )
         ) {
             val state = rememberLazyListState()
