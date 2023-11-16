@@ -43,7 +43,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
+fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,15 +58,19 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
         )
         ProvideTextStyle(value = Theme.typography.bodyLarge) {
             CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
+                val colorToken = Theme.colorScheme.surface.copy(
+                    color = Theme.colorScheme.surface.color.copy(alpha = 0.5f)
+                )
                 FlowRow(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Surface(
-                        onClick = { push(LibraryScreen.Songs) },
+                        onClick = { changeTo(LibraryScreen.Songs) },
                         modifier = Modifier.weight(1f),
-                        shape = SmoothRoundedCornerShape(16.dp)
+                        shape = SmoothRoundedCornerShape(16.dp),
+                        colorToken = colorToken
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -77,9 +81,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                         }
                     }
                     Surface(
-                        onClick = { push(LibraryScreen.Albums) },
+                        onClick = { changeTo(LibraryScreen.Albums) },
                         modifier = Modifier.weight(1f),
-                        shape = SmoothRoundedCornerShape(16.dp)
+                        shape = SmoothRoundedCornerShape(16.dp),
+                        colorToken = colorToken
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -90,9 +95,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                         }
                     }
                     Surface(
-                        onClick = { push(LibraryScreen.Artists) },
+                        onClick = { changeTo(LibraryScreen.Artists) },
                         modifier = Modifier.weight(1f),
-                        shape = SmoothRoundedCornerShape(16.dp)
+                        shape = SmoothRoundedCornerShape(16.dp),
+                        colorToken = colorToken
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -103,9 +109,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                         }
                     }
                     Surface(
-                        onClick = { push(LibraryScreen.Genres) },
+                        onClick = { changeTo(LibraryScreen.Genres) },
                         modifier = Modifier.weight(1f),
-                        shape = SmoothRoundedCornerShape(16.dp)
+                        shape = SmoothRoundedCornerShape(16.dp),
+                        colorToken = colorToken
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -116,9 +123,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                         }
                     }
                     Surface(
-                        onClick = { push(LibraryScreen.FolderView) },
+                        onClick = { changeTo(LibraryScreen.FolderView) },
                         modifier = Modifier.weight(1f),
-                        shape = SmoothRoundedCornerShape(16.dp)
+                        shape = SmoothRoundedCornerShape(16.dp),
+                        colorToken = colorToken
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -131,9 +139,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                 }
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Surface(
-                        onClick = { push(LibraryScreen.PlayQueue) },
+                        onClick = { changeTo(LibraryScreen.PlayQueue) },
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        shape = SmoothRoundedCornerShape(8.dp)
+                        shape = SmoothRoundedCornerShape(8.dp),
+                        colorToken = colorToken
                     ) {
                         Row(
                             modifier = Modifier
@@ -150,9 +159,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                         }
                     }
                     Surface(
-                        onClick = { push(LibraryScreen.Favorites) },
+                        onClick = { changeTo(LibraryScreen.Favorites) },
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        shape = SmoothRoundedCornerShape(8.dp)
+                        shape = SmoothRoundedCornerShape(8.dp),
+                        colorToken = colorToken
                     ) {
                         Row(
                             modifier = Modifier
@@ -169,9 +179,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                         }
                     }
                     Surface(
-                        onClick = { push(LibraryScreen.Playlists) },
+                        onClick = { changeTo(LibraryScreen.Playlists) },
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        shape = SmoothRoundedCornerShape(8.dp)
+                        shape = SmoothRoundedCornerShape(8.dp),
+                        colorToken = colorToken
                     ) {
                         Row(
                             modifier = Modifier
@@ -194,7 +205,8 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                     Surface(
                         onClick = { scope.launch(Dispatchers.IO) { MediaStore.scan(context) } },
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        shape = SmoothRoundedCornerShape(8.dp)
+                        shape = SmoothRoundedCornerShape(8.dp),
+                        colorToken = colorToken
                     ) {
                         Row(
                             modifier = Modifier
@@ -211,9 +223,10 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
                         }
                     }
                     Surface(
-                        onClick = { mainNavigator.push(MainScreen.Settings) },
+                        onClick = { navigator.push(MainScreen.Settings) },
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        shape = SmoothRoundedCornerShape(8.dp)
+                        shape = SmoothRoundedCornerShape(8.dp),
+                        colorToken = colorToken
                     ) {
                         Row(
                             modifier = Modifier
