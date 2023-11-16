@@ -12,8 +12,8 @@ import androidx.compose.runtime.getValue
 @Stable
 class FractionAnimatable(
     initialValue: Float,
-    private val scale: Float = 10000f,
-    visibilityThreshold: Float = 0.1f
+    private val scale: Float = 100f,
+    visibilityThreshold: Float = 1f
 ) {
     private val percentage = Animatable(initialValue * scale, visibilityThreshold)
 
