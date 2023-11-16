@@ -29,6 +29,7 @@ import com.kyant.music.ui.MainScreen
 import com.kyant.music.util.hazeBlur
 import com.kyant.ui.navigation.LocalNavigator
 import com.kyant.ui.navigation.Navigator
+import com.kyant.ui.navigation.OnBackPressed
 import com.kyant.ui.theme.Theme
 
 enum class LibraryScreen {
@@ -101,6 +102,9 @@ enum class LibraryScreen {
                         }
                     }
                     controller.Library(navigator = navigator)
+                }
+                OnBackPressed(enabled = { controller.isMenuOpen }) {
+                    controller.isMenuOpen = false
                 }
             }
         }
