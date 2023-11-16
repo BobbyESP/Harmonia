@@ -2,11 +2,13 @@ package com.kyant.music.ui.library
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.QueueMusic
@@ -30,6 +32,7 @@ import com.kyant.music.storage.MediaStore
 import com.kyant.music.ui.MainScreen
 import com.kyant.ui.Icon
 import com.kyant.ui.LocalIconSize
+import com.kyant.ui.ProvideTextStyle
 import com.kyant.ui.Surface
 import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalScroll
@@ -53,202 +56,178 @@ fun Navigator<LibraryScreen>.Library(mainNavigator: Navigator<MainScreen>) {
             modifier = Modifier.padding(24.dp, 24.dp, 16.dp, 8.dp),
             style = Theme.typography.titleLarge
         )
-        CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Surface(
-                    onClick = { push(LibraryScreen.Songs) },
+        ProvideTextStyle(value = Theme.typography.bodyLarge) {
+            CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
+                FlowRow(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                    Surface(
+                        onClick = { push(LibraryScreen.Songs) },
+                        modifier = Modifier.weight(1f),
+                        shape = SmoothRoundedCornerShape(16.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.MusicNote)
-                        Text(
-                            text = "Songs",
-                            style = Theme.typography.bodyLarge
-                        )
+                        Column(
+                            modifier = Modifier.width(160.dp).padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.MusicNote)
+                            Text(text = "Songs")
+                        }
+                    }
+                    Surface(
+                        onClick = { push(LibraryScreen.Albums) },
+                        modifier = Modifier.weight(1f),
+                        shape = SmoothRoundedCornerShape(16.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.width(160.dp).padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Album)
+                            Text(text = "Albums")
+                        }
+                    }
+                    Surface(
+                        onClick = { push(LibraryScreen.Artists) },
+                        modifier = Modifier.weight(1f),
+                        shape = SmoothRoundedCornerShape(16.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.width(160.dp).padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.PeopleAlt)
+                            Text(text = "Artists")
+                        }
+                    }
+                    Surface(
+                        onClick = { push(LibraryScreen.Genres) },
+                        modifier = Modifier.weight(1f),
+                        shape = SmoothRoundedCornerShape(16.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.width(160.dp).padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Category)
+                            Text(text = "Genres")
+                        }
+                    }
+                    Surface(
+                        onClick = { push(LibraryScreen.FolderView) },
+                        modifier = Modifier.weight(1f),
+                        shape = SmoothRoundedCornerShape(16.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.width(160.dp).padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.FolderOpen)
+                            Text(text = "Folder view")
+                        }
                     }
                 }
-                Surface(
-                    onClick = { push(LibraryScreen.Albums) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Surface(
+                        onClick = { push(LibraryScreen.PlayQueue) },
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        shape = SmoothRoundedCornerShape(8.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.Album)
-                        Text(
-                            text = "Albums",
-                            style = Theme.typography.bodyLarge
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp, 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(imageVector = Icons.AutoMirrored.Default.QueueMusic)
+                            Text(
+                                text = "Play queue",
+                                style = Theme.typography.bodyLarge
+                            )
+                        }
+                    }
+                    Surface(
+                        onClick = { push(LibraryScreen.Favorites) },
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        shape = SmoothRoundedCornerShape(8.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp, 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(imageVector = Icons.Default.Stars)
+                            Text(
+                                text = "Favorites",
+                                style = Theme.typography.bodyLarge
+                            )
+                        }
+                    }
+                    Surface(
+                        onClick = { push(LibraryScreen.Playlists) },
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        shape = SmoothRoundedCornerShape(8.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp, 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(imageVector = Icons.Default.CollectionsBookmark)
+                            Text(
+                                text = "Playlists",
+                                style = Theme.typography.bodyLarge
+                            )
+                        }
                     }
                 }
-                Surface(
-                    onClick = { push(LibraryScreen.Artists) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    val context = LocalContext.current
+                    val scope = rememberCoroutineScope()
+                    Surface(
+                        onClick = { scope.launch(Dispatchers.IO) { MediaStore.scan(context) } },
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        shape = SmoothRoundedCornerShape(8.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.PeopleAlt)
-                        Text(
-                            text = "Artists",
-                            style = Theme.typography.bodyLarge
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp, 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(imageVector = Icons.Default.Refresh)
+                            Text(
+                                text = "Refresh",
+                                style = Theme.typography.bodyLarge
+                            )
+                        }
                     }
-                }
-                Surface(
-                    onClick = { push(LibraryScreen.Genres) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                    Surface(
+                        onClick = { mainNavigator.push(MainScreen.Settings) },
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        shape = SmoothRoundedCornerShape(8.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.Category)
-                        Text(
-                            text = "Genres",
-                            style = Theme.typography.bodyLarge
-                        )
-                    }
-                }
-                Surface(
-                    onClick = { push(LibraryScreen.FolderView) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.Default.FolderOpen)
-                        Text(
-                            text = "Folder view",
-                            style = Theme.typography.bodyLarge
-                        )
-                    }
-                }
-            }
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Surface(
-                    onClick = { push(LibraryScreen.PlayQueue) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.AutoMirrored.Default.QueueMusic)
-                        Text(
-                            text = "Play queue",
-                            style = Theme.typography.bodyLarge
-                        )
-                    }
-                }
-                Surface(
-                    onClick = { push(LibraryScreen.Favorites) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.Default.Stars)
-                        Text(
-                            text = "Favorites",
-                            style = Theme.typography.bodyLarge
-                        )
-                    }
-                }
-                Surface(
-                    onClick = { push(LibraryScreen.Playlists) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.Default.CollectionsBookmark)
-                        Text(
-                            text = "Playlists",
-                            style = Theme.typography.bodyLarge
-                        )
-                    }
-                }
-            }
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                val context = LocalContext.current
-                val scope = rememberCoroutineScope()
-                Surface(
-                    onClick = { scope.launch(Dispatchers.IO) { MediaStore.scan(context) } },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.Default.Refresh)
-                        Text(
-                            text = "Refresh",
-                            style = Theme.typography.bodyLarge
-                        )
-                    }
-                }
-                Surface(
-                    onClick = { mainNavigator.push(MainScreen.Settings) },
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    shape = SmoothRoundedCornerShape(8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp, 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(imageVector = Icons.Default.Settings)
-                        Text(
-                            text = "Settings",
-                            style = Theme.typography.bodyLarge
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp, 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(imageVector = Icons.Default.Settings)
+                            Text(
+                                text = "Settings",
+                                style = Theme.typography.bodyLarge
+                            )
+                        }
                     }
                 }
             }
