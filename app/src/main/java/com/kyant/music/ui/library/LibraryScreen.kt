@@ -14,6 +14,10 @@ sealed class LibraryScreen(isHome: Boolean = false) : Screen(isHome) {
     data object Albums : LibraryScreen()
     data object Artists : LibraryScreen()
     data object Genres : LibraryScreen()
+    data object FolderView : LibraryScreen()
+    data object PlayQueue : LibraryScreen()
+    data object Favorites : LibraryScreen()
+    data object Playlists : LibraryScreen()
 
     companion object {
         @Composable
