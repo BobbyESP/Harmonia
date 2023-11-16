@@ -88,4 +88,5 @@ dependencies {
     implementation(libs.kyant.taglib) // https://github.com/Kyant0/taglib
     implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.3.1") // https://github.com/chrisbanes/haze
     implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
+    implementation("com.github.GIGAMOLE:ComposeFadingEdges:1.0.4") // https://github.com/GIGAMOLE/ComposeFadingEdges
 }
