@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.LocalContentColor
@@ -32,7 +31,7 @@ fun IconButton(
     shape: Shape = CircleShape,
     size: Dp = 40.dp,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -51,8 +50,9 @@ fun IconButton(
             ),
         contentAlignment = Alignment.Center
     ) {
-        CompositionLocalProvider(LocalContentColor provides colorToken.contentColor) {
-            content()
-        }
+        CompositionLocalProvider(
+            LocalContentColor provides colorToken.contentColor,
+            content = content
+        )
     }
 }
