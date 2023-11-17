@@ -66,8 +66,8 @@ enum class LibraryScreen {
             Box(
                 modifier = Modifier
                     .hazeBlur(
-                        RoundRect(sortMenuRect, with(density) { 24.dp.toPx() }, with(density) { 24.dp.toPx() }),
-                        backgroundColor = Theme.colorScheme.surfaceContainerHigh.color
+                        RoundRect(sortMenuRect, with(density) { 32.dp.toPx() }, with(density) { 32.dp.toPx() }),
+                        backgroundColor = Theme.colorScheme.surfaceContainer.color
                     )
             ) {
                 with(controller) {
