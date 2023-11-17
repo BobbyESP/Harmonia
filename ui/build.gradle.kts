@@ -32,7 +32,6 @@ android {
         languageVersion = "2.0"
         freeCompilerArgs += arrayOf(
             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi," +
-                "kotlinx.serialization.ExperimentalSerializationApi," +
                 "androidx.compose.animation.ExperimentalAnimationApi," +
                 "androidx.compose.animation.core.ExperimentalTransitionApi," +
                 "androidx.compose.foundation.ExperimentalFoundationApi," +
