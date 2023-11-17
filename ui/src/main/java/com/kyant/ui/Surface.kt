@@ -56,7 +56,10 @@ import com.kyant.ui.util.thenIfNotNull
 @NonRestartableComposable
 fun RootBackground(
     modifier: Modifier = Modifier,
-    colorToken: ColorToken = Theme.colorScheme.background,
+    colorToken: ColorToken = ColorToken(
+        if (Theme.colorScheme.darkTheme) Color.Black else Color.White,
+        if (Theme.colorScheme.darkTheme) Color.White else Color.Black
+    ),
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(LocalColorToken provides colorToken) {
