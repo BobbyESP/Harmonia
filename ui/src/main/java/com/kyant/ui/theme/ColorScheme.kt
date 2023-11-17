@@ -8,8 +8,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
-import com.kyant.m3color.dynamiccolor.ContrastCurve
-import com.kyant.m3color.dynamiccolor.DynamicColor
 import com.kyant.m3color.dynamiccolor.MaterialDynamicColors
 import com.kyant.m3color.hct.Hct
 import com.kyant.m3color.scheme.SchemeContent
@@ -106,39 +104,7 @@ fun dynamicColorScheme(
     }
     val monochromeScheme = SchemeMonochrome(hct, isDark, contrastLevel)
 
-    val surface = Color(
-        DynamicColor(
-            "surface",
-            { it.neutralPalette },
-            { if (it.isDark) 8.0 else 100.0 },
-            true,
-            null,
-            null,
-            null,
-            null
-        ).getArgb(monochromeScheme)
-    )
     val onSurface = Color(colors.onSurface().getArgb(monochromeScheme))
-    val background = DynamicColor(
-        "background",
-        { it.neutralPalette },
-        { if (it.isDark) 0.0 else 96.0 },
-        true,
-        null,
-        null,
-        null,
-        null
-    )
-    val onBackground = DynamicColor(
-        "on_background",
-        { it.neutralPalette },
-        { if (it.isDark) 90.0 else 10.0 },
-        false,
-        { background },
-        null,
-        ContrastCurve(3.0, 3.0, 4.5, 7.0),
-        null
-    )
 
     return ColorScheme(
         scrim = ColorToken.Scrim(
@@ -200,7 +166,7 @@ fun dynamicColorScheme(
         ),
 
         surface = ColorToken.Surface(
-            surface,
+            Color(colors.surface().getArgb(scheme)),
             onSurface
         ),
         surfaceVariant = ColorToken.SurfaceVariant(
@@ -244,8 +210,8 @@ fun dynamicColorScheme(
         ),
 
         background = ColorToken.Background(
-            Color(background.getArgb(monochromeScheme)),
-            Color(onBackground.getArgb(monochromeScheme))
+            Color(colors.background().getArgb(scheme)),
+            Color(colors.onBackground().getArgb(scheme))
         ),
 
         outline = ColorToken.Outline(
