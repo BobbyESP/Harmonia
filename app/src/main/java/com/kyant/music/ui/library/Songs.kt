@@ -27,7 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kyant.music.storage.MediaStore
 import com.kyant.music.util.AsyncImage
-import com.kyant.ui.HorizontalDivider
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
 import com.kyant.ui.Text
@@ -101,7 +100,6 @@ fun LibraryScreen.Companion.Controller.Songs() {
                         )
                     }
                 }
-                HorizontalDivider(modifier = Modifier.padding(start = 76.dp))
             }
         }
     }
