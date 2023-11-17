@@ -8,6 +8,7 @@ import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.kyant.ui.theme.LocalColorToken
 import com.kyant.ui.theme.Theme
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.haze
@@ -16,7 +17,7 @@ import dev.chrisbanes.haze.haze
 @Composable
 fun Modifier.hazeBlur(
     vararg area: Rect,
-    backgroundColor: Color = Theme.colorScheme.background.color,
+    backgroundColor: Color = LocalColorToken.current.color,
     tint: Color = backgroundColor.copy(alpha = if (Theme.colorScheme.darkTheme) 0.5f else 0.8f),
     blurRadius: Dp = 24.dp,
     noiseFactor: Float = HazeDefaults.noiseFactor
@@ -32,7 +33,7 @@ fun Modifier.hazeBlur(
 @Composable
 fun Modifier.hazeBlur(
     vararg area: RoundRect,
-    backgroundColor: Color = Theme.colorScheme.background.color,
+    backgroundColor: Color = LocalColorToken.current.color,
     tint: Color = backgroundColor.copy(alpha = if (Theme.colorScheme.darkTheme) 0.5f else 0.8f),
     blurRadius: Dp = 24.dp,
     noiseFactor: Float = HazeDefaults.noiseFactor
