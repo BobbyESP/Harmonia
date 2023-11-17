@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -48,11 +49,12 @@ fun RequestPermissionDialog() {
             .fillMaxSize()
             .pointerInput(Unit) { detectTapGestures() }
             .systemBarsPadding()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 32.dp),
         contentAlignment = Alignment.Center
     ) {
         Surface(
             modifier = Modifier
+                .widthIn(max = 360.dp)
                 .onGloballyPositioned { dialogRect = it.boundsInWindow() },
             shape = SmoothRoundedCornerShape(32.dp),
             colorToken = Theme.colorScheme.surfaceContainer.copy(

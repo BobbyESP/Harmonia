@@ -34,7 +34,6 @@ import com.kyant.music.util.hazeBlur
 import com.kyant.ui.RootBackground
 import com.kyant.ui.theme.Theme
 import com.kyant.ui.theme.systemColorScheme
-import com.kyant.ui.util.thenIf
 
 var dialogRect by mutableStateOf(Rect.Zero)
 
@@ -70,12 +69,10 @@ class MainActivity : ComponentActivity() {
                 RootBackground(
                     modifier = Modifier
                         .fillMaxSize()
-                        .thenIf(isDialogVisible) {
-                            hazeBlur(
-                                RoundRect(dialogRect, with(density) { 32.dp.toPx() }, with(density) { 32.dp.toPx() }),
-                                backgroundColor = if (Theme.colorScheme.darkTheme) Color.Black else Color.White
-                            )
-                        }
+                        .hazeBlur(
+                            RoundRect(dialogRect, with(density) { 32.dp.toPx() }, with(density) { 32.dp.toPx() }),
+                            backgroundColor = if (Theme.colorScheme.darkTheme) Color.Black else Color.White
+                        )
                         .drawWithContent {
                             drawContent()
                             drawRect(Color.Black, alpha = dimAlpha)
