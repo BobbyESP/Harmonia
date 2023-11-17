@@ -49,10 +49,11 @@ android {
 }
 
 dependencies {
-    api(libs.core.ktx)
-    api(libs.activity.compose)
-    api(libs.ui)
-    api(libs.ui.graphics)
-    api(libs.material3)
-    api(libs.kyant.m3color) // https://github.com/Kyant0/m3color
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    api(libs.compose.material3)
+    api(libs.kyant.m3color)
 }

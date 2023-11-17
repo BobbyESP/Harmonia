@@ -33,6 +33,6 @@ android {
 
 dependencies {
     implementation(libs.kotlinx.coroutines)
-    implementation(libs.core.ktx)
-    api(libs.media)
+    implementation(libs.androidx.core)
+    api(libs.androidx.media)
 }

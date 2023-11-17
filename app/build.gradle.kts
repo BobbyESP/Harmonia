@@ -77,16 +77,17 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.protobuf)
-    implementation(libs.core.ktx)
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.material.icons.extended)
-    implementation(libs.activity.compose)
-    implementation(libs.lifecycle.runtime.compose)
-    implementation(libs.lifecycle.viewmodel.compose)
-    implementation(libs.glide.compose) // https://github.com/bumptech/glide
-    implementation(libs.kyant.taglib) // https://github.com/Kyant0/taglib
-    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.3.1") // https://github.com/chrisbanes/haze
-    implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
+    implementation(libs.androidx.core)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.material.icons.extended)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.kyant.taglib)
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01") // https://github.com/bumptech/glide
     implementation("com.github.GIGAMOLE:ComposeFadingEdges:1.0.4") // https://github.com/GIGAMOLE/ComposeFadingEdges
+    implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
+    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.3.1") // https://github.com/chrisbanes/haze
 }
