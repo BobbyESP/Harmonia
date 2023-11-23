@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.color.LocalColorSet
-import com.kyant.ui.theme.color.applyEmphasis
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.color.LocalColorSet
+import com.kyant.ui.style.color.applyEmphasis
+import com.kyant.ui.style.colorScheme
 
 @Composable
 fun HorizontalDivider(

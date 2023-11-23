@@ -33,7 +33,7 @@ import com.kyant.music.ui.RequestPermissionDialog
 import com.kyant.music.ui.theme.DefaultTheme
 import com.kyant.music.util.hazeBlur
 import com.kyant.ui.RootBackground
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.colorScheme
 
 var dialogRect by mutableStateOf(Rect.Zero)
 

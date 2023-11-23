@@ -1,4 +1,4 @@
-package com.kyant.ui.theme.color
+package com.kyant.ui.style.color
 
 import androidx.annotation.FloatRange
 import androidx.compose.runtime.Immutable

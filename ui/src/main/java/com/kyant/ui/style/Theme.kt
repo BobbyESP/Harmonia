@@ -1,4 +1,4 @@
-package com.kyant.ui.theme
+package com.kyant.ui.style
 
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -13,11 +13,11 @@ import com.kyant.ui.ProvideTextStyle
 import com.kyant.ui.ripple.LocalRippleTheme
 import com.kyant.ui.ripple.RippleTheme
 import com.kyant.ui.ripple.rememberRipple
-import com.kyant.ui.theme.color.ColorScheme
-import com.kyant.ui.theme.color.LocalColorScheme
-import com.kyant.ui.theme.color.LocalColorSet
-import com.kyant.ui.theme.typo.LocalTypography
-import com.kyant.ui.theme.typo.Typography
+import com.kyant.ui.style.color.ColorScheme
+import com.kyant.ui.style.color.LocalColorScheme
+import com.kyant.ui.style.color.LocalColorSet
+import com.kyant.ui.style.typo.LocalTypography
+import com.kyant.ui.style.typo.Typography
 
 val colorScheme: ColorScheme
     @Composable
@@ -31,8 +31,8 @@ val typography: Typography
 
 @Composable
 fun Theme(
-    colorScheme: ColorScheme = com.kyant.ui.theme.colorScheme,
-    typography: Typography = com.kyant.ui.theme.typography,
+    colorScheme: ColorScheme = com.kyant.ui.style.colorScheme,
+    typography: Typography = com.kyant.ui.style.typography,
     content: @Composable () -> Unit
 ) {
     val rippleIndication = rememberRipple(color = LocalColorSet.current.onColor)

@@ -47,9 +47,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsControllerCompat
 import com.kyant.ui.ripple.rememberRipple
-import com.kyant.ui.theme.color.ColorSet
-import com.kyant.ui.theme.color.LocalColorSet
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.color.ColorSet
+import com.kyant.ui.style.color.LocalColorSet
+import com.kyant.ui.style.colorScheme
 import com.kyant.ui.util.thenIfNotNull
 
 @Composable

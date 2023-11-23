@@ -38,8 +38,8 @@ import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalScroll
 import com.kyant.ui.graphics.SmoothRoundedCornerShape
 import com.kyant.ui.navigation.Navigator
-import com.kyant.ui.theme.colorScheme
-import com.kyant.ui.theme.typography
+import com.kyant.ui.style.colorScheme
+import com.kyant.ui.style.typography
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

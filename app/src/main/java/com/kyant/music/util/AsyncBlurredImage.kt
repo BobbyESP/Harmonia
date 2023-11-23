@@ -15,7 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.core.graphics.scale
 import androidx.core.graphics.set
 import com.kyant.m3color.hct.Hct
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.colorScheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

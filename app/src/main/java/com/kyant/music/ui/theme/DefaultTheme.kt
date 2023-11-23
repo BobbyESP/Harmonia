@@ -4,10 +4,10 @@ import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
-import com.kyant.ui.theme.Theme
-import com.kyant.ui.theme.color.ColorScheme
-import com.kyant.ui.theme.color.ColorTheme
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.Theme
+import com.kyant.ui.style.color.ColorScheme
+import com.kyant.ui.style.color.ColorTheme
+import com.kyant.ui.style.colorScheme
 
 @Composable
 fun DefaultTheme(content: @Composable () -> Unit) {

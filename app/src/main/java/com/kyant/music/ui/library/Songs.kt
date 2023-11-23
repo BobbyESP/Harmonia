@@ -64,8 +64,8 @@ import com.kyant.ui.Surface
 import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalOverscroll
 import com.kyant.ui.graphics.SmoothRoundedCornerShape
-import com.kyant.ui.theme.colorScheme
-import com.kyant.ui.theme.typography
+import com.kyant.ui.style.colorScheme
+import com.kyant.ui.style.typography
 import com.kyant.ui.util.thenIf
 
 @Composable

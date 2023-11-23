@@ -7,9 +7,9 @@ import androidx.compose.ui.platform.LocalContext
 import com.kyant.music.data.Album
 import com.kyant.music.data.song.Song
 import com.kyant.music.util.toBitmap
-import com.kyant.ui.theme.Theme
-import com.kyant.ui.theme.color.ColorScheme
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.Theme
+import com.kyant.ui.style.color.ColorScheme
+import com.kyant.ui.style.colorScheme
 import com.kyant.ui.util.extractColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

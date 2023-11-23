@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalScroll
-import com.kyant.ui.theme.typography
+import com.kyant.ui.style.typography
 
 @Composable
 fun Settings() {

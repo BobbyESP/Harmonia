@@ -39,9 +39,9 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.color.LocalColorSet
-import com.kyant.ui.theme.color.LocalEmphasis
-import com.kyant.ui.theme.color.applyEmphasis
+import com.kyant.ui.style.color.LocalColorSet
+import com.kyant.ui.style.color.LocalEmphasis
+import com.kyant.ui.style.color.applyEmphasis
 import com.kyant.ui.util.thenIfNotNull
 
 /**

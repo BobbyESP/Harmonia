@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.colorScheme
 import com.kyant.ui.util.thenIf
 
 @Composable

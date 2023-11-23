@@ -19,8 +19,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.kyant.ui.ripple.rememberRipple
-import com.kyant.ui.theme.color.ColorSet
-import com.kyant.ui.theme.color.LocalColorSet
+import com.kyant.ui.style.color.ColorSet
+import com.kyant.ui.style.color.LocalColorSet
 
 @Composable
 fun IconButton(

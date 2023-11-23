@@ -14,10 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.color.ColorSet
-import com.kyant.ui.theme.color.LocalColorSet
-import com.kyant.ui.theme.colorScheme
-import com.kyant.ui.theme.typography
+import com.kyant.ui.style.color.ColorSet
+import com.kyant.ui.style.color.LocalColorSet
+import com.kyant.ui.style.colorScheme
+import com.kyant.ui.style.typography
 
 @Composable
 fun Button(

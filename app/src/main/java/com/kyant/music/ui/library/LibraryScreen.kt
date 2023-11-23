@@ -30,7 +30,7 @@ import com.kyant.music.util.hazeBlur
 import com.kyant.ui.navigation.LocalNavigator
 import com.kyant.ui.navigation.Navigator
 import com.kyant.ui.navigation.OnBackPressed
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.colorScheme
 
 enum class LibraryScreen {
     Songs,

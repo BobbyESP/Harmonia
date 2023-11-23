@@ -8,8 +8,8 @@ import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.color.LocalColorSet
-import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.style.color.LocalColorSet
+import com.kyant.ui.style.colorScheme
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.haze
 
