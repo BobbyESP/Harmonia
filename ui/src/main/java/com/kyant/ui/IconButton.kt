@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
@@ -26,18 +25,18 @@ fun IconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colorToken: ColorSet = LocalColorSet.current.copy(color = Color.Transparent),
+    colorSet: ColorSet = LocalColorSet.current,
     shape: Shape = CircleShape,
     size: Dp = 40.dp,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorSet provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorSet) {
         Box(
             modifier = modifier
                 .size(size)
                 .clip(shape)
-                .background(colorToken.color)
+                .background(colorSet.color)
                 .clickable(
                     onClick = onClick,
                     enabled = enabled,

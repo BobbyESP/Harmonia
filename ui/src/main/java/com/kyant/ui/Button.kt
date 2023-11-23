@@ -24,7 +24,7 @@ fun Button(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colorToken: ColorSet = colorScheme.primary,
+    colorSet: ColorSet = colorScheme.primary,
     disabledColorSet: ColorSet = ColorSet(
         colorScheme.surface.onColor.copy(alpha = 0.12f),
         colorScheme.surface.onColor.copy(alpha = 0.38f),
@@ -35,7 +35,7 @@ fun Button(
     content: @Composable RowScope.() -> Unit
 ) {
     val buttonColorSet = if (enabled) {
-        colorToken
+        colorSet
     } else {
         disabledColorSet
     }
@@ -45,7 +45,7 @@ fun Button(
         modifier = modifier,
         enabled = enabled,
         shape = CircleShape,
-        colorToken = buttonColorSet,
+        colorSet = buttonColorSet,
         border = border,
         interactionSource = interactionSource
     ) {
@@ -67,14 +67,14 @@ fun FilledTonalButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colorToken: ColorSet = colorScheme.primaryContainer,
+    colorSet: ColorSet = colorScheme.primaryContainer,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) = Button(
     onClick = onClick,
     modifier = modifier,
     enabled = enabled,
-    colorToken = colorToken,
+    colorSet = colorSet,
     interactionSource = interactionSource,
     content = content
 )
@@ -91,7 +91,7 @@ fun TextButton(
     onClick = onClick,
     modifier = modifier,
     enabled = enabled,
-    colorToken = ColorSet(Color.Transparent, contentColor),
+    colorSet = ColorSet(Color.Transparent, contentColor),
     disabledColorSet = ColorSet(
         Color.Transparent,
         colorScheme.surface.onColor.copy(alpha = 0.12f),
@@ -114,7 +114,7 @@ fun OutlinedButton(
     onClick = onClick,
     modifier = modifier,
     enabled = enabled,
-    colorToken = ColorSet(Color.Transparent, color),
+    colorSet = ColorSet(Color.Transparent, color),
     disabledColorSet = ColorSet(
         Color.Transparent,
         colorScheme.surface.onColor.copy(alpha = 0.12f),

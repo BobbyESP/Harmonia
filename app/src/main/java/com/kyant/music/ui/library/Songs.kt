@@ -243,7 +243,7 @@ fun LibraryScreen.Companion.Controller.Songs() {
             ) {
                 ProvideTextStyle(value = typography.bodyMedium) {
                     CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
-                        val colorToken = colorScheme.surface.copy(
+                        val colorSet = colorScheme.surface.copy(
                             color = Color.Transparent
                         )
                         Surface(
@@ -253,7 +253,7 @@ fun LibraryScreen.Companion.Controller.Songs() {
                             },
                             modifier = Modifier.weight(1f),
                             shape = SmoothRoundedCornerShape(16.dp),
-                            colorToken = colorToken
+                            colorSet = colorSet
                         ) {
                             Column(
                                 modifier = Modifier.padding(16.dp, 12.dp),
@@ -270,7 +270,7 @@ fun LibraryScreen.Companion.Controller.Songs() {
                             },
                             modifier = Modifier.weight(1f),
                             shape = SmoothRoundedCornerShape(16.dp),
-                            colorToken = colorToken
+                            colorSet = colorSet
                         ) {
                             Column(
                                 modifier = Modifier.padding(16.dp, 12.dp),

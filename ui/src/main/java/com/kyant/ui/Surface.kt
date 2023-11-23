@@ -56,16 +56,16 @@ import com.kyant.ui.util.thenIfNotNull
 @NonRestartableComposable
 fun RootBackground(
     modifier: Modifier = Modifier,
-    colorToken: ColorSet = ColorSet(
+    colorSet: ColorSet = ColorSet(
         if (colorScheme.theme.isDark) Color.Black else Color.White,
         if (colorScheme.theme.isDark) Color.White else Color.Black
     ),
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorSet provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorSet) {
         val view = LocalView.current
         val activity = view.context as Activity
-        val background = colorToken.color
+        val background = colorSet.color
         val isDark = colorScheme.theme.isDark
 
         LaunchedEffect(background) {
@@ -98,7 +98,7 @@ fun RootBackground(
 fun Surface(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
-    colorToken: ColorSet = colorScheme.surface,
+    colorSet: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -106,12 +106,12 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorSet provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorSet) {
         Box(
             modifier = modifier
                 .surface(
                     shape = shape,
-                    backgroundColor = colorToken.color,
+                    backgroundColor = colorSet.color,
                     border = border,
                     elevation = elevation,
                     shadowAlpha = shadowAlpha
@@ -135,7 +135,7 @@ fun Surface(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: Shape = RectangleShape,
-    colorToken: ColorSet = colorScheme.surface,
+    colorSet: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -145,13 +145,13 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorSet provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorSet) {
         Box(
             modifier = modifier
                 .minimumInteractiveComponentSize()
                 .surface(
                     shape = shape,
-                    backgroundColor = colorToken.color,
+                    backgroundColor = colorSet.color,
                     border = border,
                     elevation = elevation,
                     shadowAlpha = shadowAlpha
@@ -178,7 +178,7 @@ fun Surface(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: Shape = RectangleShape,
-    colorToken: ColorSet = colorScheme.surface,
+    colorSet: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -188,13 +188,13 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorSet provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorSet) {
         Box(
             modifier = modifier
                 .minimumInteractiveComponentSize()
                 .surface(
                     shape = shape,
-                    backgroundColor = colorToken.color,
+                    backgroundColor = colorSet.color,
                     border = border,
                     elevation = elevation,
                     shadowAlpha = shadowAlpha
@@ -222,7 +222,7 @@ fun Surface(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: Shape = RectangleShape,
-    colorToken: ColorSet = colorScheme.surface,
+    colorSet: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -232,13 +232,13 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorSet provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorSet) {
         Box(
             modifier = modifier
                 .minimumInteractiveComponentSize()
                 .surface(
                     shape = shape,
-                    backgroundColor = colorToken.color,
+                    backgroundColor = colorSet.color,
                     border = border,
                     elevation = elevation,
                     shadowAlpha = shadowAlpha

@@ -117,7 +117,7 @@ private inline fun BaseDialog(
                 .thenIf(consumeSystemWindowInsets) { systemBarsPadding() }
                 .padding(dialogPadding)
                 .softShadow(8.dp, RoundedCornerShape(24.dp)),
-            colorToken = colorScheme.surfaceContainerLowest
+            colorSet = colorScheme.surfaceContainerLowest
         ) {
             content()
         }

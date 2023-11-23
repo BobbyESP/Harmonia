@@ -58,7 +58,7 @@ fun RequestPermissionDialog() {
                 .widthIn(max = 360.dp)
                 .onGloballyPositioned { dialogRect = it.boundsInWindow() },
             shape = SmoothRoundedCornerShape(32.dp),
-            colorToken = colorScheme.surfaceContainer.copy(
+            colorSet = colorScheme.surfaceContainer.copy(
                 color = colorScheme.surfaceContainer.color.copy(alpha = 0f)
             )
         ) {

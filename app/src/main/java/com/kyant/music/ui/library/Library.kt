@@ -59,7 +59,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
         )
         ProvideTextStyle(value = typography.bodyLarge) {
             CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
-                val colorToken = colorScheme.surface.copyAlpha(colorAlpha = 0.5f)
+                val colorSet = colorScheme.surface.copyAlpha(colorAlpha = 0.5f)
                 FlowRow(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -69,7 +69,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.Songs) },
                         modifier = Modifier.weight(1f),
                         shape = SmoothRoundedCornerShape(16.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -83,7 +83,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.Albums) },
                         modifier = Modifier.weight(1f),
                         shape = SmoothRoundedCornerShape(16.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -97,7 +97,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.Artists) },
                         modifier = Modifier.weight(1f),
                         shape = SmoothRoundedCornerShape(16.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -111,7 +111,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.Genres) },
                         modifier = Modifier.weight(1f),
                         shape = SmoothRoundedCornerShape(16.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -125,7 +125,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.FolderView) },
                         modifier = Modifier.weight(1f),
                         shape = SmoothRoundedCornerShape(16.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Column(
                             modifier = Modifier.width(160.dp).padding(16.dp),
@@ -141,7 +141,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.PlayQueue) },
                         modifier = Modifier.padding(horizontal = 16.dp),
                         shape = SmoothRoundedCornerShape(8.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Row(
                             modifier = Modifier
@@ -161,7 +161,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.Favorites) },
                         modifier = Modifier.padding(horizontal = 16.dp),
                         shape = SmoothRoundedCornerShape(8.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Row(
                             modifier = Modifier
@@ -181,7 +181,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { changeTo(LibraryScreen.Playlists) },
                         modifier = Modifier.padding(horizontal = 16.dp),
                         shape = SmoothRoundedCornerShape(8.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Row(
                             modifier = Modifier
@@ -205,7 +205,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { scope.launch(Dispatchers.IO) { MediaStore.scan(context) } },
                         modifier = Modifier.padding(horizontal = 16.dp),
                         shape = SmoothRoundedCornerShape(8.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Row(
                             modifier = Modifier
@@ -225,7 +225,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                         onClick = { navigator.push(MainScreen.Settings) },
                         modifier = Modifier.padding(horizontal = 16.dp),
                         shape = SmoothRoundedCornerShape(8.dp),
-                        colorToken = colorToken
+                        colorSet = colorSet
                     ) {
                         Row(
                             modifier = Modifier
