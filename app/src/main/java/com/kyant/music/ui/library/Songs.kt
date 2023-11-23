@@ -54,6 +54,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kyant.music.storage.MediaStore
+import com.kyant.music.ui.theme.isDark
 import com.kyant.music.util.AsyncImage
 import com.kyant.music.util.hazeBlur
 import com.kyant.ui.Icon
@@ -153,7 +154,7 @@ fun LibraryScreen.Companion.Controller.Songs() {
                         )
                         Text(
                             text = song.displayArtist,
-                            emphasis = 0.6f,
+                            emphasis = if (isDark) 0.6f else 0.5f,
                             style = typography.bodyLarge
                         )
                     }
