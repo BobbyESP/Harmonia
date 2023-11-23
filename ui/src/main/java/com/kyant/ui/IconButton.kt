@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
@@ -25,31 +26,30 @@ fun IconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colorSet: ColorSet = LocalColorSet.current,
+    colorSet: ColorSet = LocalColorSet.current.copy(color = Color.Transparent),
     shape: Shape = CircleShape,
     size: Dp = 40.dp,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorSet provides colorSet) {
-        Box(
-            modifier = modifier
-                .size(size)
-                .clip(shape)
-                .background(colorSet.color)
-                .clickable(
-                    onClick = onClick,
-                    enabled = enabled,
-                    role = Role.Button,
-                    interactionSource = interactionSource,
-                    indication = rememberRipple(
-                        bounded = false,
-                        radius = size / 2
-                    )
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            content()
-        }
+    Box(
+        modifier = modifier
+            .size(size)
+            .clip(shape)
+            .background(colorSet.color)
+            .clickable(
+                onClick = onClick,
+                enabled = enabled,
+                role = Role.Button,
+                interactionSource = interactionSource,
+                indication = rememberRipple(
+                    bounded = false,
+                    radius = size / 2
+                )
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        val parentColorSet = colorSet.copy(color = LocalColorSet.current.color)
+        CompositionLocalProvider(value = LocalColorSet provides parentColorSet, content = content)
     }
 }
