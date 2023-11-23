@@ -35,10 +35,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import com.kyant.ui.theme.DefaultTextStyle
-import com.kyant.ui.theme.LocalColorToken
-import com.kyant.ui.theme.LocalEmphasis
-import com.kyant.ui.theme.applyEmphasis
+import com.kyant.ui.theme.color.LocalColorSet
+import com.kyant.ui.theme.color.LocalEmphasis
+import com.kyant.ui.theme.color.applyEmphasis
+import com.kyant.ui.theme.typo.DefaultTextStyle
 
 @Composable
 fun SingleLineText(
@@ -61,7 +61,7 @@ fun SingleLineText(
 ) {
     val textColor = color.takeOrElse {
         style.color.takeOrElse {
-            LocalColorToken.current.contentColor
+            LocalColorSet.current.onColor
         }
     }.applyEmphasis(emphasis)
 
@@ -110,7 +110,7 @@ fun Text(
 ) {
     val textColor = color.takeOrElse {
         style.color.takeOrElse {
-            LocalColorToken.current.contentColor
+            LocalColorSet.current.onColor
         }
     }.applyEmphasis(emphasis)
 
@@ -160,7 +160,7 @@ fun Text(
 ) {
     val textColor = color.takeOrElse {
         style.color.takeOrElse {
-            LocalColorToken.current.contentColor
+            LocalColorSet.current.onColor
         }
     }.applyEmphasis(emphasis)
 

@@ -38,7 +38,8 @@ import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalScroll
 import com.kyant.ui.graphics.SmoothRoundedCornerShape
 import com.kyant.ui.navigation.Navigator
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.theme.typography
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -54,13 +55,11 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
         Text(
             text = "Library",
             modifier = Modifier.padding(24.dp, 24.dp, 16.dp, 8.dp),
-            style = Theme.typography.titleLarge
+            style = typography.titleLarge
         )
-        ProvideTextStyle(value = Theme.typography.bodyLarge) {
+        ProvideTextStyle(value = typography.bodyLarge) {
             CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
-                val colorToken = Theme.colorScheme.surface.copy(
-                    color = Theme.colorScheme.surface.color.copy(alpha = 0.5f)
-                )
+                val colorToken = colorScheme.surface.copyAlpha(colorAlpha = 0.5f)
                 FlowRow(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -154,7 +153,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                             Icon(imageVector = Icons.AutoMirrored.Default.QueueMusic)
                             Text(
                                 text = "Play queue",
-                                style = Theme.typography.bodyLarge
+                                style = typography.bodyLarge
                             )
                         }
                     }
@@ -174,7 +173,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                             Icon(imageVector = Icons.Default.Stars)
                             Text(
                                 text = "Favorites",
-                                style = Theme.typography.bodyLarge
+                                style = typography.bodyLarge
                             )
                         }
                     }
@@ -194,7 +193,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                             Icon(imageVector = Icons.Default.CollectionsBookmark)
                             Text(
                                 text = "Playlists",
-                                style = Theme.typography.bodyLarge
+                                style = typography.bodyLarge
                             )
                         }
                     }
@@ -218,7 +217,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                             Icon(imageVector = Icons.Default.Refresh)
                             Text(
                                 text = "Refresh",
-                                style = Theme.typography.bodyLarge
+                                style = typography.bodyLarge
                             )
                         }
                     }
@@ -238,7 +237,7 @@ fun LibraryScreen.Companion.Controller.Library(navigator: Navigator<MainScreen>)
                             Icon(imageVector = Icons.Default.Settings)
                             Text(
                                 text = "Settings",
-                                style = Theme.typography.bodyLarge
+                                style = typography.bodyLarge
                             )
                         }
                     }

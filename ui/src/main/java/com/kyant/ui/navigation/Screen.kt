@@ -1,6 +1,7 @@
 package com.kyant.ui.navigation
 
 import android.os.Parcelable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,6 +9,7 @@ import com.kyant.ui.animation.FractionAnimatable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
+@Stable
 @Parcelize
 open class Screen(val isHome: Boolean) : Parcelable {
 

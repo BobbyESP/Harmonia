@@ -19,15 +19,15 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.kyant.ui.ripple.rememberRipple
-import com.kyant.ui.theme.ColorToken
-import com.kyant.ui.theme.LocalColorToken
+import com.kyant.ui.theme.color.ColorSet
+import com.kyant.ui.theme.color.LocalColorSet
 
 @Composable
 fun IconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colorToken: ColorToken = LocalColorToken.current.copy(color = Color.Transparent),
+    colorToken: ColorSet = LocalColorSet.current.copy(color = Color.Transparent),
     shape: Shape = CircleShape,
     size: Dp = 40.dp,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -51,7 +51,7 @@ fun IconButton(
         contentAlignment = Alignment.Center
     ) {
         CompositionLocalProvider(
-            LocalContentColor provides colorToken.contentColor,
+            LocalContentColor provides colorToken.onColor,
             content = content
         )
     }

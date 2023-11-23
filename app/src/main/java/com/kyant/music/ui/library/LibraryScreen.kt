@@ -30,7 +30,7 @@ import com.kyant.music.util.hazeBlur
 import com.kyant.ui.navigation.LocalNavigator
 import com.kyant.ui.navigation.Navigator
 import com.kyant.ui.navigation.OnBackPressed
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.colorScheme
 
 enum class LibraryScreen {
     Songs,
@@ -67,7 +67,7 @@ enum class LibraryScreen {
                 modifier = Modifier
                     .hazeBlur(
                         RoundRect(sortMenuRect, with(density) { 32.dp.toPx() }, with(density) { 32.dp.toPx() }),
-                        backgroundColor = Theme.colorScheme.surfaceContainer.color
+                        backgroundColor = colorScheme.surfaceContainer.color
                     )
             ) {
                 with(controller) {

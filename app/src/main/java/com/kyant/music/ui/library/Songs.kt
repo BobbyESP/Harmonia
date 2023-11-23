@@ -64,7 +64,8 @@ import com.kyant.ui.Surface
 import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalOverscroll
 import com.kyant.ui.graphics.SmoothRoundedCornerShape
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.theme.typography
 import com.kyant.ui.util.thenIf
 
 @Composable
@@ -148,12 +149,12 @@ fun LibraryScreen.Companion.Controller.Songs() {
                     ) {
                         Text(
                             text = song.title,
-                            style = Theme.typography.bodyLarge
+                            style = typography.bodyLarge
                         )
                         Text(
                             text = song.displayArtist,
                             emphasis = 0.6f,
-                            style = Theme.typography.bodyLarge
+                            style = typography.bodyLarge
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
@@ -188,7 +189,7 @@ fun LibraryScreen.Companion.Controller.Songs() {
             }
             Text(
                 text = "Songs",
-                style = Theme.typography.titleLarge
+                style = typography.titleLarge
             )
             Row(
                 modifier = Modifier.weight(1f),
@@ -204,10 +205,10 @@ fun LibraryScreen.Companion.Controller.Songs() {
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
                                 .clip(CircleShape)
-                                .background(Theme.colorScheme.primary.color)
+                                .background(colorScheme.primary.color)
                                 .padding(horizontal = 8.dp),
-                            color = Theme.colorScheme.primary.contentColor,
-                            style = Theme.typography.labelMedium
+                            color = colorScheme.primary.onColor,
+                            style = typography.labelMedium
                         )
                     }
                 }
@@ -239,9 +240,9 @@ fun LibraryScreen.Companion.Controller.Songs() {
                     .fillMaxWidth()
                     .navigationBarsPadding()
             ) {
-                ProvideTextStyle(value = Theme.typography.bodyMedium) {
+                ProvideTextStyle(value = typography.bodyMedium) {
                     CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
-                        val colorToken = Theme.colorScheme.surface.copy(
+                        val colorToken = colorScheme.surface.copy(
                             color = Color.Transparent
                         )
                         Surface(

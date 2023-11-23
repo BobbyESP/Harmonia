@@ -31,7 +31,8 @@ import com.kyant.ui.Surface
 import com.kyant.ui.Text
 import com.kyant.ui.TextButton
 import com.kyant.ui.graphics.SmoothRoundedCornerShape
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.theme.typography
 
 @Composable
 fun RequestPermissionDialog() {
@@ -57,8 +58,8 @@ fun RequestPermissionDialog() {
                 .widthIn(max = 360.dp)
                 .onGloballyPositioned { dialogRect = it.boundsInWindow() },
             shape = SmoothRoundedCornerShape(32.dp),
-            colorToken = Theme.colorScheme.surfaceContainer.copy(
-                color = Theme.colorScheme.surfaceContainer.color.copy(alpha = 0f)
+            colorToken = colorScheme.surfaceContainer.copy(
+                color = colorScheme.surfaceContainer.color.copy(alpha = 0f)
             )
         ) {
             Column(
@@ -68,13 +69,13 @@ fun RequestPermissionDialog() {
                 Text(
                     text = "⚠️ Permission required",
                     modifier = Modifier.padding(horizontal = 24.dp),
-                    style = Theme.typography.titleLarge
+                    style = typography.titleLarge
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
                     text = "You need to grant the permissions to use the app.",
                     modifier = Modifier.padding(horizontal = 24.dp),
-                    style = Theme.typography.bodyMedium
+                    style = typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 24.dp))

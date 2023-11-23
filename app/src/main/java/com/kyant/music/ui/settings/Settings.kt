@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.kyant.ui.Text
 import com.kyant.ui.animation.smoothVerticalScroll
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.typography
 
 @Composable
 fun Settings() {
@@ -26,7 +26,7 @@ fun Settings() {
             text = "Settings",
             modifier = Modifier
                 .padding(24.dp, 24.dp, 16.dp, 8.dp),
-            style = Theme.typography.titleLarge
+            style = typography.titleLarge
         )
     }
 }

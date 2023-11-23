@@ -2,6 +2,7 @@ package com.kyant.ui.navigation
 
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -19,6 +20,7 @@ fun <S : Screen> rememberNavigator(homeScreen: S): Navigator<S> {
     return rememberSaveable(homeScreen) { Navigator(homeScreen) }
 }
 
+@Stable
 @Parcelize
 class Navigator<S : Screen>(private val homeScreen: S) : Parcelable {
 

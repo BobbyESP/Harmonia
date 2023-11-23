@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.colorScheme
 import com.kyant.ui.util.thenIf
 
 @Composable
@@ -117,7 +117,7 @@ private inline fun BaseDialog(
                 .thenIf(consumeSystemWindowInsets) { systemBarsPadding() }
                 .padding(dialogPadding)
                 .softShadow(8.dp, RoundedCornerShape(24.dp)),
-            colorToken = Theme.colorScheme.surfaceContainerLowest
+            colorToken = colorScheme.surfaceContainerLowest
         ) {
             content()
         }

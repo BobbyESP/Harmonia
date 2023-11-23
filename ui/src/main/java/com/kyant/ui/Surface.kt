@@ -47,26 +47,26 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsControllerCompat
 import com.kyant.ui.ripple.rememberRipple
-import com.kyant.ui.theme.ColorToken
-import com.kyant.ui.theme.LocalColorToken
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.color.ColorSet
+import com.kyant.ui.theme.color.LocalColorSet
+import com.kyant.ui.theme.colorScheme
 import com.kyant.ui.util.thenIfNotNull
 
 @Composable
 @NonRestartableComposable
 fun RootBackground(
     modifier: Modifier = Modifier,
-    colorToken: ColorToken = ColorToken(
-        if (Theme.colorScheme.darkTheme) Color.Black else Color.White,
-        if (Theme.colorScheme.darkTheme) Color.White else Color.Black
+    colorToken: ColorSet = ColorSet(
+        if (colorScheme.theme.isDark) Color.Black else Color.White,
+        if (colorScheme.theme.isDark) Color.White else Color.Black
     ),
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorToken provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorToken) {
         val view = LocalView.current
         val activity = view.context as Activity
         val background = colorToken.color
-        val isDark = Theme.colorScheme.darkTheme
+        val isDark = colorScheme.theme.isDark
 
         LaunchedEffect(background) {
             activity.window.decorView.setBackgroundColor(background.toArgb())
@@ -98,7 +98,7 @@ fun RootBackground(
 fun Surface(
     modifier: Modifier = Modifier,
     shape: Shape = RectangleShape,
-    colorToken: ColorToken = Theme.colorScheme.surface,
+    colorToken: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -106,7 +106,7 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorToken provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorToken) {
         Box(
             modifier = modifier
                 .surface(
@@ -135,7 +135,7 @@ fun Surface(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: Shape = RectangleShape,
-    colorToken: ColorToken = Theme.colorScheme.surface,
+    colorToken: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -145,7 +145,7 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorToken provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorToken) {
         Box(
             modifier = modifier
                 .minimumInteractiveComponentSize()
@@ -178,7 +178,7 @@ fun Surface(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: Shape = RectangleShape,
-    colorToken: ColorToken = Theme.colorScheme.surface,
+    colorToken: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -188,7 +188,7 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorToken provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorToken) {
         Box(
             modifier = modifier
                 .minimumInteractiveComponentSize()
@@ -222,7 +222,7 @@ fun Surface(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     shape: Shape = RectangleShape,
-    colorToken: ColorToken = Theme.colorScheme.surface,
+    colorToken: ColorSet = colorScheme.surface,
     elevation: Dp = 0.dp,
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
@@ -232,7 +232,7 @@ fun Surface(
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    CompositionLocalProvider(LocalColorToken provides colorToken) {
+    CompositionLocalProvider(LocalColorSet provides colorToken) {
         Box(
             modifier = modifier
                 .minimumInteractiveComponentSize()

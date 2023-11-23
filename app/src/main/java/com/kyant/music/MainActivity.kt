@@ -30,10 +30,10 @@ import com.kyant.music.service.PlaybackService
 import com.kyant.music.service.StatefulPlayer
 import com.kyant.music.ui.MainScreen
 import com.kyant.music.ui.RequestPermissionDialog
+import com.kyant.music.ui.theme.DefaultTheme
 import com.kyant.music.util.hazeBlur
 import com.kyant.ui.RootBackground
-import com.kyant.ui.theme.Theme
-import com.kyant.ui.theme.systemColorScheme
+import com.kyant.ui.theme.colorScheme
 
 var dialogRect by mutableStateOf(Rect.Zero)
 
@@ -61,7 +61,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Theme(systemColorScheme()) {
+            DefaultTheme {
                 val density = LocalDensity.current
                 val isDialogVisible by remember { derivedStateOf { dialogRect != Rect.Zero } }
                 val dimAlpha by animateFloatAsState(targetValue = if (isDialogVisible) 0.3f else 0f)
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .hazeBlur(
                             RoundRect(dialogRect, with(density) { 32.dp.toPx() }, with(density) { 32.dp.toPx() }),
-                            backgroundColor = if (Theme.colorScheme.darkTheme) Color.Black else Color.White
+                            backgroundColor = if (colorScheme.theme.isDark) Color.Black else Color.White
                         )
                         .drawWithContent {
                             drawContent()

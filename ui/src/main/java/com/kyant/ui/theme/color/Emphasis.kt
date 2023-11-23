@@ -1,4 +1,4 @@
-package com.kyant.ui.theme
+package com.kyant.ui.theme.color
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -28,13 +28,13 @@ data class Emphasis(
 internal fun Color.applyEmphasis(emphasis: Float): Color {
     return when (emphasis) {
         1f -> this
-        0f -> LocalColorToken.current.color.copy(alpha = alpha)
+        0f -> LocalColorSet.current.color.copy(alpha = alpha)
         else -> {
-            val colorToken = LocalColorToken.current
+            val colorSet = LocalColorSet.current
             this.transformInHct {
                 tone = lerp(
-                    Hct.fromInt(colorToken.color.toArgb()).tone,
-                    Hct.fromInt(colorToken.contentColor.toArgb()).tone,
+                    Hct.fromInt(colorSet.color.toArgb()).tone,
+                    Hct.fromInt(colorSet.onColor.toArgb()).tone,
                     emphasis
                 )
             }

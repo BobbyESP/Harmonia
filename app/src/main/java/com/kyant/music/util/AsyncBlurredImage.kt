@@ -15,7 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.core.graphics.scale
 import androidx.core.graphics.set
 import com.kyant.m3color.hct.Hct
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.colorScheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -30,7 +30,7 @@ fun <T> AsyncBlurredImage(
     alpha: Float = DefaultAlpha,
     colorFilter: ColorFilter? = null,
     sampleCount: Int = 3,
-    tone: Double = if (Theme.colorScheme.darkTheme) 50.0 else 90.0
+    tone: Double = if (colorScheme.theme.isDark) 50.0 else 90.0
 ) {
     val blurredBitmap by produceState<ImageBitmap?>(initialValue = null, key1 = model) {
         value = withContext(Dispatchers.IO) {

@@ -14,28 +14,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.ColorToken
-import com.kyant.ui.theme.LocalColorToken
-import com.kyant.ui.theme.Theme
+import com.kyant.ui.theme.color.ColorSet
+import com.kyant.ui.theme.color.LocalColorSet
+import com.kyant.ui.theme.colorScheme
+import com.kyant.ui.theme.typography
 
 @Composable
 fun Button(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colorToken: ColorToken = Theme.colorScheme.primary,
-    disabledColorToken: ColorToken = ColorToken(
-        Theme.colorScheme.surface.contentColor.copy(alpha = 0.12f),
-        Theme.colorScheme.surface.contentColor.copy(alpha = 0.38f)
+    colorToken: ColorSet = colorScheme.primary,
+    disabledColorSet: ColorSet = ColorSet(
+        colorScheme.surface.onColor.copy(alpha = 0.12f),
+        colorScheme.surface.onColor.copy(alpha = 0.38f),
+        colorScheme.surface.onColorVariant.copy(alpha = 0.38f)
     ),
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) {
-    val buttonColorToken = if (enabled) {
+    val buttonColorSet = if (enabled) {
         colorToken
     } else {
-        disabledColorToken
+        disabledColorSet
     }
 
     Surface(
@@ -43,11 +45,11 @@ fun Button(
         modifier = modifier,
         enabled = enabled,
         shape = CircleShape,
-        colorToken = buttonColorToken,
+        colorToken = buttonColorSet,
         border = border,
         interactionSource = interactionSource
     ) {
-        ProvideTextStyle(value = Theme.typography.labelLarge) {
+        ProvideTextStyle(value = typography.labelLarge) {
             CompositionLocalProvider(value = LocalIconSize provides 20.dp) {
                 Row(
                     modifier = Modifier.padding(16.dp, 8.dp),
@@ -65,7 +67,7 @@ fun FilledTonalButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colorToken: ColorToken = Theme.colorScheme.primaryContainer,
+    colorToken: ColorSet = colorScheme.primaryContainer,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) = Button(
@@ -82,17 +84,18 @@ fun TextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    contentColor: Color = Theme.colorScheme.primary.color,
+    contentColor: Color = colorScheme.primary.color,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) = Button(
     onClick = onClick,
     modifier = modifier,
     enabled = enabled,
-    colorToken = ColorToken(Color.Transparent, contentColor),
-    disabledColorToken = ColorToken(
+    colorToken = ColorSet(Color.Transparent, contentColor),
+    disabledColorSet = ColorSet(
         Color.Transparent,
-        Theme.colorScheme.surface.contentColor.copy(alpha = 0.12f)
+        colorScheme.surface.onColor.copy(alpha = 0.12f),
+        colorScheme.surface.onColorVariant.copy(alpha = 0.12f)
     ),
     interactionSource = interactionSource,
     content = content
@@ -103,7 +106,7 @@ fun OutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    color: Color = LocalColorToken.current.contentColor,
+    color: Color = LocalColorSet.current.onColor,
     border: BorderStroke? = BorderStroke(1.dp, color),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
@@ -111,10 +114,11 @@ fun OutlinedButton(
     onClick = onClick,
     modifier = modifier,
     enabled = enabled,
-    colorToken = ColorToken(Color.Transparent, color),
-    disabledColorToken = ColorToken(
+    colorToken = ColorSet(Color.Transparent, color),
+    disabledColorSet = ColorSet(
         Color.Transparent,
-        Theme.colorScheme.surface.contentColor.copy(alpha = 0.12f)
+        colorScheme.surface.onColor.copy(alpha = 0.12f),
+        colorScheme.surface.onColorVariant.copy(alpha = 0.12f)
     ),
     border = border,
     interactionSource = interactionSource,

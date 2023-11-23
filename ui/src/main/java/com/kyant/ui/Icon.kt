@@ -39,9 +39,9 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.LocalColorToken
-import com.kyant.ui.theme.LocalEmphasis
-import com.kyant.ui.theme.applyEmphasis
+import com.kyant.ui.theme.color.LocalColorSet
+import com.kyant.ui.theme.color.LocalEmphasis
+import com.kyant.ui.theme.color.applyEmphasis
 import com.kyant.ui.util.thenIfNotNull
 
 /**
@@ -70,7 +70,7 @@ fun Icon(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     size: Dp = LocalIconSize.current,
-    tint: Color = LocalColorToken.current.contentColor,
+    tint: Color = LocalColorSet.current.onColor,
     emphasis: Float = LocalEmphasis.current.iconEmphasis
 ) {
     Icon(
@@ -109,7 +109,7 @@ fun Icon(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     size: Dp = LocalIconSize.current,
-    tint: Color = LocalColorToken.current.contentColor,
+    tint: Color = LocalColorSet.current.onColor,
     emphasis: Float = LocalEmphasis.current.iconEmphasis
 ) {
     val painter = remember(bitmap) { BitmapPainter(bitmap) }
@@ -149,7 +149,7 @@ fun Icon(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     size: Dp = LocalIconSize.current,
-    tint: Color = LocalColorToken.current.contentColor,
+    tint: Color = LocalColorSet.current.onColor,
     emphasis: Float = LocalEmphasis.current.iconEmphasis
 ) {
     val colorFilter = if (tint.isUnspecified) null else ColorFilter.tint(tint.applyEmphasis(emphasis))

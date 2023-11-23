@@ -1,4 +1,4 @@
-package com.kyant.ui.theme
+package com.kyant.ui.theme.typo
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf

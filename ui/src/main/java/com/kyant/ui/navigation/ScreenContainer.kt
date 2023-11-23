@@ -23,11 +23,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.LocalColorToken
+import com.kyant.ui.theme.color.LocalColorSet
 import com.kyant.ui.util.thenIf
 import kotlinx.coroutines.launch
 
-@Suppress("KotlinRedundantDiagnosticSuppress")
 @Composable
 inline fun <reified S : Screen> ScreenContainer(
     navigator: Navigator<S>,
@@ -44,7 +43,7 @@ inline fun <reified S : Screen> ScreenContainer(
         }
     }
 
-    val color = LocalColorToken.current.color
+    val color = LocalColorSet.current.color
     val width = with(LocalDensity.current) { LocalConfiguration.current.screenWidthDp.dp.toPx() }
     val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
     val scope = rememberCoroutineScope()
@@ -164,7 +163,7 @@ inline fun <reified S : Screen> ScreenContainer(
                         .padding(horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    CompositionLocalProvider(value = LocalColorToken provides Theme.colorScheme.primary.inverse()) {
+                    CompositionLocalProvider(value = LocalColorToken provides colorScheme.primary.inverse()) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                             size = 16.dp

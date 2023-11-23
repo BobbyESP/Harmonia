@@ -13,14 +13,29 @@ import com.kyant.ui.ProvideTextStyle
 import com.kyant.ui.ripple.LocalRippleTheme
 import com.kyant.ui.ripple.RippleTheme
 import com.kyant.ui.ripple.rememberRipple
+import com.kyant.ui.theme.color.ColorScheme
+import com.kyant.ui.theme.color.LocalColorScheme
+import com.kyant.ui.theme.color.LocalColorSet
+import com.kyant.ui.theme.typo.LocalTypography
+import com.kyant.ui.theme.typo.Typography
+
+val colorScheme: ColorScheme
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalColorScheme.current
+
+val typography: Typography
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalTypography.current
 
 @Composable
 fun Theme(
-    colorScheme: ColorScheme = Theme.colorScheme,
-    typography: Typography = Theme.typography,
+    colorScheme: ColorScheme = com.kyant.ui.theme.colorScheme,
+    typography: Typography = com.kyant.ui.theme.typography,
     content: @Composable () -> Unit
 ) {
-    val rippleIndication = rememberRipple(color = LocalColorToken.current.contentColor)
+    val rippleIndication = rememberRipple(color = LocalColorSet.current.onColor)
     val primaryColor = colorScheme.primary
     val selectionColors = remember(primaryColor) {
         TextSelectionColors(
@@ -40,29 +55,17 @@ fun Theme(
     }
 }
 
-object Theme {
-    val colorScheme: ColorScheme
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalColorScheme.current
-
-    val typography: Typography
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalTypography.current
-}
-
 @Immutable
 private object ThemedRippleTheme : RippleTheme {
     @Composable
     override fun defaultColor() = RippleTheme.defaultRippleColor(
-        contentColor = LocalColorToken.current.contentColor,
+        contentColor = LocalColorSet.current.onColor,
         lightTheme = true
     )
 
     @Composable
     override fun rippleAlpha() = RippleTheme.defaultRippleAlpha(
-        contentColor = LocalColorToken.current.contentColor,
-        lightTheme = !LocalColorScheme.current.darkTheme
+        contentColor = LocalColorSet.current.onColor,
+        lightTheme = !LocalColorScheme.current.theme.isDark
     )
 }

@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.theme.LocalColorToken
-import com.kyant.ui.theme.Theme
-import com.kyant.ui.theme.applyEmphasis
+import com.kyant.ui.theme.color.LocalColorSet
+import com.kyant.ui.theme.color.applyEmphasis
+import com.kyant.ui.theme.colorScheme
 
 @Composable
 fun HorizontalDivider(
@@ -29,9 +29,7 @@ fun HorizontalDivider(
             }
             .height(thickness)
             .background(
-                LocalColorToken.current.contentColor.applyEmphasis(
-                    if (Theme.colorScheme.darkTheme) 0.25f else 0.1f
-                )
+                LocalColorSet.current.onColor.applyEmphasis(if (colorScheme.theme.isDark) 0.25f else 0.1f)
             )
     )
 }
