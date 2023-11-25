@@ -9,6 +9,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import com.kyant.m3color.scheme.Variant
 import com.kyant.ui.ProvideTextStyle
 import com.kyant.ui.ripple.LocalRippleTheme
 import com.kyant.ui.ripple.RippleTheme
@@ -28,6 +30,35 @@ val typography: Typography
     @Composable
     @ReadOnlyComposable
     get() = LocalTypography.current
+
+val Color.colorScheme
+    @Suppress("RemoveRedundantQualifierName")
+    @Composable
+    @ReadOnlyComposable
+    get() = ColorScheme(
+        com.kyant.ui.style.colorScheme.theme.copy(sourceColor = this)
+    )
+
+val Color.monochromeColorScheme
+    @Composable
+    @ReadOnlyComposable
+    get() = ColorScheme(
+        colorScheme.theme.copy(sourceColor = this, variant = Variant.MONOCHROME)
+    )
+
+val Color.fidelityColorScheme
+    @Composable
+    @ReadOnlyComposable
+    get() = ColorScheme(
+        colorScheme.theme.copy(sourceColor = this, variant = Variant.FIDELITY)
+    )
+
+val Color.vibrantColorScheme
+    @Composable
+    @ReadOnlyComposable
+    get() = ColorScheme(
+        colorScheme.theme.copy(sourceColor = this, variant = Variant.VIBRANT)
+    )
 
 @Composable
 fun Theme(

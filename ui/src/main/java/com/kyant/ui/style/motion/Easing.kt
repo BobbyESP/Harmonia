@@ -1,5 +1,6 @@
 package com.kyant.ui.style.motion
 
+import androidx.compose.animation.core.tween
 import com.kyant.ui.animation.CubicBezierEasing
 
 object Easing {
@@ -17,4 +18,6 @@ object Easing {
     val StandardDecelerate = CubicBezierEasing(0f, 0f, 0f, 1f)
 
     val Linear = CubicBezierEasing(0f, 0f, 1f, 1f)
+
+    infix fun <T> CubicBezierEasing.with(duration: Int) = tween<T>(duration, 0, this)
 }

@@ -1,5 +1,9 @@
 package com.kyant.ui.style.color
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.spring
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.compositionLocalOf
@@ -28,4 +32,17 @@ data class ColorSet(
         @Stable
         val Unspecified = ColorSet()
     }
+}
+
+@Suppress("NOTHING_TO_INLINE")
+@Composable
+inline fun animateColorSet(
+    targetValue: ColorSet,
+    animationSpec: AnimationSpec<Color> = spring()
+): ColorSet {
+    return ColorSet(
+        animateColorAsState(targetValue.color, animationSpec).value,
+        animateColorAsState(targetValue.onColor, animationSpec).value,
+        animateColorAsState(targetValue.onColorVariant, animationSpec).value
+    )
 }
