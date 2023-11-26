@@ -15,6 +15,12 @@ import kotlinx.parcelize.Parcelize
 
 val LocalNavigator = staticCompositionLocalOf<Navigator<out Screen>?> { null }
 
+@Suppress("UNCHECKED_CAST")
+@Composable
+fun <S : Screen> currentNavigator(): Navigator<S> {
+    return LocalNavigator.current as Navigator<S>
+}
+
 @Composable
 fun <S : Screen> rememberNavigator(homeScreen: S): Navigator<S> {
     return rememberSaveable(homeScreen) { Navigator(homeScreen) }
