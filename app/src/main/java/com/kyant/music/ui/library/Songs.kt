@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -41,9 +40,7 @@ import kotlin.math.absoluteValue
 @Composable
 fun LibraryNavigator.Songs() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Column(
@@ -74,7 +71,6 @@ fun LibraryNavigator.Songs() {
         val state = rememberLazyListState()
         LazyColumn(
             modifier = Modifier
-                .padding(horizontal = 8.dp)
                 .clip(Rounding.Large.asSmoothRoundedShape()),
             state = state,
             verticalArrangement = Arrangement.spacedBy(2.dp)

@@ -4,32 +4,20 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.gestures.DraggableState
-import androidx.compose.material3.adaptive.collectWindowSizeAsState
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
-
-@Composable
-fun rememberLibraryNavigator(): LibraryNavigator {
-    val scope = rememberCoroutineScope()
-    val size by collectWindowSizeAsState()
-    return remember(scope, size) { LibraryNavigator(scope, size.width.toFloat()) }
-}
 
 @Stable
 class LibraryNavigator(
     private val scope: CoroutineScope,
     val width: Float = 0f
 ) {
-
     var listPaneRoute by mutableStateOf(ListPaneRoute.Songs)
         private set
 
@@ -111,8 +99,4 @@ class LibraryNavigator(
             }
         }
     }
-}
-
-enum class ListPaneRoute {
-    Songs, Albums, Artists, Genres, Playlists
 }

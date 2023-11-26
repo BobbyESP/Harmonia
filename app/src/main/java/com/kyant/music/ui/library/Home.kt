@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -41,9 +40,7 @@ import kotlin.math.absoluteValue
 @Composable
 fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Column(
@@ -71,7 +68,6 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
         }
         if (MediaStore.songs.isEmpty()) {
             Surface(
-                modifier = Modifier.padding(horizontal = 24.dp),
                 shape = Rounding.Large.asSmoothRoundedShape()
             ) {
                 Column(
@@ -102,7 +98,6 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
         }
         Column(
             modifier = Modifier
-                .padding(horizontal = 8.dp)
                 .verticalScroll(rememberScrollState())
                 .clip(Rounding.Large.asSmoothRoundedShape()),
             verticalArrangement = Arrangement.spacedBy(2.dp)
