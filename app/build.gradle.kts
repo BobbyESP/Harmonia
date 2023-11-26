@@ -44,6 +44,7 @@ android {
                 "androidx.compose.foundation.ExperimentalFoundationApi," +
                 "androidx.compose.foundation.layout.ExperimentalLayoutApi," +
                 "androidx.compose.material3.ExperimentalMaterial3Api," +
+                "androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi," +
                 "androidx.compose.ui.ExperimentalComposeUiApi," +
                 "com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi"
         )
@@ -82,6 +83,7 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.material.icons.extended)
+    implementation(libs.compose.material3.adaptive)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

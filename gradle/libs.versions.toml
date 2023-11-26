@@ -10,6 +10,7 @@ activity = "1.9.0-SNAPSHOT"
 compose = "1.7.0-SNAPSHOT"
 compose-material-icons-extended = "1.6.0-beta01"
 compose-m3 = "1.2.0-SNAPSHOT"
+compose-m3-adaptive = "1.0.0-SNAPSHOT"
 core = "1.13.0-SNAPSHOT"
 coroutines = "1.7.3"
 kotlinx-collections-immutable = "0.3.6"
@@ -30,6 +31,7 @@ androidx-media = { module = "androidx.media:media", version.ref = "media" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-material-icons-extended" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-m3" }
+compose-material3-adaptive = { module = "androidx.compose.material3:material3-adaptive", version.ref = "compose-m3-adaptive" }
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose" }
 
