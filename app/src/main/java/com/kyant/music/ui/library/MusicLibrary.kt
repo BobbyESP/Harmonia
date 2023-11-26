@@ -101,7 +101,7 @@ fun MusicLibrary() {
                 modifier = Modifier.layout { measurable, constraints ->
                     val fraction = lerp(1f, 1f / 3f, libraryNavigator.paneExpandProgressValue)
                     val maxWidth =
-                        (fraction * libraryNavigator.width - (1f - fraction) * hingeWidth.toPx()).roundToInt()
+                        (fraction * libraryNavigator.width - (1f - fraction) * hingeWidth.toPx() / 2f).roundToInt()
                     val placeable = measurable.measure(constraints.copy(maxWidth = maxWidth))
                     layout(maxWidth, constraints.maxHeight) {
                         placeable.placeRelative(0, 0)
@@ -115,7 +115,7 @@ fun MusicLibrary() {
                 visible = libraryNavigator.targetPaneExpandProgress == 1,
                 modifier = Modifier.layout { measurable, constraints ->
                     val fraction = 1f - lerp(1f, 1f / 3f, libraryNavigator.paneExpandProgressValue)
-                    val endMaxWidth = (2f / 3f * libraryNavigator.width - 1f / 3f * hingeWidth.toPx()).roundToInt()
+                    val endMaxWidth = (2f / 3f * (libraryNavigator.width - hingeWidth.toPx())).roundToInt()
                     val paddingStart =
                         ((1f - fraction) * libraryNavigator.width + fraction * hingeWidth.toPx()).roundToInt()
                     val placeable = measurable.measure(constraints.copy(maxWidth = endMaxWidth))
