@@ -37,28 +37,28 @@ class SmoothRoundedCornerShape(
                 val rect = size.toRect()
                 moveTo(rect.left + topStart, rect.top)
                 lineTo(rect.right - topEnd, rect.top)
-                quadraticBezierTo(
+                quadraticTo(
                     rect.right,
                     rect.top,
                     rect.right,
                     rect.top + topEnd
                 )
                 lineTo(rect.right, rect.bottom - bottomEnd)
-                quadraticBezierTo(
+                quadraticTo(
                     rect.right,
                     rect.bottom,
                     rect.right - bottomEnd,
                     rect.bottom
                 )
                 lineTo(rect.left + bottomStart, rect.bottom)
-                quadraticBezierTo(
+                quadraticTo(
                     rect.left,
                     rect.bottom,
                     rect.left,
                     rect.bottom - bottomStart
                 )
                 lineTo(rect.left, rect.top + topStart)
-                quadraticBezierTo(
+                quadraticTo(
                     rect.left,
                     rect.top,
                     rect.left + topStart,

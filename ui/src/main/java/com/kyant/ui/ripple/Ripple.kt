@@ -13,38 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.kyant.ui.ripple
 
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.Indication
-import androidx.compose.foundation.IndicationInstance
 import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.interaction.FocusInteraction
 import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorProducer
+import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.clipRect
-import androidx.compose.ui.graphics.isSpecified
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.node.CompositionLocalConsumerModifierNode
+import androidx.compose.ui.node.DelegatableNode
+import androidx.compose.ui.node.DrawModifierNode
+import androidx.compose.ui.node.currentValueOf
+import androidx.compose.ui.node.invalidateDraw
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.isUnspecified
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 /**
- * Creates and [remember]s a Ripple using values provided by [RippleTheme].
+ * Creates a Ripple node using the values provided.
  *
  * A Ripple is a Material implementation of [Indication] that expresses different [Interaction]s
  * by drawing ripple animations and state layers.
@@ -53,151 +59,259 @@ import kotlinx.coroutines.launch
  * responds to other [Interaction]s by showing a fixed [StateLayer] with varying alpha values
  * depending on the [Interaction].
  *
- * If you are using MaterialTheme in your hierarchy, a Ripple will be used as the default
- * [Indication] inside components such as [androidx.compose.foundation.clickable] and
- * [androidx.compose.foundation.indication]. You can also manually provide Ripples through
- * [androidx.compose.foundation.LocalIndication] for the same effect if you are not using
- * MaterialTheme.
+ * This Ripple node is a low level building block for building IndicationNodeFactory implementations
+ * that use a Ripple - higher level design system libraries such as material and material3 provide
+ * [Indication] implementations using this node internally. In most cases you should use those
+ * factories directly: this node exists for design system libraries to delegate their Ripple
+ * implementation to, after querying any required theme values for customizing the Ripple.
  *
- * You can also explicitly create a Ripple and provide it to components in order to change the
- * parameters from the default, such as to create an unbounded ripple with a fixed size.
- *
- * @param bounded If true, ripples are clipped by the bounds of the target layout. Unbounded
+ * @param interactionSource the [InteractionSource] used to determine the state of the ripple.
+ * @param bounded if true, ripples are clipped by the bounds of the target layout. Unbounded
  * ripples always animate from the target layout center, bounded ripples animate from the touch
  * position.
  * @param radius the radius for the ripple. If [Dp.Unspecified] is provided then the size will be
  * calculated based on the target layout size.
  * @param color the color of the ripple. This color is usually the same color used by the text or
- * iconography in the component. This color will then have [RippleTheme.rippleAlpha] applied to
- * calculate the final color used to draw the ripple. If [Color.Unspecified] is provided the color
- * used will be [RippleTheme.defaultColor] instead.
+ * iconography in the component. This color will then have [rippleAlpha] applied to calculate the
+ * final color used to draw the ripple.
+ * @param rippleAlpha the [RippleAlpha] that will be applied to the [color] depending on the state
+ * of the ripple.
  */
-@Composable
-fun rememberRipple(
-    bounded: Boolean = true,
-    radius: Dp = Dp.Unspecified,
-    color: Color = Color.Unspecified
-): Indication {
-    val colorState = rememberUpdatedState(color)
-    return remember(bounded, radius) {
-        CommonRipple(bounded, radius, colorState)
+fun createRippleModifierNode(
+    interactionSource: InteractionSource,
+    bounded: Boolean,
+    radius: Dp,
+    color: ColorProducer,
+    rippleAlpha: () -> RippleAlpha
+): DelegatableNode {
+    return createPlatformRippleNode(interactionSource, bounded, radius, color, rippleAlpha)
+}
+
+/**
+ * Android specific Ripple implementation that uses a [RippleDrawable] under the hood, which allows
+ * rendering the ripple animation on the render thread (away from the main UI thread). This
+ * allows the ripple to animate smoothly even while the UI thread is under heavy load, such as
+ * when navigating between complex screens.
+ *
+ * @see RippleNode
+ */
+internal fun createPlatformRippleNode(
+    interactionSource: InteractionSource,
+    bounded: Boolean,
+    radius: Dp,
+    color: ColorProducer,
+    rippleAlpha: () -> RippleAlpha
+): DelegatableNode {
+    return if (IsRunningInPreview) {
+        CommonRippleNode(interactionSource, bounded, radius, color, rippleAlpha)
+    } else {
+        AndroidRippleNode(interactionSource, bounded, radius, color, rippleAlpha)
     }
 }
 
 /**
- * A Ripple is a Material implementation of [Indication] that expresses different [Interaction]s
- * by drawing ripple animations and state layers.
- *
- * A Ripple responds to [PressInteraction.Press] by starting a new [RippleAnimation], and
- * responds to other [Interaction]s by showing a fixed [StateLayer] with varying alpha values
- * depending on the [Interaction].
- *
- * If you are using MaterialTheme in your hierarchy, a Ripple will be used as the default
- * [Indication] inside components such as [androidx.compose.foundation.clickable] and
- * [androidx.compose.foundation.indication]. You can also manually provide Ripples through
- * [androidx.compose.foundation.LocalIndication] for the same effect if you are not using
- * MaterialTheme.
- *
- * You can also explicitly create a Ripple and provide it to components in order to change the
- * parameters from the default, such as to create an unbounded ripple with a fixed size.
+ * Abstract [Modifier.Node] that provides common functionality used by ripple node implementations.
+ * Implementing classes should use [stateLayer] to draw the [StateLayer], so they only need to
+ * handle showing the ripple effect when pressed, and not other [Interaction]s.
  */
-@Stable
-internal abstract class Ripple(
-    private val bounded: Boolean,
+internal abstract class RippleNode(
+    private val interactionSource: InteractionSource,
+    protected val bounded: Boolean,
     private val radius: Dp,
-    private val color: State<Color>
-) : Indication {
-    @Composable
-    final override fun rememberUpdatedInstance(
-        interactionSource: InteractionSource
-    ): IndicationInstance {
-        val theme = LocalRippleTheme.current
-        val color = rememberUpdatedState(
-            if (color.value.isSpecified) {
-                color.value
-            } else {
-                theme.defaultColor()
-            }
-        )
-        val rippleAlpha = rememberUpdatedState(theme.rippleAlpha())
+    private val color: ColorProducer,
+    protected val rippleAlpha: () -> RippleAlpha
+) : Modifier.Node(), CompositionLocalConsumerModifierNode, DrawModifierNode {
+    final override val shouldAutoInvalidate: Boolean = false
+    private var stateLayer: StateLayer? = null
 
-        val instance = rememberUpdatedRippleInstance(
-            interactionSource,
-            bounded,
-            radius,
-            color,
-            rippleAlpha
-        )
+    // Calculated inside draw(). This won't happen in Robolectric, so default to 0f to avoid crashes
+    var targetRadius: Float = 0f
+        private set
+    val rippleColor: Color
+        get() = color()
 
-        LaunchedEffect(instance, interactionSource) {
+    final override fun onAttach() {
+        coroutineScope.launch {
             interactionSource.interactions.collect { interaction ->
                 when (interaction) {
-                    is PressInteraction.Press -> instance.addRipple(interaction, this)
-                    is PressInteraction.Release -> instance.removeRipple(interaction.press)
-                    is PressInteraction.Cancel -> instance.removeRipple(interaction.press)
-                    else -> instance.updateStateLayer(interaction, this)
+                    is PressInteraction.Press -> addRipple(interaction)
+                    is PressInteraction.Release -> removeRipple(interaction.press)
+                    is PressInteraction.Cancel -> removeRipple(interaction.press)
+                    else -> updateStateLayer(interaction, this)
                 }
             }
         }
-
-        return instance
     }
 
-    @Composable
-    abstract fun rememberUpdatedRippleInstance(
-        interactionSource: InteractionSource,
-        bounded: Boolean,
-        radius: Dp,
-        color: State<Color>,
-        rippleAlpha: State<RippleAlpha>
-    ): RippleIndicationInstance
-
-    // To force stability on this Ripple we need equals and hashcode, there's no value in
-    // making this class to be a `data class`
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Ripple) return false
-
-        if (bounded != other.bounded) return false
-        if (radius != other.radius) return false
-        if (color != other.color) return false
-
-        return true
+    override fun ContentDrawScope.draw() {
+        targetRadius = if (radius.isUnspecified) {
+            // Explicitly calculate the radius instead of using RippleDrawable.RADIUS_AUTO on
+            // Android since the latest spec does not match with the existing radius calculation in
+            // the framework.
+            getRippleEndRadius(bounded, size)
+        } else {
+            radius.toPx()
+        }
+        drawContent()
+        stateLayer?.run {
+            drawStateLayer(targetRadius, rippleColor)
+        }
+        drawRipples()
     }
 
-    override fun hashCode(): Int {
-        var result = bounded.hashCode()
-        result = 31 * result + radius.hashCode()
-        result = 31 * result + color.hashCode()
-        return result
+    abstract fun DrawScope.drawRipples()
+    abstract fun addRipple(interaction: PressInteraction.Press)
+    abstract fun removeRipple(interaction: PressInteraction.Press)
+    private fun updateStateLayer(interaction: Interaction, scope: CoroutineScope) {
+        val stateLayer = stateLayer ?: StateLayer(bounded, rippleAlpha).also { instance ->
+            // Invalidate when adding the state layer so we can start drawing it
+            invalidateDraw()
+            stateLayer = instance
+        }
+        stateLayer.handleInteraction(interaction, scope)
     }
 }
 
 /**
- * Abstract [IndicationInstance] that provides common functionality used by [Ripple]
- * implementations. Implementing classes should call [drawStateLayer] to draw the [StateLayer], so
- * they only need to handle showing the ripple effect when pressed, and not other [Interaction]s.
+ * Android specific [RippleNode]. This uses a [RippleHostView] provided by [rippleContainer] to
+ * draw ripples in the drawing bounds provided within [draw].
+ *
+ * The state layer is still handled by [stateLayer], and drawn inside Compose.
  */
-internal abstract class RippleIndicationInstance(
+internal class AndroidRippleNode(
+    interactionSource: InteractionSource,
     bounded: Boolean,
-    rippleAlpha: State<RippleAlpha>
-) : IndicationInstance {
-    private val stateLayer = StateLayer(bounded, rippleAlpha)
+    radius: Dp,
+    color: ColorProducer,
+    rippleAlpha: () -> RippleAlpha
+) : RippleNode(interactionSource, bounded, radius, color, rippleAlpha), RippleHostKey {
+    /**
+     * [RippleContainer] attached to the nearest [ViewGroup]. If it hasn't already been
+     * created by a another ripple, we will create it and attach it to the hierarchy.
+     */
+    private var rippleContainer: RippleContainer? = null
 
-    abstract fun addRipple(interaction: PressInteraction.Press, scope: CoroutineScope)
+    /**
+     * Backing [RippleHostView] used to draw ripples for this [RippleIndicationInstance].
+     */
+    private var rippleHostView: RippleHostView? = null
+        set(value) {
+            field = value
+            invalidateDraw()
+        }
 
-    abstract fun removeRipple(interaction: PressInteraction.Press)
-
-    internal fun updateStateLayer(interaction: Interaction, scope: CoroutineScope) {
-        stateLayer.handleInteraction(interaction, scope)
-    }
-
-    fun DrawScope.drawStateLayer(radius: Dp, color: Color) {
-        with(stateLayer) {
-            drawStateLayer(radius, color)
+    /**
+     * Cache the size of the canvas we will draw the ripple into - this is updated each time
+     * [draw] is called. This is needed as before we start animating the ripple, we
+     * need to know its size (changing the bounds mid-animation will cause us to continue the
+     * animation on the UI thread, not the render thread), but the size is only known inside the
+     * draw scope.
+     */
+    private var rippleSize: Size = Size.Zero
+    override fun DrawScope.drawRipples() {
+        rippleSize = size
+        drawIntoCanvas { canvas ->
+            rippleHostView?.run {
+                // We set these inside addRipple() already, but they may change during the ripple
+                // animation, so update them here too.
+                // Note that changes to color / alpha will not be reflected in any
+                // currently drawn ripples if the ripples are being drawn on the RenderThread,
+                // since only the software paint is updated, not the hardware paint used in
+                // RippleForeground.
+                updateRippleProperties(
+                    size = size,
+                    radius = targetRadius.roundToInt(),
+                    color = rippleColor,
+                    alpha = rippleAlpha().pressedAlpha
+                )
+                draw(canvas.nativeCanvas)
+            }
         }
     }
+
+    override fun addRipple(interaction: PressInteraction.Press) {
+        rippleHostView = with(getOrCreateRippleContainer()) {
+            getRippleHostView().apply {
+                addRipple(
+                    interaction = interaction,
+                    bounded = bounded,
+                    size = rippleSize,
+                    radius = targetRadius.roundToInt(),
+                    color = rippleColor,
+                    alpha = rippleAlpha().pressedAlpha,
+                    onInvalidateRipple = { invalidateDraw() }
+                )
+            }
+        }
+    }
+
+    override fun removeRipple(interaction: PressInteraction.Press) {
+        rippleHostView?.removeRipple()
+    }
+
+    override fun onDetach() {
+        rippleContainer?.run {
+            disposeRippleIfNeeded()
+        }
+    }
+
+    override fun onResetRippleHostView() {
+        rippleHostView = null
+    }
+
+    private fun getOrCreateRippleContainer(): RippleContainer {
+        if (rippleContainer != null) return rippleContainer!!
+        val view = findNearestViewGroup(currentValueOf(LocalView))
+        rippleContainer = createAndAttachRippleContainerIfNeeded(view)
+        return rippleContainer!!
+    }
 }
+
+private fun createAndAttachRippleContainerIfNeeded(view: ViewGroup): RippleContainer {
+    // Try to find existing RippleContainer in the view hierarchy
+    for (index in 0 until view.childCount) {
+        val child = view.getChildAt(index)
+        if (child is RippleContainer) {
+            return child
+        }
+    }
+    // Create a new RippleContainer if needed and add to the hierarchy
+    return RippleContainer(view.context).apply {
+        view.addView(this)
+    }
+}
+
+/**
+ * Returns [initialView] if it is a [ViewGroup], otherwise the nearest parent [ViewGroup] that
+ * we will add a [RippleContainer] to.
+ *
+ * In all normal scenarios this should just be [LocalView], but since [LocalView] is public
+ * API theoretically its value can be overridden with a non-[ViewGroup], so we walk up the
+ * tree to be safe.
+ */
+private fun findNearestViewGroup(initialView: View): ViewGroup {
+    var view: View = initialView
+    while (view !is ViewGroup) {
+        val parent = view.parent
+        // We should never get to a ViewParent that isn't a View, without finding a ViewGroup
+        // first - throw an exception if we do.
+        require(parent is View) {
+            "Couldn't find a valid parent for $view. Are you overriding LocalView and " +
+                "providing a View that is not attached to the view hierarchy?"
+        }
+        view = parent
+    }
+    return view
+}
+
+/**
+ * Whether we are running in a preview or not, to control using the native vs the common ripple
+ * implementation. We check this way instead of using [View.isInEditMode] or LocalInspectionMode so
+ * this can be called from outside composition.
+ */
+// TODO(b/188112048): Remove in the future when more versions of Studio support previewing native
+//  ripples
+private const val IsRunningInPreview = true /*android.os.Build.DEVICE == "layoutlib"*/
 
 /**
  * Represents the layer underneath the press ripple, that displays an overlay for states such as
@@ -224,15 +338,12 @@ internal abstract class RippleIndicationInstance(
  */
 private class StateLayer(
     private val bounded: Boolean,
-    // TODO: consider dynamically updating the alpha for existing interactions when rippleAlpha changes
-    private val rippleAlpha: State<RippleAlpha>
+    private val rippleAlpha: () -> RippleAlpha
 ) {
     private val animatedAlpha = Animatable(0f)
-
     private val interactions: MutableList<Interaction> = mutableListOf()
     private var currentInteraction: Interaction? = null
-
-    fun handleInteraction(interaction: Interaction, scope: CoroutineScope) {
+    internal fun handleInteraction(interaction: Interaction, scope: CoroutineScope) {
         when (interaction) {
             is HoverInteraction.Enter -> {
                 interactions.add(interaction)
@@ -264,26 +375,23 @@ private class StateLayer(
 
             else -> return
         }
-
         // The most recent interaction is the one we want to show
         val newInteraction = interactions.lastOrNull()
-
         if (currentInteraction != newInteraction) {
             if (newInteraction != null) {
+                val rippleAlpha = rippleAlpha()
                 val targetAlpha = when (interaction) {
-                    is HoverInteraction.Enter -> rippleAlpha.value.hoveredAlpha
-                    is FocusInteraction.Focus -> rippleAlpha.value.focusedAlpha
-                    is DragInteraction.Start -> rippleAlpha.value.draggedAlpha
+                    is HoverInteraction.Enter -> rippleAlpha.hoveredAlpha
+                    is FocusInteraction.Focus -> rippleAlpha.focusedAlpha
+                    is DragInteraction.Start -> rippleAlpha.draggedAlpha
                     else -> 0f
                 }
                 val incomingAnimationSpec = incomingStateLayerAnimationSpecFor(newInteraction)
-
                 scope.launch {
                     animatedAlpha.animateTo(targetAlpha, incomingAnimationSpec)
                 }
             } else {
                 val outgoingAnimationSpec = outgoingStateLayerAnimationSpecFor(currentInteraction)
-
                 scope.launch {
                     animatedAlpha.animateTo(0f, outgoingAnimationSpec)
                 }
@@ -292,24 +400,16 @@ private class StateLayer(
         }
     }
 
-    fun DrawScope.drawStateLayer(radius: Dp, color: Color) {
-        val targetRadius = if (radius.isUnspecified) {
-            getRippleEndRadius(bounded, size)
-        } else {
-            radius.toPx()
-        }
-
+    fun DrawScope.drawStateLayer(radius: Float, color: Color) {
         val alpha = animatedAlpha.value
-
         if (alpha > 0f) {
             val modulatedColor = color.copy(alpha = alpha)
-
             if (bounded) {
                 clipRect {
-                    drawCircle(modulatedColor, targetRadius)
+                    drawCircle(modulatedColor, radius)
                 }
             } else {
-                drawCircle(modulatedColor, targetRadius)
+                drawCircle(modulatedColor, radius)
             }
         }
     }

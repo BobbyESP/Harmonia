@@ -155,26 +155,5 @@ inline fun <reified S : Screen> ScreenContainer(
             }
     ) {
         content()
-        /*if (screen !is HomeScreen) {
-            previousScreen?.let { screen ->
-                Row(
-                    modifier = Modifier
-                        .statusBarsPadding()
-                        .padding(horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    CompositionLocalProvider(value = LocalColorToken provides colorScheme.primary.inverse()) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                            size = 16.dp
-                        )
-                        Text(
-                            text = screen.toString(),
-                            style = Theme.typography.labelMedium
-                        )
-                    }
-                }
-            }
-        }*/
     }
 }

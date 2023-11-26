@@ -46,7 +46,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowInsetsControllerCompat
-import com.kyant.ui.ripple.rememberRipple
 import com.kyant.ui.style.color.ColorSet
 import com.kyant.ui.style.color.LocalColorSet
 import com.kyant.ui.style.colorScheme
@@ -56,10 +55,11 @@ import com.kyant.ui.util.thenIfNotNull
 @NonRestartableComposable
 fun RootBackground(
     modifier: Modifier = Modifier,
-    colorSet: ColorSet = ColorSet(
-        if (colorScheme.theme.isDark) Color.Black else Color.White,
-        if (colorScheme.theme.isDark) Color.White else Color.Black
-    ),
+    colorSet: ColorSet = if (colorScheme.theme.isDark) {
+        ColorSet(Color.Black, Color.White)
+    } else {
+        colorScheme.surfaceContainerLow
+    },
     content: @Composable () -> Unit
 ) {
     CompositionLocalProvider(LocalColorSet provides colorSet) {
@@ -85,8 +85,7 @@ fun RootBackground(
                 .semantics(mergeDescendants = false) {
                     isTraversalGroup = true
                 }
-                .pointerInput(Unit) {},
-            propagateMinConstraints = true
+                .pointerInput(Unit) {}
         ) {
             content()
         }
@@ -140,7 +139,7 @@ fun Surface(
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    indication: Indication? = rememberRipple(),
+    indication: Indication? = ripple(),
     contentAlignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
@@ -183,7 +182,7 @@ fun Surface(
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    indication: Indication? = rememberRipple(),
+    indication: Indication? = ripple(),
     contentAlignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit
@@ -227,7 +226,7 @@ fun Surface(
     shadowAlpha: Float = 0.1f,
     border: BorderStroke? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    indication: Indication? = rememberRipple(),
+    indication: Indication? = ripple(),
     contentAlignment: Alignment = Alignment.TopStart,
     propagateMinConstraints: Boolean = true,
     content: @Composable () -> Unit

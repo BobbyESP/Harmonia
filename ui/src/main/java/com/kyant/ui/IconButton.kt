@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.ripple.rememberRipple
 import com.kyant.ui.style.color.ColorSet
 import com.kyant.ui.style.color.LocalColorSet
 
@@ -42,7 +41,7 @@ fun IconButton(
                 enabled = enabled,
                 role = Role.Button,
                 interactionSource = interactionSource,
-                indication = rememberRipple(
+                indication = ripple(
                     bounded = false,
                     radius = size / 2
                 )
