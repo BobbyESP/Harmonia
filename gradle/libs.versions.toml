@@ -32,6 +32,7 @@ compose-foundation = { group = "androidx.compose.foundation", name = "foundation
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-material-icons-extended" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-m3" }
 compose-material3-adaptive = { module = "androidx.compose.material3:material3-adaptive", version.ref = "compose-m3-adaptive" }
+compose-material3-windowsizeclass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "compose-m3" }
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose" }
 

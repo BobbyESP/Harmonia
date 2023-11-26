@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.material3.adaptive)
+    implementation(libs.compose.material3.windowsizeclass)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
