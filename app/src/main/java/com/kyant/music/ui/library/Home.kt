@@ -49,7 +49,7 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             SingleLineText(
-                text = "Home",
+                text = "Library",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)

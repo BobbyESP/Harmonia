@@ -1,17 +1,21 @@
 package com.kyant.music.ui.library
 
-import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.adaptive.collectWindowSizeAsState
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -19,8 +23,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import com.kyant.music.ui.AppScreen
 import com.kyant.ui.BoxNoInline
 import com.kyant.ui.navigation.OnBackPressed
@@ -45,10 +49,8 @@ fun MusicLibrary() {
             LibraryNavigator(scope, constraints.maxWidth.toFloat())
         }
 
-        val context = LocalContext.current
-        val windowSizeClass = calculateWindowSizeClass(activity = context as Activity)
-
-        if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+        val windowAdaptiveInfo = currentWindowAdaptiveInfo()
+        if (windowAdaptiveInfo.windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
             val size by collectWindowSizeAsState()
             BoxNoInline(
                 modifier = Modifier.draggable(
@@ -95,13 +97,32 @@ fun MusicLibrary() {
                 }
             }
         } else {
-            val hingeWidth = 24.dp
+            val isVerticallyFoldable = remember(windowAdaptiveInfo) {
+                windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.isNotEmpty()
+            }
+            val hingeWidth = if (isVerticallyFoldable) {
+                windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.first().width +
+                    with(LocalDensity.current) {
+                        WindowInsets.safeContent.asPaddingValues().run {
+                            val layoutDirection = LocalLayoutDirection.current
+                            calculateStartPadding(layoutDirection) + calculateEndPadding(layoutDirection)
+                        }.toPx()
+                    }
+            } else {
+                with(LocalDensity.current) {
+                    WindowInsets.safeContent.asPaddingValues().run {
+                        val layoutDirection = LocalLayoutDirection.current
+                        minOf(calculateStartPadding(layoutDirection), calculateEndPadding(layoutDirection))
+                    }.toPx()
+                }
+            }
+            val separatedFraction = if (isVerticallyFoldable) 0.5f else 1f / 3f
 
             BoxNoInline(
                 modifier = Modifier.layout { measurable, constraints ->
-                    val fraction = lerp(1f, 1f / 3f, libraryNavigator.paneExpandProgressValue)
+                    val fraction = lerp(1f, separatedFraction, libraryNavigator.paneExpandProgressValue)
                     val maxWidth =
-                        (fraction * libraryNavigator.width - (1f - fraction) * hingeWidth.toPx() / 2f).roundToInt()
+                        (fraction * libraryNavigator.width - (1f - fraction) * hingeWidth).roundToInt()
                     val placeable = measurable.measure(constraints.copy(maxWidth = maxWidth))
                     layout(maxWidth, constraints.maxHeight) {
                         placeable.placeRelative(0, 0)
@@ -114,10 +135,10 @@ fun MusicLibrary() {
             AnimatedVisibility(
                 visible = libraryNavigator.targetPaneExpandProgress == 1,
                 modifier = Modifier.layout { measurable, constraints ->
-                    val fraction = 1f - lerp(1f, 1f / 3f, libraryNavigator.paneExpandProgressValue)
-                    val endMaxWidth = (2f / 3f * (libraryNavigator.width - hingeWidth.toPx())).roundToInt()
+                    val fraction = 1f - lerp(1f, separatedFraction, libraryNavigator.paneExpandProgressValue)
+                    val endMaxWidth = ((1f - separatedFraction) * (libraryNavigator.width - hingeWidth)).roundToInt()
                     val paddingStart =
-                        ((1f - fraction) * libraryNavigator.width + fraction * hingeWidth.toPx()).roundToInt()
+                        ((1f - fraction) * libraryNavigator.width + fraction * hingeWidth).roundToInt()
                     val placeable = measurable.measure(constraints.copy(maxWidth = endMaxWidth))
                     layout(endMaxWidth, constraints.maxHeight) {
                         placeable.placeRelative(paddingStart, 0)
