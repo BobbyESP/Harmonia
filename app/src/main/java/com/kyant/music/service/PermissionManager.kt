@@ -7,21 +7,18 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
-import com.kyant.music.storage.MediaStore
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Stable
 class PermissionManager(private val context: Context) {
 
-    val permissions = listOfNotNull(
+    private val permissions = listOfNotNull(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.READ_MEDIA_AUDIO
         } else {
@@ -48,11 +45,6 @@ class PermissionManager(private val context: Context) {
 
     fun processPermissionResult(granted: Boolean) {
         isGranted = granted
-        if (granted) {
-            CoroutineScope(Dispatchers.IO).launch {
-                MediaStore.scan(context)
-            }
-        }
     }
 
     fun launchAppInfo() {
@@ -60,5 +52,9 @@ class PermissionManager(private val context: Context) {
             data = Uri.fromParts("package", context.packageName, null)
         }
         context.startActivity(intent)
+    }
+
+    fun grant(launcher: ActivityResultLauncher<Array<String>>) {
+        launcher.launch(permissions.toTypedArray())
     }
 }
