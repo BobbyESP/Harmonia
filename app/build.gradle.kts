@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.protobuf)
     implementation(libs.androidx.core)
+    implementation(libs.androidx.window)
     implementation(libs.compose.foundation)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)

@@ -6,13 +6,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.safeContent
-import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.adaptive.collectWindowSizeAsState
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -24,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.dp
 import com.kyant.music.ui.AppScreen
 import com.kyant.ui.BoxNoInline
 import com.kyant.ui.navigation.OnBackPressed
@@ -42,7 +38,8 @@ fun MusicLibrary() {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .safeContentPadding()
+            .safeDrawingPadding()
+            .padding(horizontal = 16.dp)
     ) {
         val scope = rememberCoroutineScope()
         val libraryNavigator = remember(constraints) {
@@ -108,19 +105,9 @@ fun MusicLibrary() {
             }
             val hingeWidth = if (isVerticallyFoldable) {
                 windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.first().width +
-                    with(LocalDensity.current) {
-                        WindowInsets.safeContent.asPaddingValues().run {
-                            val layoutDirection = LocalLayoutDirection.current
-                            calculateStartPadding(layoutDirection) + calculateEndPadding(layoutDirection)
-                        }.toPx()
-                    }
+                    with(LocalDensity.current) { 24.dp.toPx() }
             } else {
-                with(LocalDensity.current) {
-                    WindowInsets.safeContent.asPaddingValues().run {
-                        val layoutDirection = LocalLayoutDirection.current
-                        minOf(calculateStartPadding(layoutDirection), calculateEndPadding(layoutDirection))
-                    }.toPx()
-                }
+                with(LocalDensity.current) { 24.dp.toPx() }
             }
             val separatedFraction = if (isVerticallyFoldable) 0.5f else 1f / 3f
 
