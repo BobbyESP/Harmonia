@@ -2,7 +2,6 @@ package com.kyant.music.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import com.kyant.music.storage.FakeMediaStore
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.library.MusicLibrary
 import com.kyant.music.ui.theme.DefaultTheme
@@ -36,7 +35,7 @@ open class AppScreen(isHome: Boolean = false) : Screen(isHome) {
 fun AppScreenPreview() {
     SideEffect {
         runBlocking {
-            (mediaStore as FakeMediaStore).scan()
+            mediaStore.scan()
         }
     }
     DefaultTheme {
