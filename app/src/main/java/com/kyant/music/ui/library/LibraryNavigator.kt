@@ -39,6 +39,7 @@ class LibraryNavigator(
 
     fun navigate(route: ListPaneRoute) {
         listPaneRoute = route
+        expandPane()
     }
 
     fun expandPane(initialVelocity: Float = 0f) {

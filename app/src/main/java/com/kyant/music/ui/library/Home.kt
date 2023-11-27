@@ -103,7 +103,7 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             Surface(
-                onClick = { expandPane() },
+                onClick = { navigate(ListPaneRoute.Songs) },
                 shape = Rounding.ExtraSmall.asRoundedShape(),
                 colorSet = colorScheme.surfaceContainerLowest
             ) {
@@ -123,6 +123,36 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
                     ) {
                         Text(
                             text = "Songs",
+                            style = typography.bodyLarge
+                        )
+                    }
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.NavigateNext,
+                        emphasis = 0.5f
+                    )
+                }
+            }
+            Surface(
+                onClick = { navigate(ListPaneRoute.Albums) },
+                shape = Rounding.ExtraSmall.asRoundedShape(),
+                colorSet = colorScheme.surfaceContainerLowest
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp, 8.dp, 8.dp, 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier.size(48.dp),
+                        contentAlignment = Alignment.Center
+                    ) {}
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(
+                            text = "Albums",
                             style = typography.bodyLarge
                         )
                     }

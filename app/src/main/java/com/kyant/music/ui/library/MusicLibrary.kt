@@ -93,7 +93,13 @@ fun MusicLibrary() {
                         }
                     }
                 ) {
-                    libraryNavigator.Songs()
+                    with(libraryNavigator) {
+                        when (listPaneRoute) {
+                            ListPaneRoute.Songs -> Songs()
+                            ListPaneRoute.Albums -> Albums()
+                            else -> {}
+                        }
+                    }
                 }
             }
         } else {
@@ -147,7 +153,13 @@ fun MusicLibrary() {
                 enter = fadeIn(Easing.EmphasizedAccelerate with Duration.SHORT_4),
                 exit = fadeOut(Easing.EmphasizedDecelerate with Duration.SHORT_4)
             ) {
-                libraryNavigator.Songs()
+                with(libraryNavigator) {
+                    when (listPaneRoute) {
+                        ListPaneRoute.Songs -> Songs()
+                        ListPaneRoute.Albums -> Albums()
+                        else -> {}
+                    }
+                }
             }
             OnBackPressed(enabled = { libraryNavigator.targetPaneExpandProgress == 1 }) {
                 libraryNavigator.collapsePane()
