@@ -17,8 +17,8 @@ val LocalNavigator = staticCompositionLocalOf<Navigator<out Screen>?> { null }
 
 @Suppress("UNCHECKED_CAST")
 @Composable
-fun <S : Screen> currentNavigator(): Navigator<S> {
-    return LocalNavigator.current as Navigator<S>
+fun <S : Screen> currentNavigator(): Navigator<S>? {
+    return LocalNavigator.current as? Navigator<S>
 }
 
 @Composable

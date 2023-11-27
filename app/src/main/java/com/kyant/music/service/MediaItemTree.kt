@@ -9,7 +9,7 @@ import com.kyant.music.data.Album
 import com.kyant.music.data.Artist
 import com.kyant.music.data.Genre
 import com.kyant.music.data.song.Song
-import com.kyant.music.storage.MediaStore
+import com.kyant.music.storage.mediaStore
 
 @Immutable
 object MediaItemTree : BaseMediaItemTree {
@@ -25,10 +25,10 @@ object MediaItemTree : BaseMediaItemTree {
         mediaId == artists.mediaId -> artists
         mediaId == genres.mediaId -> genres
 
-        mediaId.startsWith(Song.MEDIA_ID_PREFIX) -> MediaStore.getSong(mediaId)
-        mediaId.startsWith(Album.MEDIA_ID_PREFIX) -> MediaStore.getAlbum(mediaId)
-        mediaId.startsWith(Artist.MEDIA_ID_PREFIX) -> MediaStore.getArtist(mediaId)
-        mediaId.startsWith(Genre.MEDIA_ID_PREFIX) -> MediaStore.getGenre(mediaId)
+        mediaId.startsWith(Song.MEDIA_ID_PREFIX) -> mediaStore.getSong(mediaId)
+        mediaId.startsWith(Album.MEDIA_ID_PREFIX) -> mediaStore.getAlbum(mediaId)
+        mediaId.startsWith(Artist.MEDIA_ID_PREFIX) -> mediaStore.getArtist(mediaId)
+        mediaId.startsWith(Genre.MEDIA_ID_PREFIX) -> mediaStore.getGenre(mediaId)
 
         else -> null
     }
@@ -47,25 +47,25 @@ object MediaItemTree : BaseMediaItemTree {
         ":songs",
         "Songs",
         { "$it songs" },
-        { MediaStore.songs }
+        { mediaStore.songs }
     )
     private val albums = category(
         ":albums",
         "Albums",
         { "$it albums" },
-        { MediaStore.albums }
+        { mediaStore.albums }
     )
     private val artists = category(
         ":artists",
         "Artists",
         { "$it artists" },
-        { MediaStore.artists }
+        { mediaStore.artists }
     )
     private val genres = category(
         ":genres",
         "Genres",
         { "$it genres" },
-        { MediaStore.genres }
+        { mediaStore.genres }
     )
 
     private val categories = listOf(songs, albums, artists, genres)

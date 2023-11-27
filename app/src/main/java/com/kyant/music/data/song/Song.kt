@@ -9,7 +9,7 @@ import com.kyant.media.core.item.PlayableItem
 import com.kyant.music.data.Album
 import com.kyant.music.data.Artist
 import com.kyant.music.data.Genre
-import com.kyant.music.storage.ResourceManager
+import com.kyant.music.storage.resourceManager
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -51,10 +51,10 @@ data class Song(
         get() = source.uri
 
     val thumbnailUri: Uri?
-        get() = ResourceManager.getThumbnailUri(this)
+        get() = resourceManager.getThumbnailUri(this)
 
     val coverArt: Bitmap?
-        get() = ResourceManager.getFrontCover(this)
+        get() = resourceManager.getFrontCover(this)
 
     val title: String
         get() = metadata.trackTitle
@@ -94,7 +94,7 @@ data class Song(
         get() = fileProperties.folderName
 
     val lyrics: String?
-        get() = ResourceManager.getLyrics(this)
+        get() = resourceManager.getLyrics(this)
 
     fun isArtistUnknown(): Boolean {
         return artists.size == 1 && artists.first().isUnknown()

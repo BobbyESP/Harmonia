@@ -3,7 +3,7 @@ package com.kyant.music.data
 import com.kyant.media.core.item.BrowsableItem
 import com.kyant.media.core.item.MediaDescription
 import com.kyant.music.data.song.Song
-import com.kyant.music.storage.MediaStore
+import com.kyant.music.storage.mediaStore
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.Serializable
@@ -23,7 +23,7 @@ value class Artist(private val name: String?) : BrowsableItem, SongList {
         get() = MediaDescription(title = title)
 
     override val songs: ImmutableList<Song>
-        get() = MediaStore.songSequence.filter { it.artists.contains(this) }
+        get() = mediaStore.songSequence.filter { it.artists.contains(this) }
             .sortedBy { it.metadata.trackNumber }
             .sortedBy { it.metadata.discNumber }
             .sortedBy { it.album.title }

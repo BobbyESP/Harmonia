@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.compose.foundation)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.compose.material3.adaptive)
     implementation(libs.compose.material3.windowsizeclass)
@@ -94,4 +95,5 @@ dependencies {
     implementation("com.github.GIGAMOLE:ComposeFadingEdges:1.0.4") // https://github.com/GIGAMOLE/ComposeFadingEdges
     implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
     implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.3.1") // https://github.com/chrisbanes/haze
+    debugImplementation(libs.compose.ui.tooling)
 }

@@ -49,6 +49,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.kyant.ui.style.color.ColorSet
 import com.kyant.ui.style.color.LocalColorSet
 import com.kyant.ui.style.colorScheme
+import com.kyant.ui.util.thenIf
 import com.kyant.ui.util.thenIfNotNull
 
 @Composable
@@ -64,24 +65,29 @@ fun RootBackground(
 ) {
     CompositionLocalProvider(LocalColorSet provides colorSet) {
         val view = LocalView.current
-        val activity = view.context as Activity
+        val activity = view.context as? Activity
         val background = colorSet.color
         val isDark = colorScheme.theme.isDark
 
         LaunchedEffect(background) {
-            activity.window.decorView.setBackgroundColor(background.toArgb())
+            activity?.window?.decorView?.setBackgroundColor(background.toArgb())
         }
 
         LaunchedEffect(isDark) {
-            WindowInsetsControllerCompat(activity.window, view).apply {
-                isAppearanceLightStatusBars = !isDark
-                isAppearanceLightNavigationBars = !isDark
+            activity?.window?.let {
+                WindowInsetsControllerCompat(it, view).apply {
+                    isAppearanceLightStatusBars = !isDark
+                    isAppearanceLightNavigationBars = !isDark
+                }
             }
         }
 
         Box(
             modifier = modifier
                 .fillMaxSize()
+                .thenIf(activity == null) {
+                    background(background)
+                }
                 .semantics(mergeDescendants = false) {
                     isTraversalGroup = true
                 }

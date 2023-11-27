@@ -5,7 +5,7 @@ import android.net.Uri
 import com.kyant.media.core.item.BrowsableItem
 import com.kyant.media.core.item.MediaDescription
 import com.kyant.music.data.song.Song
-import com.kyant.music.storage.MediaStore
+import com.kyant.music.storage.mediaStore
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -30,7 +30,7 @@ data class Album(
         )
 
     override val songs: ImmutableList<Song>
-        get() = MediaStore.songSequence.filter { it.album == this }
+        get() = mediaStore.songSequence.filter { it.album == this }
             .sortedBy { it.metadata.trackNumber }
             .sortedBy { it.metadata.discNumber }
             .toImmutableList()
@@ -42,10 +42,10 @@ data class Album(
         get() = albumArtist.joinToString { it.title }
 
     val thumbnailUri: Uri?
-        get() = MediaStore.songSequence.find { it.album == this }?.thumbnailUri
+        get() = mediaStore.songSequence.find { it.album == this }?.thumbnailUri
 
     val coverArt: Bitmap?
-        get() = MediaStore.songSequence.find { it.album == this }?.coverArt
+        get() = mediaStore.songSequence.find { it.album == this }?.coverArt
 
     fun isUnknown(): Boolean {
         return name == null

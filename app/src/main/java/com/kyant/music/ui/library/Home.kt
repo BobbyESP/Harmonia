@@ -17,10 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.kyant.music.storage.MediaStore
+import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.AppScreen
 import com.kyant.ui.FilledTonalButton
 import com.kyant.ui.Icon
@@ -38,7 +37,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @Composable
-fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
+fun LibraryNavigator.Home(navigator: Navigator<AppScreen>?) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -66,33 +65,30 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
                 style = typography.headlineLarge
             )
         }
-        if (MediaStore.songs.isEmpty()) {
-            Surface(
-                shape = Rounding.Large.asSmoothRoundedShape()
+        Surface(
+            shape = Rounding.Large.asSmoothRoundedShape()
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                Text(
+                    text = "Scan your library",
+                    modifier = Modifier.padding(16.dp, 8.dp),
+                    style = typography.headlineSmall
+                )
+                FilledTonalButton(
+                    onClick = {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            mediaStore.scan()
+                        }
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    enabled = !mediaStore.isScanning
                 ) {
-                    Text(
-                        text = "Scan your library",
-                        modifier = Modifier.padding(16.dp, 8.dp),
-                        style = typography.headlineSmall
-                    )
-                    val context = LocalContext.current
-                    FilledTonalButton(
-                        onClick = {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                MediaStore.scan(context)
-                            }
-                        },
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        enabled = !MediaStore.isScanning
-                    ) {
-                        Text(text = "Scan")
-                    }
+                    Text(text = "Scan")
                 }
             }
         }
@@ -163,7 +159,7 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>) {
                 }
             }
             Surface(
-                onClick = { navigator.push(AppScreen.Settings) },
+                onClick = { navigator?.push(AppScreen.Settings) },
                 shape = Rounding.ExtraSmall.asRoundedShape(),
                 colorSet = colorScheme.surfaceContainerLowest
             ) {

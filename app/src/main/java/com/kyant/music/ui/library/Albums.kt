@@ -1,7 +1,6 @@
 package com.kyant.music.ui.library
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,8 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.kyant.music.storage.MediaStore
-import com.kyant.music.ui.theme.isDark
+import com.kyant.music.storage.mediaStore
 import com.kyant.music.util.AsyncImage
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
@@ -73,7 +71,7 @@ fun LibraryNavigator.Albums() {
             state = state,
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
-            items(MediaStore.albums, { album -> album.mediaId }) { album ->
+            items(mediaStore.albums, { album -> album.mediaId }) { album ->
                 Surface(
                     onClick = {},
                     shape = Rounding.ExtraSmall.asRoundedShape(),
@@ -85,15 +83,12 @@ fun LibraryNavigator.Albums() {
                             .padding(16.dp, 8.dp, 8.dp, 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box(
-                            modifier = Modifier.size(48.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            AsyncImage(
-                                model = album.thumbnailUri,
-                                modifier = Modifier.clip(Rounding.Small.asSmoothRoundedShape())
-                            )
-                        }
+                        AsyncImage(
+                            model = album.thumbnailUri,
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(Rounding.Small.asSmoothRoundedShape())
+                        )
                         Spacer(modifier = Modifier.width(12.dp))
                         Column(
                             modifier = Modifier.weight(1f)
@@ -104,7 +99,7 @@ fun LibraryNavigator.Albums() {
                             )
                             Text(
                                 text = album.displayAlbumArtist,
-                                emphasis = if (isDark) 0.6f else 0.5f,
+                                emphasis = 0.6f,
                                 style = typography.bodyLarge
                             )
                         }
@@ -112,7 +107,8 @@ fun LibraryNavigator.Albums() {
                         IconButton(onClick = {}) {
                             Icon(
                                 imageVector = Icons.Default.MoreVert,
-                                emphasis = 0.5f
+                                contentDescription = "More for ${album.title}",
+                                emphasis = 0.6f
                             )
                         }
                     }

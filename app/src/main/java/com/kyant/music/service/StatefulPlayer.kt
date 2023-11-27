@@ -144,7 +144,7 @@ class StatefulPlayer : Player {
     }
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             while (true) {
                 if (isPlaying) {
                     position = player.realPosition
