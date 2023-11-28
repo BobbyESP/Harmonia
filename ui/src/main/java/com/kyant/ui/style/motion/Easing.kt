@@ -1,7 +1,7 @@
 package com.kyant.ui.style.motion
 
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
-import com.kyant.ui.animation.CubicBezierEasing
 
 object Easing {
 
