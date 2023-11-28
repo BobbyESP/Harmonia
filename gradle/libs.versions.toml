@@ -23,7 +23,7 @@ coroutines = "1.7.3"
 kotlinx-collections-immutable = "0.3.6"
 serialization = "1.6.1"
 
-kyant-m3color = "2023.10.1"
+kyant-m3color = "2023.11.1"
 kyant-taglib = "1945944a49"
 
 [libraries]
