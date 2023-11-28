@@ -10,10 +10,10 @@ import com.kyant.ui.style.color.ColorScheme
 import com.kyant.ui.style.color.ColorTheme
 import com.kyant.ui.style.colorScheme
 
-val isDark
+val isLight
     @Composable
     @ReadOnlyComposable
-    get() = isSystemInDarkTheme()
+    get() = !isSystemInDarkTheme()
 
 @Composable
 fun DefaultTheme(content: @Composable () -> Unit) {
@@ -22,7 +22,7 @@ fun DefaultTheme(content: @Composable () -> Unit) {
     } else {
         colorScheme.theme.sourceColor
     }
-    val colorScheme = ColorScheme(ColorTheme(sourceColor, isDark))
+    val colorScheme = ColorScheme(ColorTheme(sourceColor, !isLight))
 
     Theme(colorScheme = colorScheme, content = content)
 }

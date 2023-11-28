@@ -57,7 +57,7 @@ import com.kyant.ui.util.thenIfNotNull
 fun RootBackground(
     modifier: Modifier = Modifier,
     colorSet: ColorSet = if (colorScheme.theme.isDark) {
-        ColorSet(Color.Black, Color.White)
+        colorScheme.surfaceContainerLowest
     } else {
         colorScheme.surfaceContainerLow
     },

@@ -20,6 +20,7 @@ import com.kyant.music.service.PlaybackService
 import com.kyant.music.service.StatefulPlayer
 import com.kyant.music.ui.AppScreen
 import com.kyant.music.ui.WelcomeDialog
+import com.kyant.music.ui.theme.ColorToken
 import com.kyant.music.ui.theme.DefaultTheme
 import com.kyant.ui.RootBackground
 
@@ -50,7 +51,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DefaultTheme {
-                RootBackground {
+                RootBackground(colorSet = ColorToken.background) {
                     CompositionLocalProvider(value = LocalPlayer provides player) {
                         AppScreen.Container()
                     }
