@@ -8,8 +8,8 @@ import com.kyant.ui.style.color.ColorTheme
 
 @Composable
 fun DefaultTheme(content: @Composable () -> Unit) {
-    val sourceColor = ColorToken.sourceColor
-    val isDark = !ColorToken.isLight
+    val sourceColor = colorToken.sourceColor
+    val isDark = !colorToken.isLight
     val colorScheme = remember(sourceColor, isDark) {
         ColorScheme(ColorTheme(sourceColor, isDark))
     }

@@ -4,9 +4,13 @@ import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.res.colorResource
 import com.kyant.ui.style.colorScheme
 
+val colorToken = ColorToken
+
+@Stable
 object ColorToken {
 
     val sourceColor
