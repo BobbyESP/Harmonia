@@ -1,28 +1,18 @@
 package com.kyant.music.ui.theme
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.ui.res.colorResource
+import androidx.compose.runtime.remember
 import com.kyant.ui.style.Theme
 import com.kyant.ui.style.color.ColorScheme
 import com.kyant.ui.style.color.ColorTheme
-import com.kyant.ui.style.colorScheme
-
-val isLight
-    @Composable
-    @ReadOnlyComposable
-    get() = !isSystemInDarkTheme()
 
 @Composable
 fun DefaultTheme(content: @Composable () -> Unit) {
-    val sourceColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        colorResource(id = android.R.color.system_accent1_600)
-    } else {
-        colorScheme.theme.sourceColor
+    val sourceColor = ColorToken.sourceColor
+    val isDark = !ColorToken.isLight
+    val colorScheme = remember(sourceColor, isDark) {
+        ColorScheme(ColorTheme(sourceColor, isDark))
     }
-    val colorScheme = ColorScheme(ColorTheme(sourceColor, !isLight))
 
     Theme(colorScheme = colorScheme, content = content)
 }
