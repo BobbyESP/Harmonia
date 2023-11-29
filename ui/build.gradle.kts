@@ -36,7 +36,9 @@ android {
                 "androidx.compose.animation.core.ExperimentalTransitionApi," +
                 "androidx.compose.foundation.ExperimentalFoundationApi," +
                 "androidx.compose.foundation.layout.ExperimentalLayoutApi," +
-                "androidx.compose.ui.ExperimentalComposeUiApi"
+                "androidx.compose.ui.ExperimentalComposeUiApi",
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:experimentalStrongSkipping=true"
         )
     }
     buildFeatures {

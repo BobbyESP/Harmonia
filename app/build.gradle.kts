@@ -47,7 +47,9 @@ android {
                 "androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi," +
                 "androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi," +
                 "androidx.compose.ui.ExperimentalComposeUiApi," +
-                "com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi"
+                "com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi",
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:experimentalStrongSkipping=true"
         )
     }
     buildFeatures {
