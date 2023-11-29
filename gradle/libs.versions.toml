@@ -29,28 +29,28 @@ kyant-taglib = "1945944a49"
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
-androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
-androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
-androidx-media = { module = "androidx.media:media", version.ref = "media" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-media = { group = "androidx.media", name = "media", version.ref = "media" }
 androidx-window = { group = "androidx.window", name = "window", version.ref = "window" }
 
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-material-icons-extended" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-m3" }
-compose-material3-adaptive = { module = "androidx.compose.material3:material3-adaptive", version.ref = "compose-m3-adaptive" }
+compose-material3-adaptive = { group = "androidx.compose.material3", name = "material3-adaptive", version.ref = "compose-m3-adaptive" }
 compose-material3-windowsizeclass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "compose-m3" }
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "compose" }
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
 
-kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }
-kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "serialization" }
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core-jvm", version.ref = "serialization" }
+kotlinx-serialization-protobuf = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-protobuf", version.ref = "serialization" }
 
-kyant-m3color = { module = "com.github.Kyant0:m3color", version.ref = "kyant-m3color" }
-kyant-taglib = { module = "com.github.Kyant0:taglib", version.ref = "kyant-taglib" }
+kyant-m3color = { group = "com.github.Kyant0", name = "m3color", version.ref = "kyant-m3color" }
+kyant-taglib = { group = "com.github.Kyant0", name = "taglib", version.ref = "kyant-taglib" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
