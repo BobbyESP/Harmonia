@@ -64,7 +64,11 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>?) {
                 style = typography.headlineLarge
             )
         }
+
         Surface(
+            modifier = Modifier.graphicsLayer {
+                translationX = paneExpandProgressValue * (-72).dp.toPx()
+            },
             shape = Rounding.Large.asSmoothRoundedShape()
         ) {
             Column(
@@ -91,6 +95,7 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>?) {
                 }
             }
         }
+
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
