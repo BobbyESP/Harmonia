@@ -1,5 +1,6 @@
 package com.kyant.music.ui.library
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +46,7 @@ fun LibraryNavigator.Songs() {
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Box(
-            modifier = Modifier.padding(vertical = 24.dp)
+            modifier = Modifier.padding(top = 24.dp)
         ) {
             SingleLineText(
                 text = "Songs",
@@ -63,6 +65,34 @@ fun LibraryNavigator.Songs() {
                 textAlign = TextAlign.Center,
                 style = typography.headlineLarge
             )
+        }
+
+        Surface(
+            modifier = Modifier.graphicsLayer {
+                translationX = (1f - paneExpandProgressValue) * 72.dp.toPx()
+            },
+            shape = Rounding.Full.asSmoothRoundedShape(),
+            colorSet = colorScheme.surfaceContainerHigh
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    modifier = Modifier.clickable {},
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Shuffle,
+                        size = 20.dp
+                    )
+                    Text(text = "Shuffle all")
+                }
+            }
         }
 
         val player = LocalPlayer.current
