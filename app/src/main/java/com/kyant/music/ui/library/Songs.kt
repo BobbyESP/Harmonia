@@ -1,6 +1,7 @@
 package com.kyant.music.ui.library
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -42,10 +43,8 @@ fun LibraryNavigator.Songs() {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+        Box(
+            modifier = Modifier.padding(vertical = 24.dp)
         ) {
             SingleLineText(
                 text = "Songs",
@@ -58,7 +57,7 @@ fun LibraryNavigator.Songs() {
                 color = colorScheme.primary.color,
                 emphasis = lerp(
                     0.8f,
-                    0.2f,
+                    0f,
                     (paneExpandProgressValue - targetPaneExpandProgress).absoluteValue * 2f
                 ),
                 textAlign = TextAlign.Center,

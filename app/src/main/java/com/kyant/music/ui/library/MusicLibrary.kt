@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuOpen
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.adaptive.collectWindowSizeAsState
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -16,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
@@ -23,6 +27,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.kyant.music.ui.AppScreen
 import com.kyant.ui.BoxNoInline
+import com.kyant.ui.Icon
+import com.kyant.ui.IconButton
 import com.kyant.ui.navigation.OnBackPressed
 import com.kyant.ui.navigation.currentNavigator
 import com.kyant.ui.style.motion.Duration
@@ -95,6 +101,40 @@ fun MusicLibrary() {
                             ListPaneRoute.Songs -> Songs()
                             ListPaneRoute.Albums -> Albums()
                             else -> {}
+                        }
+                    }
+                }
+
+                BoxNoInline {
+                    IconButton(
+                        onClick = {
+                            if (libraryNavigator.targetPaneExpandProgress < 0.5f) {
+                                libraryNavigator.expandPane()
+                            } else {
+                                libraryNavigator.collapsePane()
+                            }
+                        },
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .graphicsLayer {
+                                translationX = lerp(
+                                    size.width - 72.dp.toPx(),
+                                    0f,
+                                    libraryNavigator.paneExpandProgressValue
+                                )
+                                translationY = 40.dp.toPx()
+                            }
+                    ) {
+                        if (libraryNavigator.targetPaneExpandProgress < 0.5f) {
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Close menu"
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.MenuOpen,
+                                contentDescription = "Open menu"
+                            )
                         }
                     }
                 }

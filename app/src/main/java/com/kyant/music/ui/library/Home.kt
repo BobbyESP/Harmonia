@@ -43,10 +43,8 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>?) {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+        Box(
+            modifier = Modifier.padding(vertical = 24.dp)
         ) {
             SingleLineText(
                 text = "Library",
@@ -59,7 +57,7 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>?) {
                 color = colorScheme.primary.color,
                 emphasis = lerp(
                     0.8f,
-                    0.2f,
+                    0f,
                     (paneExpandProgressValue - targetPaneExpandProgress).absoluteValue * 2f
                 ),
                 textAlign = TextAlign.Center,
