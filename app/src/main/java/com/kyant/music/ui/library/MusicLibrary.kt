@@ -41,8 +41,8 @@ import com.kyant.music.util.AsyncImage
 import com.kyant.ui.BoxNoInline
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
+import com.kyant.ui.SingleLineText
 import com.kyant.ui.Surface
-import com.kyant.ui.Text
 import com.kyant.ui.navigation.OnBackPressed
 import com.kyant.ui.navigation.currentNavigator
 import com.kyant.ui.style.color.LocalColorSet
@@ -179,48 +179,51 @@ fun MusicLibrary() {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             song?.let { song ->
-                                Surface(
-                                    onClick = { player.playFromMediaId(song.mediaId) },
-                                    shape = Rounding.Small.asRoundedShape(),
-                                    colorSet = colorScheme.secondaryFixedDim
+                                Box(
+                                    modifier = Modifier.weight(1f)
                                 ) {
-                                    Row(
-                                        modifier = Modifier
-                                            .padding(8.dp)
-                                            .animateContentSize(),
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                        verticalAlignment = Alignment.CenterVertically
+                                    Surface(
+                                        onClick = { player.playFromMediaId(song.mediaId) },
+                                        shape = Rounding.Small.asRoundedShape(),
+                                        colorSet = colorScheme.secondaryFixedDim
                                     ) {
-                                        AsyncImage(
-                                            model = song.thumbnailUri,
-                                            modifier = Modifier
-                                                .size(32.dp)
-                                                .clip(Rounding.ExtraSmall.asSmoothRoundedShape())
-                                        )
                                         Row(
+                                            modifier = Modifier
+                                                .padding(8.dp, 8.dp, 16.dp, 8.dp)
+                                                .animateContentSize(),
+                                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                                             verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            Text(
-                                                text = song.title,
-                                                style = typography.bodyMedium
-                                            )
-                                            Box(
+                                            AsyncImage(
+                                                model = song.thumbnailUri,
                                                 modifier = Modifier
-                                                    .padding(horizontal = 6.dp)
-                                                    .size(2.5.dp)
-                                                    .clip(Rounding.Full.asRoundedShape())
-                                                    .background(LocalColorSet.current.onColor)
+                                                    .size(32.dp)
+                                                    .clip(Rounding.ExtraSmall.asSmoothRoundedShape())
                                             )
-                                            Text(
-                                                text = song.displayArtist,
-                                                emphasis = 0.6f,
-                                                style = typography.bodyMedium
-                                            )
+                                            Row(
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                SingleLineText(
+                                                    text = song.title,
+                                                    style = typography.bodyMedium
+                                                )
+                                                Box(
+                                                    modifier = Modifier
+                                                        .padding(horizontal = 6.dp)
+                                                        .size(2.5.dp)
+                                                        .clip(Rounding.Full.asRoundedShape())
+                                                        .background(LocalColorSet.current.onColor)
+                                                )
+                                                SingleLineText(
+                                                    text = song.displayArtist,
+                                                    emphasis = 0.6f,
+                                                    style = typography.bodyMedium
+                                                )
+                                            }
                                         }
                                     }
                                 }
                                 Row(
-                                    modifier = Modifier.weight(1f),
                                     horizontalArrangement = Arrangement.End,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
