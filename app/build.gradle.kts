@@ -77,10 +77,11 @@ android {
 dependencies {
     implementation(project(":ui"))
     implementation(project(":media"))
-    implementation(libs.kotlinx.collections.immutable)
-    implementation(libs.kotlinx.coroutines)
-    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.collections.immutable) // https://github.com/Kotlin/kotlinx.collections.immutable
+    implementation(libs.kotlinx.coroutines) // https://github.com/Kotlin/kotlinx.coroutines
+    implementation(libs.kotlinx.serialization.core) // https://github.com/Kotlin/kotlinx.serialization
     implementation(libs.kotlinx.serialization.protobuf)
+    implementation(libs.androidx.collection)
     implementation(libs.androidx.core)
     implementation(libs.androidx.window)
     implementation(libs.compose.foundation)

@@ -10,6 +10,7 @@ kotlin = "2.0.0-Beta1"
 compose-compiler = "1.5.5-dev-k2.0.0-Beta1-06b8ae672a4"
 
 activity = "1.9.0-SNAPSHOT"
+collection = "1.4.0-SNAPSHOT"
 compose = "1.7.0-SNAPSHOT"
 compose-material-icons-extended = "1.6.0-beta01"
 compose-m3 = "1.2.0-SNAPSHOT"
@@ -28,6 +29,7 @@ kyant-taglib = "1945944a49"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+androidx-collection = { group = "androidx.collection", name = "collection", version.ref = "collection" }
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
