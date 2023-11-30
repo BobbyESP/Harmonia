@@ -40,8 +40,7 @@ fun Settings() {
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Box(
-            modifier = Modifier.padding(vertical = 24.dp),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.padding(vertical = 24.dp)
         ) {
             IconButton(
                 onClick = { navigator?.pop() },
