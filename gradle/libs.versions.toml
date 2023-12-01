@@ -25,7 +25,7 @@ kotlinx-collections-immutable = "0.3.6"
 serialization = "1.6.2"
 
 kyant-m3color = "2023.11.1"
-kyant-taglib = "1945944a49"
+kyant-taglib = "db001aa85b"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
