@@ -184,7 +184,7 @@ fun MusicLibrary() {
                                 ) {
                                     Surface(
                                         onClick = { player.playFromMediaId(song.mediaId) },
-                                        shape = Rounding.Small.asRoundedShape(),
+                                        shape = Rounding.Small.asSmoothRoundedShape(),
                                         colorSet = colorScheme.secondaryFixedDim
                                     ) {
                                         Row(
@@ -223,6 +223,7 @@ fun MusicLibrary() {
                                         }
                                     }
                                 }
+
                                 Row(
                                     horizontalArrangement = Arrangement.End,
                                     verticalAlignment = Alignment.CenterVertically

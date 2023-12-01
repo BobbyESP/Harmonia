@@ -17,7 +17,7 @@ inline fun CardItem(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 48.dp),
+            .heightIn(min = 56.dp),
         shape = Rounding.ExtraSmall.asSmoothRoundedShape(),
         colorSet = colorToken.card
     ) {
