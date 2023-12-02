@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.res.colorResource
+import com.kyant.music.config.configStore
 import com.kyant.ui.style.colorScheme
 
 var colorToken = ColorToken
@@ -25,7 +26,11 @@ object ColorToken {
     val isLight
         @Composable
         @ReadOnlyComposable
-        get() = !isSystemInDarkTheme()
+        get() = if (valueToken.lightMode == "-1") {
+            !isSystemInDarkTheme()
+        } else {
+            configStore?.read("light-mode") == "1"
+        }
 
     val background
         @Composable
