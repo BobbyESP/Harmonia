@@ -10,10 +10,10 @@ var valueToken = ValueToken
 @Stable
 object ValueToken {
 
-    val lightMode = mutableConfigStateOf("light-mode", "-1")
+    val lightMode = mutableConfigStateOf("ui.light-mode", -1)
 
     val safeBottomPadding = mutableConfigStateOf(
-        "safe-bottom-padding",
+        "ui.safe-bottom-padding",
         8.dp,
         ConfigConverter.Dp
     )
