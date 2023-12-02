@@ -12,7 +12,7 @@ class ConfigStore(
 ) {
 
     private val file by lazy {
-        File(filesDir, "$name.toml")
+        File(filesDir, "$name.map")
     }
 
     private val lock = ReentrantReadWriteLock()
