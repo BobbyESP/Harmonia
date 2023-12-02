@@ -26,9 +26,6 @@ class MutableConfigState<T>(
 
     init {
         Configs[key] = Config(key, component1(), initialValue)
-        if (configStore?.read(key) == null) {
-            configStore?.edit(key, converter.save(initialValue))
-        }
     }
 
     fun reset() {
