@@ -10,10 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.geometry.Rect
+import com.kyant.media.core.player.EmptyPlayer
 import com.kyant.media.session.MediaBrowserService
 import com.kyant.music.service.LocalPlayer
 import com.kyant.music.service.PlaybackService
@@ -24,24 +21,19 @@ import com.kyant.music.ui.style.DefaultTheme
 import com.kyant.music.ui.style.colorToken
 import com.kyant.ui.RootBackground
 
-var dialogRect by mutableStateOf(Rect.Zero)
-
 class MainActivity : ComponentActivity() {
 
     private val player = StatefulPlayer()
-
-    private var isBound = false
 
     private val connection = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val binder = service as MediaBrowserService.LocalBinder
             player.setPlayer(binder.getPlayer())
-            isBound = true
         }
 
         override fun onServiceDisconnected(name: ComponentName) {
-            isBound = false
+            player.setPlayer(EmptyPlayer())
         }
     }
 
@@ -76,15 +68,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
-        if (!isBound) return
         unbindService(connection)
-        isBound = false
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (!isBound) return
-        unbindService(connection)
-        isBound = false
     }
 }
