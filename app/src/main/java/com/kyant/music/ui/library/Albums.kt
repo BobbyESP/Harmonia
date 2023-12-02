@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kyant.music.storage.mediaStore
-import com.kyant.music.ui.theme.colorToken
+import com.kyant.music.ui.style.colorToken
 import com.kyant.music.util.AsyncImage
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton

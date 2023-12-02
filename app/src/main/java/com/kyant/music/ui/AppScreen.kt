@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.library.MusicLibrary
-import com.kyant.music.ui.theme.DefaultTheme
+import com.kyant.music.ui.style.DefaultTheme
 import com.kyant.music.util.MultiPrev
 import com.kyant.ui.RootBackground
 import com.kyant.ui.navigation.NavigationScreens

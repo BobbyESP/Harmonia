@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.kyant.music.service.LocalPlayer
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.AppScreen
+import com.kyant.music.ui.style.valueToken
 import com.kyant.music.util.AsyncImage
 import com.kyant.ui.BoxNoInline
 import com.kyant.ui.Icon
@@ -160,7 +161,9 @@ fun MusicLibrary() {
                 }
 
                 BoxNoInline(
-                    modifier = Modifier.align(Alignment.BottomCenter)
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = valueToken.safeBottomPadding)
                 ) {
                     Surface(
                         shape = Rounding.Full.asSmoothRoundedShape(),

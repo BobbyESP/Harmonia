@@ -1,4 +1,4 @@
-package com.kyant.music.ui.theme
+package com.kyant.music.ui.style
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -8,7 +8,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.ui.res.colorResource
 import com.kyant.ui.style.colorScheme
 
-val colorToken = ColorToken
+var colorToken = ColorToken
 
 @Stable
 object ColorToken {

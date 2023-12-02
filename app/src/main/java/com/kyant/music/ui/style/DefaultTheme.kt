@@ -1,4 +1,4 @@
-package com.kyant.music.ui.theme
+package com.kyant.music.ui.style
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
