@@ -1,9 +1,6 @@
 package com.kyant.music.ui.library
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -44,13 +41,9 @@ import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
 import com.kyant.ui.SingleLineText
 import com.kyant.ui.Surface
-import com.kyant.ui.navigation.OnBackPressed
 import com.kyant.ui.navigation.currentNavigator
 import com.kyant.ui.style.color.LocalColorSet
 import com.kyant.ui.style.colorScheme
-import com.kyant.ui.style.motion.Duration
-import com.kyant.ui.style.motion.Easing
-import com.kyant.ui.style.motion.Easing.with
 import com.kyant.ui.style.shape.Rounding
 import com.kyant.ui.style.typography
 import com.kyant.ui.util.lerp
@@ -105,17 +98,23 @@ fun MusicLibrary() {
                 }
 
                 BoxNoInline(
-                    modifier = Modifier.layout { measurable, constraints ->
-                        val placeable = measurable.measure(constraints)
-                        layout(constraints.maxWidth, constraints.maxHeight) {
-                            placeable.placeRelative(
-                                (
-                                    (1 - libraryNavigator.paneExpandProgressValue) * size.width
-                                    ).roundToInt(),
-                                0
-                            )
+                    modifier = Modifier
+                        .layout { measurable, constraints ->
+                            val placeable = measurable.measure(constraints)
+                            layout(constraints.maxWidth, constraints.maxHeight) {
+                                placeable.placeRelative(
+                                    (
+                                        (1 - libraryNavigator.paneExpandProgressValue) * size.width
+                                        ).roundToInt(),
+                                    0
+                                )
+                            }
                         }
-                    }
+                        .graphicsLayer {
+                            if (libraryNavigator.paneExpandProgressValue == 0f) {
+                                alpha = 0f
+                            }
+                        }
                 ) {
                     with(libraryNavigator) {
                         when (listPaneRoute) {
@@ -273,52 +272,33 @@ fun MusicLibrary() {
                 windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.isNotEmpty()
             }
             val hingeWidth = if (isVerticallyFoldable) {
-                windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.first().width +
-                    with(LocalDensity.current) { 24.dp.toPx() }
+                with(LocalDensity.current) {
+                    windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.first().width.toDp()
+                } + 24.dp
             } else {
-                with(LocalDensity.current) { 24.dp.toPx() }
+                24.dp
             }
             val separatedFraction = if (isVerticallyFoldable) 0.5f else 1f / 3f
 
-            BoxNoInline(
-                modifier = Modifier.layout { measurable, constraints ->
-                    val fraction = lerp(1f, separatedFraction, libraryNavigator.paneExpandProgressValue)
-                    val maxWidth =
-                        (fraction * libraryNavigator.width - (1f - fraction) * hingeWidth).roundToInt()
-                    val placeable = measurable.measure(constraints.copy(maxWidth = maxWidth))
-                    layout(maxWidth, constraints.maxHeight) {
-                        placeable.placeRelative(0, 0)
-                    }
-                }
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(hingeWidth)
             ) {
-                libraryNavigator.Home(navigator = navigator)
-            }
+                BoxNoInline(
+                    modifier = Modifier.fillMaxWidth(separatedFraction)
+                ) {
+                    libraryNavigator.Home(navigator = navigator)
+                }
 
-            AnimatedVisibility(
-                visible = libraryNavigator.targetPaneExpandProgress == 1,
-                modifier = Modifier.layout { measurable, constraints ->
-                    val fraction = 1f - lerp(1f, separatedFraction, libraryNavigator.paneExpandProgressValue)
-                    val endMaxWidth = ((1f - separatedFraction) * (libraryNavigator.width - hingeWidth)).roundToInt()
-                    val paddingStart =
-                        ((1f - fraction) * libraryNavigator.width + fraction * hingeWidth).roundToInt()
-                    val placeable = measurable.measure(constraints.copy(maxWidth = endMaxWidth))
-                    layout(endMaxWidth, constraints.maxHeight) {
-                        placeable.placeRelative(paddingStart, 0)
-                    }
-                },
-                enter = fadeIn(Easing.EmphasizedAccelerate with Duration.SHORT_4),
-                exit = fadeOut(Easing.EmphasizedDecelerate with Duration.SHORT_4)
-            ) {
-                with(libraryNavigator) {
-                    when (listPaneRoute) {
-                        ListPaneRoute.Songs -> Songs()
-                        ListPaneRoute.Albums -> Albums()
-                        else -> {}
+                BoxNoInline {
+                    with(libraryNavigator) {
+                        when (listPaneRoute) {
+                            ListPaneRoute.Songs -> Songs()
+                            ListPaneRoute.Albums -> Albums()
+                            else -> {}
+                        }
                     }
                 }
-            }
-            OnBackPressed(enabled = { libraryNavigator.targetPaneExpandProgress == 1 }) {
-                libraryNavigator.collapsePane()
             }
         }
     }

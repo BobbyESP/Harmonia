@@ -66,9 +66,6 @@ fun LibraryNavigator.Home(navigator: Navigator<AppScreen>?) {
         }
 
         Surface(
-            modifier = Modifier.graphicsLayer {
-                translationX = paneExpandProgressValue * (-72).dp.toPx()
-            },
             shape = Rounding.Large.asSmoothRoundedShape()
         ) {
             Column(
