@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.AppScreen
 import com.kyant.music.ui.style.colorToken
+import com.kyant.music.ui.style.valueToken
 import com.kyant.ui.FilledTonalButton
 import com.kyant.ui.Icon
 import com.kyant.ui.SingleLineText
@@ -40,7 +41,9 @@ import kotlin.math.absoluteValue
 @Composable
 fun LibraryNavigator.Home(navigator: Navigator<AppScreen>?) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 72.dp + valueToken.safeBottomPadding.value),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Box(

@@ -1,6 +1,5 @@
 package com.kyant.music.ui.library
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -176,91 +175,88 @@ fun MusicLibrary() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp, 8.dp),
+                                .padding(16.dp, 12.dp),
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            song?.let { song ->
-                                Box(
-                                    modifier = Modifier.weight(1f)
-                                ) {
-                                    Surface(
-                                        onClick = { player.playFromMediaId(song.mediaId) },
-                                        shape = Rounding.Small.asSmoothRoundedShape(),
-                                        colorSet = colorScheme.secondaryFixedDim
-                                    ) {
-                                        Row(
-                                            modifier = Modifier
-                                                .padding(8.dp, 8.dp, 16.dp, 8.dp)
-                                                .animateContentSize(),
-                                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            AsyncImage(
-                                                model = song.thumbnailUri,
-                                                modifier = Modifier
-                                                    .size(32.dp)
-                                                    .clip(Rounding.ExtraSmall.asSmoothRoundedShape())
-                                            )
-                                            Row(
-                                                verticalAlignment = Alignment.CenterVertically
-                                            ) {
-                                                SingleLineText(
-                                                    text = song.title,
-                                                    style = typography.bodyMedium
-                                                )
-                                                Box(
-                                                    modifier = Modifier
-                                                        .padding(horizontal = 6.dp)
-                                                        .size(2.5.dp)
-                                                        .clip(Rounding.Full.asRoundedShape())
-                                                        .background(LocalColorSet.current.onColor)
-                                                )
-                                                SingleLineText(
-                                                    text = song.displayArtist,
-                                                    emphasis = 0.6f,
-                                                    style = typography.bodyMedium
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-
+                            Row(
+                                modifier = Modifier.weight(1f),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                AsyncImage(
+                                    model = song?.thumbnailUri,
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .clip(Rounding.ExtraSmall.asSmoothRoundedShape())
+                                )
                                 Row(
-                                    horizontalArrangement = Arrangement.End,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    IconButton(onClick = { player.skipToPrevious() }) {
-                                        Icon(
-                                            painter = painterResource(id = com.kyant.media.R.drawable.skip_previous),
-                                            contentDescription = "Previous"
+                                    SingleLineText(
+                                        text = song?.title ?: "No playing",
+                                        style = typography.bodyMedium
+                                    )
+                                    song?.displayArtist?.let { artist ->
+                                        Box(
+                                            modifier = Modifier
+                                                .padding(horizontal = 6.dp)
+                                                .size(2.5.dp)
+                                                .clip(Rounding.Full.asRoundedShape())
+                                                .background(LocalColorSet.current.onColor)
+                                        )
+                                        SingleLineText(
+                                            text = artist,
+                                            emphasis = 0.6f,
+                                            style = typography.bodyMedium
                                         )
                                     }
-                                    IconButton(onClick = {
+                                }
+                            }
+
+                            Row(
+                                horizontalArrangement = Arrangement.End,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                IconButton(
+                                    onClick = { player.skipToPrevious() },
+                                    size = 32.dp
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = com.kyant.media.R.drawable.skip_previous),
+                                        contentDescription = "Previous"
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {
                                         if (player.isPlaying) {
                                             player.pause()
                                         } else {
                                             player.play()
                                         }
-                                    }) {
-                                        if (player.isPlaying) {
-                                            Icon(
-                                                painter = painterResource(id = com.kyant.media.R.drawable.pause),
-                                                contentDescription = "Pause"
-                                            )
-                                        } else {
-                                            Icon(
-                                                painter = painterResource(id = com.kyant.media.R.drawable.play),
-                                                contentDescription = "Play"
-                                            )
-                                        }
-                                    }
-                                    IconButton(onClick = { player.skipToNext() }) {
+                                    },
+                                    size = 32.dp
+                                ) {
+                                    if (player.isPlaying) {
                                         Icon(
-                                            painter = painterResource(id = com.kyant.media.R.drawable.skip_next),
-                                            contentDescription = "Next"
+                                            painter = painterResource(id = com.kyant.media.R.drawable.pause),
+                                            contentDescription = "Pause"
+                                        )
+                                    } else {
+                                        Icon(
+                                            painter = painterResource(id = com.kyant.media.R.drawable.play),
+                                            contentDescription = "Play"
                                         )
                                     }
+                                }
+                                IconButton(
+                                    onClick = { player.skipToNext() },
+                                    size = 32.dp
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = com.kyant.media.R.drawable.skip_next),
+                                        contentDescription = "Next"
+                                    )
                                 }
                             }
                         }
