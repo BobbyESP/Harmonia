@@ -23,7 +23,7 @@ import kotlin.streams.toList as kotlinToList
 
 class AndroidMediaStore(private val context: Context) : com.kyant.music.storage.MediaStore() {
 
-    override val baseSongs = mutableSaveableListStateOf<Song>("songs")
+    override val baseSongs = mutableSaveableListStateOf<Song>("songs.lst")
 
     override val customFolders = mutableSaveableListStateOf<String>("custom_folders")
 
