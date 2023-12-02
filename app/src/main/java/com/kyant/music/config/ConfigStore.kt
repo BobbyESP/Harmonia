@@ -28,25 +28,19 @@ class ConfigStore(
             lock.write {
                 val regex = Regex("$key = .*")
                 val lines = file.readLines()
-                if (value == null) {
-                    file.writeText(
-                        lines.filterNot { it.matches(regex) }.joinToString("\n")
-                    )
+                val line = lines.firstOrNull { it.matches(regex) }
+                if (line == null) {
+                    file.appendText("$key = $value\n")
                 } else {
-                    val line = lines.firstOrNull { it.matches(regex) }
-                    if (line == null) {
-                        file.appendText("$key = $value\n")
-                    } else {
-                        file.writeText(
-                            lines.joinToString("\n") {
-                                if (it.matches(regex)) {
-                                    "$key = $value"
-                                } else {
-                                    it
-                                }
+                    file.writeText(
+                        lines.joinToString("\n") {
+                            if (it.matches(regex)) {
+                                "$key = $value"
+                            } else {
+                                it
                             }
-                        )
-                    }
+                        }
+                    )
                 }
             }
         } catch (e: Exception) {

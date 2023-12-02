@@ -26,7 +26,7 @@ object ColorToken {
     val isLight
         @Composable
         @ReadOnlyComposable
-        get() = if (valueToken.lightMode == "-1") {
+        get() = if (valueToken.lightMode.value == "-1") {
             !isSystemInDarkTheme()
         } else {
             configStore?.read("light-mode") == "1"

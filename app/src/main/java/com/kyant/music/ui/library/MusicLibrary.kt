@@ -163,7 +163,7 @@ fun MusicLibrary() {
                 BoxNoInline(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = valueToken.safeBottomPadding)
+                        .padding(bottom = valueToken.safeBottomPadding.value)
                 ) {
                     Surface(
                         shape = Rounding.Full.asSmoothRoundedShape(),
