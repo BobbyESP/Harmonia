@@ -20,7 +20,7 @@ import com.kyant.ui.BoxNoInline
 import kotlinx.coroutines.launch
 
 @Composable
-fun LibraryNavigator.LibraryContent(modifier: Modifier = Modifier) {
+fun LibraryState.LibraryContent(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)

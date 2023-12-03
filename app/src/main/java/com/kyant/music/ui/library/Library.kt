@@ -23,8 +23,8 @@ import com.kyant.ui.util.lerp
 import kotlinx.coroutines.launch
 
 @Composable
-fun MusicLibrary() {
-    with(LibraryNavigator) {
+fun Library() {
+    with(LibraryState) {
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()

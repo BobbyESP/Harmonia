@@ -33,7 +33,7 @@ import com.kyant.ui.style.shape.Rounding
 import com.kyant.ui.util.thenIf
 
 @Composable
-fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
+fun LibraryState.Songs(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp)

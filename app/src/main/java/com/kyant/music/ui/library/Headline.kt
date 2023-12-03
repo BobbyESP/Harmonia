@@ -15,7 +15,7 @@ import com.kyant.ui.util.lerp
 import kotlin.math.absoluteValue
 
 @Composable
-fun LibraryNavigator.Headline(
+fun LibraryState.Headline(
     text: String,
     modifier: Modifier = Modifier
 ) {

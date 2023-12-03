@@ -33,7 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun LibraryNavigator.LibraryMenu(modifier: Modifier = Modifier) {
+fun LibraryState.LibraryMenu(modifier: Modifier = Modifier) {
     val navigator = currentNavigator<AppScreen>()
 
     Column(

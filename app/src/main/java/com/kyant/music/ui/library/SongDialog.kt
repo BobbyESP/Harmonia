@@ -32,7 +32,7 @@ import com.kyant.ui.style.shape.Rounding
 import com.kyant.ui.style.typography
 
 @Composable
-fun LibraryNavigator.SongDialog() {
+fun LibraryState.SongDialog() {
     FullScreenDialog(
         visible = hasSelectedSong,
         onDismissRequest = { selectedSong = null }

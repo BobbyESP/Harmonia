@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Stable
-object LibraryNavigator {
+object LibraryState {
 
     var listPaneRoute by mutableStateOf(ListPaneRoute.Songs)
         private set

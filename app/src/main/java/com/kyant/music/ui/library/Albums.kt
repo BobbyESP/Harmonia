@@ -22,7 +22,7 @@ import com.kyant.ui.Text
 import com.kyant.ui.style.shape.Rounding
 
 @Composable
-fun LibraryNavigator.Albums(modifier: Modifier = Modifier) {
+fun LibraryState.Albums(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp)

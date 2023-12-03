@@ -11,7 +11,7 @@ import com.kyant.ui.IconButton
 import kotlinx.coroutines.launch
 
 @Composable
-fun LibraryNavigator.LibraryMenuButton(modifier: Modifier = Modifier) {
+fun LibraryState.LibraryMenuButton(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
     IconButton(
         onClick = {

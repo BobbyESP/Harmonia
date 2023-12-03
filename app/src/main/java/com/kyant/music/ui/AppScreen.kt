@@ -3,7 +3,7 @@ package com.kyant.music.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import com.kyant.music.storage.mediaStore
-import com.kyant.music.ui.library.MusicLibrary
+import com.kyant.music.ui.library.Library
 import com.kyant.music.ui.style.DefaultTheme
 import com.kyant.music.util.MultiPrev
 import com.kyant.ui.RootBackground
@@ -22,7 +22,7 @@ open class AppScreen(isHome: Boolean = false) : Screen(isHome) {
             val navigator = rememberNavigator<AppScreen>(homeScreen = MusicLibrary)
             NavigationScreens(navigator = navigator) { screen ->
                 when (screen) {
-                    MusicLibrary -> MusicLibrary()
+                    MusicLibrary -> Library()
                     Settings -> com.kyant.music.ui.settings.SettingsMenu()
                 }
             }
