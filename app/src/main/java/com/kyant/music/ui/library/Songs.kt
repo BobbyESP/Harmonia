@@ -2,7 +2,6 @@ package com.kyant.music.ui.library
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kyant.music.service.LocalPlayer
 import com.kyant.music.storage.mediaStore
@@ -30,14 +28,11 @@ import com.kyant.music.ui.style.colorToken
 import com.kyant.music.util.AsyncImage
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
-import com.kyant.ui.SingleLineText
 import com.kyant.ui.Surface
 import com.kyant.ui.Text
 import com.kyant.ui.style.colorScheme
 import com.kyant.ui.style.shape.Rounding
 import com.kyant.ui.style.typography
-import com.kyant.ui.util.lerp
-import kotlin.math.absoluteValue
 
 @Composable
 fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
@@ -45,27 +40,10 @@ fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Box(
+        Headline(
+            text = "Songs",
             modifier = Modifier.padding(top = 24.dp)
-        ) {
-            SingleLineText(
-                text = "Songs",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .graphicsLayer {
-                        translationX = (paneExpandProgressValue - targetPaneExpandProgress) * width / 2f
-                    },
-                color = colorScheme.primary.color,
-                emphasis = lerp(
-                    0.8f,
-                    0f,
-                    (paneExpandProgressValue - targetPaneExpandProgress).absoluteValue * 2f
-                ),
-                textAlign = TextAlign.Center,
-                style = typography.headlineLarge
-            )
-        }
+        )
 
         Surface(
             modifier = Modifier.graphicsLayer {
@@ -99,6 +77,9 @@ fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
         val state = rememberLazyListState()
         LazyColumn(
             modifier = Modifier
+                .graphicsLayer {
+                    translationX = (1f - paneExpandProgressValue) * 36.dp.toPx()
+                }
                 .clip(Rounding.Large.asSmoothRoundedShape()),
             state = state,
             verticalArrangement = Arrangement.spacedBy(2.dp)

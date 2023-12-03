@@ -18,22 +18,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.style.colorToken
 import com.kyant.music.util.AsyncImage
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
-import com.kyant.ui.SingleLineText
 import com.kyant.ui.Surface
 import com.kyant.ui.Text
-import com.kyant.ui.style.colorScheme
 import com.kyant.ui.style.shape.Rounding
 import com.kyant.ui.style.typography
-import com.kyant.ui.util.lerp
-import kotlin.math.absoluteValue
 
 @Composable
 fun LibraryNavigator.Albums(modifier: Modifier = Modifier) {
@@ -41,29 +35,10 @@ fun LibraryNavigator.Albums(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            SingleLineText(
-                text = "Albums",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .graphicsLayer {
-                        translationX = (paneExpandProgressValue - targetPaneExpandProgress) * width / 2f
-                    },
-                color = colorScheme.primary.color,
-                emphasis = lerp(
-                    0.8f,
-                    0.2f,
-                    (paneExpandProgressValue - targetPaneExpandProgress).absoluteValue * 2f
-                ),
-                textAlign = TextAlign.Center,
-                style = typography.headlineLarge
-            )
-        }
+        Headline(
+            text = "Albums",
+            modifier = Modifier.padding(top = 24.dp)
+        )
 
         val state = rememberLazyListState()
         LazyColumn(

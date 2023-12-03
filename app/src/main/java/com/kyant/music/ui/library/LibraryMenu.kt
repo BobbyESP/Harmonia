@@ -13,10 +13,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.NavigateNext
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.AppScreen
@@ -24,18 +23,14 @@ import com.kyant.music.ui.core.Card
 import com.kyant.music.ui.core.CardItem
 import com.kyant.ui.FilledTonalButton
 import com.kyant.ui.Icon
-import com.kyant.ui.SingleLineText
 import com.kyant.ui.Surface
 import com.kyant.ui.Text
 import com.kyant.ui.navigation.currentNavigator
-import com.kyant.ui.style.colorScheme
 import com.kyant.ui.style.shape.Rounding
 import com.kyant.ui.style.typography
-import com.kyant.ui.util.lerp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
 
 @Composable
 fun LibraryNavigator.LibraryMenu(modifier: Modifier = Modifier) {
@@ -45,27 +40,10 @@ fun LibraryNavigator.LibraryMenu(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Box(
-            modifier = Modifier.padding(vertical = 24.dp)
-        ) {
-            SingleLineText(
-                text = "Library",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .graphicsLayer {
-                        translationX = (paneExpandProgressValue - targetPaneExpandProgress) * width / 2f
-                    },
-                color = colorScheme.primary.color,
-                emphasis = lerp(
-                    0.8f,
-                    0f,
-                    (paneExpandProgressValue - targetPaneExpandProgress).absoluteValue * 2f
-                ),
-                textAlign = TextAlign.Center,
-                style = typography.headlineLarge
-            )
-        }
+        Headline(
+            text = "Library",
+            modifier = Modifier.padding(top = 24.dp)
+        )
 
         Column(
             modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -100,8 +78,14 @@ fun LibraryNavigator.LibraryMenu(modifier: Modifier = Modifier) {
             }
 
             Card {
+                val scope = rememberCoroutineScope()
+
                 CardItem(
-                    onClick = { navigate(ListPaneRoute.Songs) }
+                    onClick = {
+                        scope.launch {
+                            navigate(ListPaneRoute.Songs)
+                        }
+                    }
                 ) {
                     Row(
                         modifier = Modifier
@@ -129,7 +113,11 @@ fun LibraryNavigator.LibraryMenu(modifier: Modifier = Modifier) {
                     }
                 }
                 CardItem(
-                    onClick = { navigate(ListPaneRoute.Albums) }
+                    onClick = {
+                        scope.launch {
+                            navigate(ListPaneRoute.Albums)
+                        }
+                    }
                 ) {
                     Row(
                         modifier = Modifier

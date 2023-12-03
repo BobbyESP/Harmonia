@@ -4,30 +4,21 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MenuOpen
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.dp
-import com.kyant.music.ui.NPBar
-import com.kyant.music.ui.style.valueToken
 import com.kyant.music.util.DeviceSpecs
 import com.kyant.ui.BoxNoInline
-import com.kyant.ui.Icon
-import com.kyant.ui.IconButton
 import com.kyant.ui.util.lerp
-import kotlin.math.roundToInt
+import kotlinx.coroutines.launch
 
 @Composable
 fun MusicLibrary() {
@@ -37,125 +28,63 @@ fun MusicLibrary() {
             .safeDrawingPadding()
             .padding(horizontal = 16.dp)
     ) {
-        val scope = rememberCoroutineScope()
-        val libraryNavigator = remember(constraints) {
-            LibraryNavigator(scope, constraints.maxWidth.toFloat())
-        }
-
-        if (DeviceSpecs.isCompact) {
-            BoxNoInline(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .draggable(
-                        state = libraryNavigator.draggableState,
-                        orientation = Orientation.Horizontal,
-                        onDragStopped = { velocity -> libraryNavigator.fling(velocity) },
-                        reverseDirection = true
-                    )
-            ) {
-                val size = DeviceSpecs.size
-                libraryNavigator.LibraryMenu(
-                    modifier = Modifier.layout { measurable, constraints ->
-                        val placeable = measurable.measure(constraints)
-                        layout(constraints.maxWidth, constraints.maxHeight) {
-                            placeable.placeRelativeWithLayer(
-                                ((0 - libraryNavigator.paneExpandProgressValue) * size.width).roundToInt(),
-                                0
-                            ) {
-                                alpha = lerp(1f, 0f, libraryNavigator.paneExpandProgressValue)
-                            }
-                        }
-                    }
-                )
-
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    BoxNoInline(
-                        modifier = Modifier
-                            .weight(1f)
-                            .layout { measurable, constraints ->
-                                val placeable = measurable.measure(constraints)
-                                layout(constraints.maxWidth, constraints.maxHeight) {
-                                    if (libraryNavigator.paneExpandProgressValue > 0f) {
-                                        placeable.placeRelative(
-                                            ((1 - libraryNavigator.paneExpandProgressValue) * size.width).roundToInt(),
-                                            0
-                                        )
-                                    }
+        with(LibraryNavigator) {
+            if (DeviceSpecs.isCompact) {
+                val scope = rememberCoroutineScope()
+                BoxNoInline(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .draggable(
+                            state = remember(constraints) {
+                                draggableState(scope, constraints.maxWidth.toFloat())
+                            },
+                            orientation = Orientation.Horizontal,
+                            onDragStopped = { velocity ->
+                                scope.launch {
+                                    fling(velocity, constraints.maxWidth.toFloat())
                                 }
-                            }
-                    ) {
-                        with(libraryNavigator) {
-                            when (listPaneRoute) {
-                                ListPaneRoute.Songs -> Songs()
-                                ListPaneRoute.Albums -> Albums()
-                                else -> {}
+                            },
+                            reverseDirection = true
+                        )
+                ) {
+                    val screenWidth = DeviceSpecs.size.width
+
+                    LibraryMenu(
+                        modifier = Modifier.graphicsLayer {
+                            translationX = -paneExpandProgressValue * screenWidth
+                            alpha = 1f - paneExpandProgressValue
+                        }
+                    )
+
+                    LibraryContent(
+                        modifier = Modifier.graphicsLayer {
+                            translationX = (1f - paneExpandProgressValue) * screenWidth
+                            if (paneExpandProgressValue < 0f) {
+                                alpha = 0f
                             }
                         }
-                    }
+                    )
 
-                    NPBar(
-                        modifier = Modifier.padding(bottom = valueToken.safeBottomPadding.value)
+                    LibraryMenuButton(
+                        modifier = Modifier.graphicsLayer {
+                            translationX = lerp(
+                                screenWidth - 72.dp.toPx(),
+                                0f,
+                                paneExpandProgressValue
+                            )
+                            translationY = 40.dp.toPx()
+                        }
                     )
                 }
-
-                IconButton(
-                    onClick = {
-                        if (libraryNavigator.targetPaneExpandProgress < 0.5f) {
-                            libraryNavigator.expandPane()
-                        } else {
-                            libraryNavigator.collapsePane()
-                        }
-                    },
-                    modifier = Modifier.graphicsLayer {
-                        translationX = lerp(
-                            size.width - 72.dp.toPx(),
-                            0f,
-                            libraryNavigator.paneExpandProgressValue
-                        )
-                        translationY = 40.dp.toPx()
-                    }
+            } else {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(DeviceSpecs.hingeWidth + 24.dp)
                 ) {
-                    if (libraryNavigator.targetPaneExpandProgress < 0.5f) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = "Close menu"
-                        )
-                    } else {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.MenuOpen,
-                            contentDescription = "Open menu"
-                        )
-                    }
-                }
-            }
-        } else {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(DeviceSpecs.hingeWidth + 24.dp)
-            ) {
-                libraryNavigator.LibraryMenu(
-                    modifier = Modifier.fillMaxWidth(if (DeviceSpecs.isVerticallyFoldable) 0.5f else 1f / 3f)
-                )
-
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    BoxNoInline(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        with(libraryNavigator) {
-                            when (listPaneRoute) {
-                                ListPaneRoute.Songs -> Songs()
-                                ListPaneRoute.Albums -> Albums()
-                                else -> {}
-                            }
-                        }
-                    }
-
-                    NPBar(
-                        modifier = Modifier.padding(bottom = valueToken.safeBottomPadding.value)
+                    LibraryMenu(
+                        modifier = Modifier.fillMaxWidth(if (DeviceSpecs.isVerticallyFoldable) 0.5f else 1f / 3f)
                     )
+
+                    LibraryContent()
                 }
             }
         }
