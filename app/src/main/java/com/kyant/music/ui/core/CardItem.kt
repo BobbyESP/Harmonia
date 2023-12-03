@@ -10,19 +10,18 @@ import com.kyant.ui.Surface
 import com.kyant.ui.style.shape.Rounding
 
 @Composable
-inline fun CardItem(
-    crossinline onClick: () -> Unit,
+fun CardItem(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    crossinline content: @Composable () -> Unit
+    content: @Composable () -> Unit
 ) {
     Surface(
-        onClick = { onClick() },
+        onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp),
         shape = Rounding.ExtraSmall.asSmoothRoundedShape(),
-        colorSet = colorToken.card
-    ) {
-        content()
-    }
+        colorSet = colorToken.card,
+        content = content
+    )
 }

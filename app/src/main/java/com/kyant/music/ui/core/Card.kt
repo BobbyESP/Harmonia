@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.kyant.ui.style.shape.Rounding
 
 @Composable
-inline fun Card(
+fun Card(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
