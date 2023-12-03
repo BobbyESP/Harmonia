@@ -54,7 +54,7 @@ fun MusicLibrary() {
                     )
             ) {
                 val size = DeviceSpecs.size
-                BoxNoInline(
+                libraryNavigator.LibraryMenu(
                     modifier = Modifier.layout { measurable, constraints ->
                         val placeable = measurable.measure(constraints)
                         layout(constraints.maxWidth, constraints.maxHeight) {
@@ -66,9 +66,7 @@ fun MusicLibrary() {
                             }
                         }
                     }
-                ) {
-                    libraryNavigator.LibraryMenu()
-                }
+                )
 
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -133,37 +131,31 @@ fun MusicLibrary() {
                 }
             }
         } else {
-            val separatedFraction = if (DeviceSpecs.isVerticallyFoldable) 0.5f else 1f / 3f
-
             Row(
                 horizontalArrangement = Arrangement.spacedBy(DeviceSpecs.hingeWidth + 24.dp)
             ) {
-                BoxNoInline(
-                    modifier = Modifier.fillMaxWidth(separatedFraction)
-                ) {
-                    libraryNavigator.LibraryMenu()
-                }
+                libraryNavigator.LibraryMenu(
+                    modifier = Modifier.fillMaxWidth(if (DeviceSpecs.isVerticallyFoldable) 0.5f else 1f / 3f)
+                )
 
-                BoxNoInline {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    BoxNoInline(
+                        modifier = Modifier.weight(1f)
                     ) {
-                        BoxNoInline(
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            with(libraryNavigator) {
-                                when (listPaneRoute) {
-                                    ListPaneRoute.Songs -> Songs()
-                                    ListPaneRoute.Albums -> Albums()
-                                    else -> {}
-                                }
+                        with(libraryNavigator) {
+                            when (listPaneRoute) {
+                                ListPaneRoute.Songs -> Songs()
+                                ListPaneRoute.Albums -> Albums()
+                                else -> {}
                             }
                         }
-
-                        NPBar(
-                            modifier = Modifier.padding(bottom = valueToken.safeBottomPadding.value)
-                        )
                     }
+
+                    NPBar(
+                        modifier = Modifier.padding(bottom = valueToken.safeBottomPadding.value)
+                    )
                 }
             }
         }
