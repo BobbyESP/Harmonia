@@ -36,7 +36,7 @@ import com.kyant.ui.util.thenIf
 fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Headline(
             text = "Songs",
@@ -92,10 +92,10 @@ fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
                 MediaItem(
                     onClick = { player.playFromMediaId(song.mediaId) },
                     image = { AsyncImage(model = song.thumbnailUri) },
-                    title = song.title,
-                    subtitle = song.displayArtist
+                    title = { Text(text = song.title) },
+                    subtitle = { Text(text = song.displayArtist) }
                 ) {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = { selectedSong = song }) {
                         Icon(imageVector = Icons.Default.MoreVert)
                     }
                 }

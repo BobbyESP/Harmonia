@@ -15,18 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.kyant.ui.Text
 import com.kyant.ui.style.color.ProvideEmphasis
 import com.kyant.ui.style.shape.Rounding
-import com.kyant.ui.style.typography
 
 @Composable
 fun MediaItem(
     onClick: () -> Unit,
     image: @Composable BoxScope.() -> Unit,
-    title: String,
+    title: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    subtitle: String? = null,
+    subtitle: @Composable (() -> Unit)? = null,
     action: @Composable RowScope.() -> Unit = {}
 ) {
     CardItem(
@@ -49,16 +47,11 @@ fun MediaItem(
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(
-                    text = title,
-                    style = typography.bodyLarge
-                )
+                title()
                 subtitle?.let {
-                    Text(
-                        text = it,
-                        emphasis = 0.6f,
-                        style = typography.bodyLarge
-                    )
+                    ProvideEmphasis(contentEmphasis = 0.6f) {
+                        it()
+                    }
                 }
             }
             Spacer(modifier = Modifier.width(8.dp))

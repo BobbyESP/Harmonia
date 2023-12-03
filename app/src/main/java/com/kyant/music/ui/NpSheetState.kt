@@ -7,6 +7,9 @@ import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import com.kyant.ui.style.motion.Duration
+import com.kyant.ui.style.motion.Easing
+import com.kyant.ui.style.motion.Easing.with
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -64,17 +67,14 @@ object NpSheetState {
     suspend fun collapsePane(initialVelocity: Float = 0f) {
         expandProgress.animateTo(
             targetValue = 0f,
-            animationSpec = spring(
-                stiffness = Spring.StiffnessLow,
-                visibilityThreshold = 0.0001f
-            ),
+            animationSpec = Easing.EmphasizedAccelerate with Duration.SHORT_4,
             initialVelocity = initialVelocity
         )
     }
 
     suspend fun fling(
         velocity: Float,
-        screenWidth: Float
+        screenHeight: Float
     ) {
         when {
             velocity > 0 -> expandProgress.animateTo(
@@ -83,16 +83,16 @@ object NpSheetState {
                     stiffness = Spring.StiffnessLow,
                     visibilityThreshold = 0.0001f
                 ),
-                initialVelocity = if (screenWidth != 0f) velocity / screenWidth else 0f
+                initialVelocity = if (screenHeight != 0f) velocity / screenHeight else 0f
             )
 
             velocity < 0 -> expandProgress.animateTo(
                 targetValue = expandProgress.value.toInt().toFloat().coerceAtLeast(0f),
                 animationSpec = spring(
-                    stiffness = Spring.StiffnessLow,
+                    stiffness = Spring.StiffnessMediumLow,
                     visibilityThreshold = 0.0001f
                 ),
-                initialVelocity = if (screenWidth != 0f) velocity / screenWidth else 0f
+                initialVelocity = if (screenHeight != 0f) velocity / screenHeight else 0f
             )
 
             else -> expandProgress.animateTo(

@@ -18,13 +18,14 @@ import com.kyant.music.ui.core.MediaItem
 import com.kyant.music.util.AsyncImage
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
+import com.kyant.ui.Text
 import com.kyant.ui.style.shape.Rounding
 
 @Composable
 fun LibraryNavigator.Albums(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Headline(
             text = "Albums",
@@ -42,8 +43,8 @@ fun LibraryNavigator.Albums(modifier: Modifier = Modifier) {
                 MediaItem(
                     onClick = {},
                     image = { AsyncImage(model = album.thumbnailUri) },
-                    title = album.title,
-                    subtitle = album.displayAlbumArtist
+                    title = { Text(text = album.title) },
+                    subtitle = { Text(text = album.displayAlbumArtist) }
                 ) {
                     IconButton(onClick = {}) {
                         Icon(imageVector = Icons.AutoMirrored.Default.NavigateNext)

@@ -27,10 +27,63 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.kyant.ui.navigation.OnBackPressed
+import com.kyant.ui.style.color.LocalColorSet
 import com.kyant.ui.style.motion.Duration
 import com.kyant.ui.style.motion.Easing
 import com.kyant.ui.style.motion.Easing.with
 import com.kyant.ui.style.shape.Rounding
+import com.kyant.ui.util.thenIf
+
+@Composable
+fun FullScreenDialog(
+    visible: Boolean,
+    onDismissRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+    dismissable: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    AnimatedVisibility(
+        visible = visible,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(LocalColorSet.current.color.copy(alpha = 0.8f))
+                .thenIf(visible) {
+                    pointerInput(dismissable) {
+                        detectTapGestures {
+                            if (dismissable) {
+                                onDismissRequest()
+                            }
+                        }
+                    }
+                }
+        )
+
+        OnBackPressed(enabled = { visible && dismissable }) {
+            onDismissRequest()
+        }
+    }
+
+    AnimatedVisibility(
+        visible = visible,
+        modifier = modifier.fillMaxSize(),
+        enter = slideInVertically(
+            spring(
+                stiffness = Spring.StiffnessLow,
+                visibilityThreshold = IntOffset.VisibilityThreshold
+            )
+        ) { it } + expandVertically(
+            spring(
+                stiffness = Spring.StiffnessLow,
+                visibilityThreshold = IntSize.VisibilityThreshold
+            )
+        ),
+        exit = slideOutVertically(Easing.EmphasizedAccelerate with Duration.SHORT_4) { it } +
+            shrinkVertically(Easing.EmphasizedAccelerate with Duration.SHORT_4)
+    ) { content() }
+}
 
 @Composable
 fun BottomSheetDialog(
@@ -49,10 +102,12 @@ fun BottomSheetDialog(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black.copy(alpha = 0.2f))
-                .pointerInput(dismissable) {
-                    detectTapGestures {
-                        if (dismissable) {
-                            onDismissRequest()
+                .thenIf(visible) {
+                    pointerInput(dismissable) {
+                        detectTapGestures {
+                            if (dismissable) {
+                                onDismissRequest()
+                            }
                         }
                     }
                 }

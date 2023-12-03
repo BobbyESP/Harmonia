@@ -9,6 +9,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.kyant.music.data.song.Song
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -18,6 +19,12 @@ object LibraryNavigator {
 
     var listPaneRoute by mutableStateOf(ListPaneRoute.Songs)
         private set
+
+    var selectedSong: Song? by mutableStateOf(null)
+
+    val hasSelectedSong by derivedStateOf {
+        selectedSong != null
+    }
 
     private val paneExpandProgress = Animatable(1f)
 

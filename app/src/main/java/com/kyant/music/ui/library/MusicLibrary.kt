@@ -24,18 +24,18 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MusicLibrary() {
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .safeDrawingPadding()
-            .padding(horizontal = 16.dp)
-            .graphicsLayer {
-                if (NpSheetState.expanded) {
-                    alpha = 0f
+    with(LibraryNavigator) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .safeDrawingPadding()
+                .padding(horizontal = 16.dp)
+                .graphicsLayer {
+                    if (NpSheetState.expanded) {
+                        alpha = 0f
+                    }
                 }
-            }
-    ) {
-        with(LibraryNavigator) {
+        ) {
             if (DeviceSpecs.isCompact) {
                 val scope = rememberCoroutineScope()
                 BoxNoInline(
@@ -95,7 +95,9 @@ fun MusicLibrary() {
                 }
             }
         }
-    }
 
-    NPSheet()
+        NPSheet()
+
+        SongDialog()
+    }
 }

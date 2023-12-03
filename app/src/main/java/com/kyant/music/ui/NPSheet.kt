@@ -132,12 +132,12 @@ fun NPSheet(modifier: Modifier = Modifier) {
                             ) {
                                 SingleLineText(
                                     text = song?.title ?: "Unknown Title",
-                                    style = typography.titleLarge
+                                    style = typography.headlineSmall
                                 )
                                 SingleLineText(
                                     text = song?.displayArtist ?: "Unknown Artist",
                                     emphasis = 0.6f,
-                                    style = typography.titleLarge
+                                    style = typography.headlineSmall
                                 )
                             }
                         }
