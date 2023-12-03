@@ -36,9 +36,9 @@ import com.kyant.ui.util.lerp
 import kotlin.math.absoluteValue
 
 @Composable
-fun LibraryNavigator.Albums() {
+fun LibraryNavigator.Albums(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Column(

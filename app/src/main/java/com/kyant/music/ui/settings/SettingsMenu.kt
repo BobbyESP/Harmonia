@@ -29,7 +29,7 @@ import com.kyant.ui.style.colorScheme
 import com.kyant.ui.style.typography
 
 @Composable
-fun Settings() {
+fun SettingsMenu() {
     val navigator = currentNavigator<AppScreen>()
 
     Column(
@@ -63,7 +63,7 @@ fun Settings() {
             )
         }
         Card {
-            CardItem {
+            CardItem(onClick = {}) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -86,7 +86,7 @@ fun Settings() {
                     )
                 }
             }
-            CardItem {
+            CardItem(onClick = {}) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import com.kyant.music.service.LocalPlayer
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.style.colorToken
-import com.kyant.music.ui.style.valueToken
 import com.kyant.music.util.AsyncImage
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
@@ -41,11 +40,9 @@ import com.kyant.ui.util.lerp
 import kotlin.math.absoluteValue
 
 @Composable
-fun LibraryNavigator.Songs() {
+fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 72.dp + valueToken.safeBottomPadding.value),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Box(

@@ -23,7 +23,7 @@ open class AppScreen(isHome: Boolean = false) : Screen(isHome) {
             NavigationScreens(navigator = navigator) { screen ->
                 when (screen) {
                     MusicLibrary -> MusicLibrary()
-                    Settings -> com.kyant.music.ui.settings.Settings()
+                    Settings -> com.kyant.music.ui.settings.SettingsMenu()
                 }
             }
         }

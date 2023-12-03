@@ -11,10 +11,12 @@ import com.kyant.ui.style.shape.Rounding
 
 @Composable
 inline fun CardItem(
+    crossinline onClick: () -> Unit,
     modifier: Modifier = Modifier,
     crossinline content: @Composable () -> Unit
 ) {
     Surface(
+        onClick = { onClick() },
         modifier = modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp),
