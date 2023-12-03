@@ -15,11 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuOpen
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.adaptive.collectWindowSizeAsState
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -27,14 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kyant.music.service.LocalPlayer
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.AppScreen
+import com.kyant.music.ui.style.DynamicTheme
 import com.kyant.music.ui.style.valueToken
 import com.kyant.music.util.AsyncImage
+import com.kyant.music.util.DeviceSpecs
 import com.kyant.ui.BoxNoInline
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
@@ -63,9 +60,7 @@ fun MusicLibrary() {
             LibraryNavigator(scope, constraints.maxWidth.toFloat())
         }
 
-        val windowAdaptiveInfo = currentWindowAdaptiveInfo()
-        if (windowAdaptiveInfo.windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
-            val size by collectWindowSizeAsState()
+        if (DeviceSpecs.isCompact) {
             BoxNoInline(
                 modifier = Modifier
                     .fillMaxSize()
@@ -76,6 +71,7 @@ fun MusicLibrary() {
                         reverseDirection = true
                     )
             ) {
+                val size = DeviceSpecs.size
                 BoxNoInline(
                     modifier = Modifier
                         .layout { measurable, constraints ->
@@ -163,100 +159,102 @@ fun MusicLibrary() {
                         .align(Alignment.BottomCenter)
                         .padding(bottom = valueToken.safeBottomPadding.value)
                 ) {
-                    Surface(
-                        shape = Rounding.Full.asSmoothRoundedShape(),
-                        colorSet = colorScheme.secondaryContainer
-                    ) {
-                        val player = LocalPlayer.current
-                        val song = remember(player.currentMediaItem) {
-                            mediaStore.getSong(player.currentMediaItem?.mediaId)
-                        }
+                    val player = LocalPlayer.current
+                    val song = remember(player.currentMediaItem) {
+                        mediaStore.getSong(player.currentMediaItem?.mediaId)
+                    }
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp, 12.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                    DynamicTheme(song = song) {
+                        Surface(
+                            shape = Rounding.Full.asSmoothRoundedShape(),
+                            colorSet = colorScheme.secondaryContainer
                         ) {
                             Row(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp, 12.dp),
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                AsyncImage(
-                                    model = song?.thumbnailUri,
-                                    modifier = Modifier
-                                        .size(32.dp)
-                                        .clip(Rounding.ExtraSmall.asSmoothRoundedShape())
-                                )
                                 Row(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    SingleLineText(
-                                        text = song?.title ?: "No playing",
-                                        style = typography.bodyMedium
+                                    AsyncImage(
+                                        model = song?.thumbnailUri,
+                                        modifier = Modifier
+                                            .size(32.dp)
+                                            .clip(Rounding.ExtraSmall.asSmoothRoundedShape())
                                     )
-                                    song?.displayArtist?.let { artist ->
-                                        Box(
-                                            modifier = Modifier
-                                                .padding(horizontal = 6.dp)
-                                                .size(2.5.dp)
-                                                .clip(Rounding.Full.asRoundedShape())
-                                                .background(LocalColorSet.current.onColor)
-                                        )
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
                                         SingleLineText(
-                                            text = artist,
-                                            emphasis = 0.6f,
+                                            text = song?.title ?: "No playing",
                                             style = typography.bodyMedium
                                         )
-                                    }
-                                }
-                            }
-
-                            Row(
-                                horizontalArrangement = Arrangement.End,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                IconButton(
-                                    onClick = { player.skipToPrevious() },
-                                    size = 32.dp
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = com.kyant.media.R.drawable.skip_previous),
-                                        contentDescription = "Previous"
-                                    )
-                                }
-                                IconButton(
-                                    onClick = {
-                                        if (player.isPlaying) {
-                                            player.pause()
-                                        } else {
-                                            player.play()
+                                        song?.displayArtist?.let { artist ->
+                                            Box(
+                                                modifier = Modifier
+                                                    .padding(horizontal = 6.dp)
+                                                    .size(2.5.dp)
+                                                    .clip(Rounding.Full.asRoundedShape())
+                                                    .background(LocalColorSet.current.onColor)
+                                            )
+                                            SingleLineText(
+                                                text = artist,
+                                                emphasis = 0.6f,
+                                                style = typography.bodyMedium
+                                            )
                                         }
-                                    },
-                                    size = 32.dp
-                                ) {
-                                    if (player.isPlaying) {
-                                        Icon(
-                                            painter = painterResource(id = com.kyant.media.R.drawable.pause),
-                                            contentDescription = "Pause"
-                                        )
-                                    } else {
-                                        Icon(
-                                            painter = painterResource(id = com.kyant.media.R.drawable.play),
-                                            contentDescription = "Play"
-                                        )
                                     }
                                 }
-                                IconButton(
-                                    onClick = { player.skipToNext() },
-                                    size = 32.dp
+
+                                Row(
+                                    horizontalArrangement = Arrangement.End,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(
-                                        painter = painterResource(id = com.kyant.media.R.drawable.skip_next),
-                                        contentDescription = "Next"
-                                    )
+                                    IconButton(
+                                        onClick = { player.skipToPrevious() },
+                                        size = 32.dp
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = com.kyant.media.R.drawable.skip_previous),
+                                            contentDescription = "Previous"
+                                        )
+                                    }
+                                    IconButton(
+                                        onClick = {
+                                            if (player.isPlaying) {
+                                                player.pause()
+                                            } else {
+                                                player.play()
+                                            }
+                                        },
+                                        size = 32.dp
+                                    ) {
+                                        if (player.isPlaying) {
+                                            Icon(
+                                                painter = painterResource(id = com.kyant.media.R.drawable.pause),
+                                                contentDescription = "Pause"
+                                            )
+                                        } else {
+                                            Icon(
+                                                painter = painterResource(id = com.kyant.media.R.drawable.play),
+                                                contentDescription = "Play"
+                                            )
+                                        }
+                                    }
+                                    IconButton(
+                                        onClick = { player.skipToNext() },
+                                        size = 32.dp
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = com.kyant.media.R.drawable.skip_next),
+                                            contentDescription = "Next"
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -264,21 +262,11 @@ fun MusicLibrary() {
                 }
             }
         } else {
-            val isVerticallyFoldable = remember(windowAdaptiveInfo) {
-                windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.isNotEmpty()
-            }
-            val hingeWidth = if (isVerticallyFoldable) {
-                with(LocalDensity.current) {
-                    windowAdaptiveInfo.windowPosture.separatingVerticalHingeBounds.first().width.toDp()
-                } + 24.dp
-            } else {
-                24.dp
-            }
-            val separatedFraction = if (isVerticallyFoldable) 0.5f else 1f / 3f
+            val separatedFraction = if (DeviceSpecs.isVerticallyFoldable) 0.5f else 1f / 3f
 
             Row(
                 modifier = Modifier,
-                horizontalArrangement = Arrangement.spacedBy(hingeWidth)
+                horizontalArrangement = Arrangement.spacedBy(DeviceSpecs.hingeWidth + 24.dp)
             ) {
                 BoxNoInline(
                     modifier = Modifier.fillMaxWidth(separatedFraction)
