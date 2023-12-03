@@ -34,7 +34,6 @@ fun NPBar(modifier: Modifier = Modifier) {
     val song = remember(player.currentMediaItem) {
         mediaStore.getSong(player.currentMediaItem?.mediaId)
     }
-
     DynamicTheme(song = song) {
         Surface(
             modifier = modifier,
@@ -84,7 +83,6 @@ fun NPBar(modifier: Modifier = Modifier) {
                 }
 
                 Row(
-                    horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(

@@ -15,6 +15,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import com.kyant.music.ui.NPSheet
+import com.kyant.music.ui.NpSheetState
 import com.kyant.music.util.DeviceSpecs
 import com.kyant.ui.BoxNoInline
 import com.kyant.ui.util.lerp
@@ -27,6 +29,11 @@ fun MusicLibrary() {
             .fillMaxSize()
             .safeDrawingPadding()
             .padding(horizontal = 16.dp)
+            .graphicsLayer {
+                if (NpSheetState.expanded) {
+                    alpha = 0f
+                }
+            }
     ) {
         with(LibraryNavigator) {
             if (DeviceSpecs.isCompact) {
@@ -89,4 +96,6 @@ fun MusicLibrary() {
             }
         }
     }
+
+    NPSheet()
 }
