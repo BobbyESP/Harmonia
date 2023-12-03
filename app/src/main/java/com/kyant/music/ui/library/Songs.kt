@@ -26,6 +26,7 @@ import com.kyant.music.service.LocalPlayer
 import com.kyant.music.storage.mediaStore
 import com.kyant.music.ui.style.colorToken
 import com.kyant.music.util.AsyncImage
+import com.kyant.music.util.DeviceSpecs
 import com.kyant.ui.Icon
 import com.kyant.ui.IconButton
 import com.kyant.ui.Surface
@@ -33,6 +34,7 @@ import com.kyant.ui.Text
 import com.kyant.ui.style.colorScheme
 import com.kyant.ui.style.shape.Rounding
 import com.kyant.ui.style.typography
+import com.kyant.ui.util.thenIf
 
 @Composable
 fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
@@ -45,9 +47,13 @@ fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
             modifier = Modifier.padding(top = 24.dp)
         )
 
+        val isCompact = DeviceSpecs.isCompact
+
         Surface(
-            modifier = Modifier.graphicsLayer {
-                translationX = (1f - paneExpandProgressValue) * 72.dp.toPx()
+            modifier = Modifier.thenIf(isCompact) {
+                graphicsLayer {
+                    translationX = (1f - paneExpandProgressValue) * 72.dp.toPx()
+                }
             },
             shape = Rounding.Full.asSmoothRoundedShape(),
             colorSet = colorScheme.surfaceContainerHigh
@@ -77,8 +83,10 @@ fun LibraryNavigator.Songs(modifier: Modifier = Modifier) {
         val state = rememberLazyListState()
         LazyColumn(
             modifier = Modifier
-                .graphicsLayer {
-                    translationX = (1f - paneExpandProgressValue) * 36.dp.toPx()
+                .thenIf(isCompact) {
+                    graphicsLayer {
+                        translationX = (1f - paneExpandProgressValue) * 36.dp.toPx()
+                    }
                 }
                 .clip(Rounding.Large.asSmoothRoundedShape()),
             state = state,
