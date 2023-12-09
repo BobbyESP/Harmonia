@@ -1,7 +1,8 @@
 package com.kyant.music.util
 
-import androidx.compose.material3.adaptive.collectWindowSizeAsState
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.currentWindowSize
+import androidx.compose.material3.adaptive.separatingVerticalHingeBounds
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -14,7 +15,7 @@ object DeviceSpecs {
 
     inline val size: IntSize
         @Composable
-        get() = collectWindowSizeAsState().value
+        get() = currentWindowSize()
 
     val isCompact: Boolean
         @Composable
