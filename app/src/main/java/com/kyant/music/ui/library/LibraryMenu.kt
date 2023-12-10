@@ -86,7 +86,7 @@ fun LibraryState.LibraryMenu(modifier: Modifier = Modifier) {
                 val scope = rememberCoroutineScope()
 
                 LibraryItem(
-                    onClick = { scope.launch { navigate(ListPaneRoute.Songs) } },
+                    onClick = { scope.launch { navigateTo(ListPaneRoute.Songs) } },
                     selected = { listPaneRoute == ListPaneRoute.Songs },
                     label = { Text(text = "Songs") },
                     icon = {
@@ -98,7 +98,7 @@ fun LibraryState.LibraryMenu(modifier: Modifier = Modifier) {
                     modifier = Modifier.weight(1f)
                 )
                 LibraryItem(
-                    onClick = { scope.launch { navigate(ListPaneRoute.Albums) } },
+                    onClick = { scope.launch { navigateTo(ListPaneRoute.Albums) } },
                     selected = { listPaneRoute == ListPaneRoute.Albums },
                     label = { Text(text = "Albums") },
                     icon = {

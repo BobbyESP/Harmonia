@@ -46,7 +46,7 @@ object LibraryState {
         }
     }
 
-    suspend fun navigate(route: ListPaneRoute) {
+    suspend fun navigateTo(route: ListPaneRoute) {
         listPaneRoute = route
         expandPane()
     }
