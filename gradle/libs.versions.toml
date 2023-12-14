@@ -5,7 +5,7 @@ android-targetSdk = "34"
 android-versionCode = "1"
 android-versionName = "1.0.0.a1"
 
-agp = "8.3.0-alpha17"
+agp = "8.3.0-alpha18"
 kotlin = "2.0.0-Beta1"
 compose-compiler = "1.5.5-dev-k2.0.0-Beta1-06b8ae672a4"
 
