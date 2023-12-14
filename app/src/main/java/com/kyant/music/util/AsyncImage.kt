@@ -33,7 +33,7 @@ fun AsyncImage(
     )
 } else {
     GlideImage(
-        model = "",
+        model = null,
         contentDescription = contentDescription,
         modifier = modifier.background(PerceptualColor.Red),
         alignment = alignment,
