@@ -21,7 +21,7 @@ media = "1.7.0-SNAPSHOT"
 window = "1.3.0-SNAPSHOT"
 
 coroutines = "1.8.0-RC" # https://github.com/Kotlin/kotlinx.coroutines
-kotlinx-collections-immutable = "0.3.6" # https://github.com/Kotlin/kotlinx.collections.immutable
+kotlinx-collections-immutable = "0.3.7" # https://github.com/Kotlin/kotlinx.collections.immutable
 serialization = "1.6.2" # https://github.com/Kotlin/kotlinx.serialization
 
 kyant-m3color = "2023.11.1"
