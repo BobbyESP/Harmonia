@@ -98,6 +98,6 @@ dependencies {
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01") // https://github.com/bumptech/glide
     implementation("com.github.GIGAMOLE:ComposeFadingEdges:1.0.4") // https://github.com/GIGAMOLE/ComposeFadingEdges
     implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
-    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.4.0") // https://github.com/chrisbanes/haze
+    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.4.1") // https://github.com/chrisbanes/haze
     debugImplementation(libs.compose.ui.tooling)
 }
