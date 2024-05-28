@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.composeCompiler)
     id("dev.shreyaspatil.compose-compiler-report-generator") version "1.1.0"
 }
 
@@ -55,9 +56,6 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     packaging {
         resources {
             excludes += arrayOf("/META-INF/{AL2.0,LGPL2.1}", "DebugProbesKt.bin")
@@ -95,9 +93,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.kyant.taglib)
-    implementation("com.github.bumptech.glide:compose:1.0.0-beta01") // https://github.com/bumptech/glide
-    implementation("com.github.GIGAMOLE:ComposeFadingEdges:1.0.4") // https://github.com/GIGAMOLE/ComposeFadingEdges
-    implementation("com.touchlane:gridpad:1.1.2") // https://github.com/touchlane/gridpad-android
-    implementation("dev.chrisbanes.haze:haze-jetpack-compose:0.4.1") // https://github.com/chrisbanes/haze
+    implementation(libs.compose) // https://github.com/bumptech/glide
+    implementation(libs.composefadingedges) // https://github.com/GIGAMOLE/ComposeFadingEdges
+    implementation(libs.gridpad) // https://github.com/touchlane/gridpad-android
+    implementation(libs.haze.jetpack.compose) // https://github.com/chrisbanes/haze
     debugImplementation(libs.compose.ui.tooling)
 }
